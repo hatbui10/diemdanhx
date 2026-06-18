@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Attendance - Independent Mode</title>
+    <title>Cyber Attendance - Auto Calculation Mode</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -138,20 +138,13 @@
 
     <div class="form-group">
         <label>1. Chọn thông tin ca học:</label>
-        <select id="classDropdown" onchange="loadClassData()">
-            <option value="mickey">Mickey. T2-237 18h45</option>
-            <option value="sun">Sun. T3-237 18h30</option>
-            <option value="donald">Donald. T4-123 17h00</option>
-        </select>
+        <select id="classDropdown" onchange="loadClassData()"></select>
     </div>
 
     <div class="form-group">
         <div class="row-flex">
             <span class="label-inline">Sĩ số:</span>
-            <input type="number" id="inputSiso" min="0" max="100" value="0"
-                   onfocus="if(this.value=='0') this.value='';" 
-                   onblur="if(this.value=='') this.value='0';" 
-                   oninput="updateAbsentOutput()" placeholder="Nhập số...">
+            <input type="text" id="inputSiso" style="color: #00ff66; font-weight: bold; border-color: #00ff66;" readonly value="0">
         </div>
     </div>
 
@@ -162,7 +155,7 @@
 
     <div class="form-group">
         <label>4. Số học sinh trong danh sách gốc:</label>
-        <input type="text" id="totalCount" readonly style="color: #00ff66; font-weight: bold; border-color: #00ff66;" value="Tổng số học sinh: 0">
+        <input type="text" id="totalCount" readonly style="color: #00f0ff; font-weight: bold; border-color: #334155;" value="Tổng số học sinh gốc: 0">
     </div>
 
     <div class="form-group">
@@ -174,23 +167,28 @@
 
 <script>
     /*****************************************************************
-     * 💡 DANH SÁCH CỐ ĐỊNH TRONG CODE:
-     * Muốn thay đổi danh sách lớp, bạn chỉ cần sửa tên ở đây.
+     * 💡 DANH SÁCH DATABASE:
+     * Bạn chỉ cần sửa hoặc thêm lớp trực tiếp tại đây.
      *****************************************************************/
     const database = {
-        mickey: [
+        "Mickey. T2-237 18h45": [
             "Nguyễn Văn A", 
             "Bùi Thị B", 
             "Trần Văn C", 
             "Lê Thị D", 
             "Phạm Minh E"
         ],
-        sun: [
+        "Sun. T3-237 18h30": [
             "Nguyễn Hoàng Nam", 
             "Trần Thu Thảo", 
             "Vũ Minh Đức"
         ],
-        donald: [
+        "Slice. T3-58 18h30": [
+            "Học Sinh Slice Một",
+            "Học Sinh Slice Hai",
+            "Học Sinh Slice Ba"
+        ],
+        "Donald. T4-123 17h00": [
             "Lê Đại Nghĩa", 
             "Đặng Thúy Quỳnh", 
             "Hoàng Quốc Bảo", 
@@ -199,21 +197,36 @@
     };
 
     let studentArray = [];
+    let totalOriginalCount = 0; // Lưu tổng số học sinh gốc của lớp đang chọn
 
     // Khởi chạy khi tải trang
     window.onload = function() {
+        initDropdown();
         loadClassData();
     };
 
-    // Hàm load đúng số lượng học sinh có sẵn từ code, không tự sinh bừa bãi
+    // Tự động sinh danh sách các lớp vào Ô số 1
+    function initDropdown() {
+        const dropdown = document.getElementById('classDropdown');
+        dropdown.innerHTML = "";
+
+        Object.keys(database).forEach(className => {
+            const option = document.createElement('option');
+            option.value = className;
+            option.innerText = className;
+            dropdown.appendChild(option);
+        });
+    }
+
+    // Tải dữ liệu lớp học
     function loadClassData() {
         const selectClass = document.getElementById('classDropdown').value;
         const currentList = database[selectClass] || [];
         
-        // Cập nhật Ô số 4 dựa theo độ dài danh sách gốc
-        document.getElementById('totalCount').value = `Tổng số học sinh gốc: ${currentList.length}`;
+        totalOriginalCount = currentList.length;
+        document.getElementById('totalCount').value = `Tổng số học sinh gốc: ${totalOriginalCount}`;
 
-        // Chuyển mảng tên thành đối tượng quản lý trạng thái
+        // Tạo mảng quản lý trạng thái điểm danh
         studentArray = currentList.map((name, index) => ({
             id: index + 1,
             name: name,
@@ -223,14 +236,14 @@
         renderAttendanceTable();
     }
 
-    // Hàm tạo giao diện bảng điểm danh cho Ô số 3
+    // Tạo bảng điểm danh hàng dọc
     function renderAttendanceTable() {
         const container = document.getElementById('attendance-list');
         container.innerHTML = "";
 
         if (studentArray.length === 0) {
-            container.innerHTML = "<span style='color:#64748b; font-size:13px; display:block; text-align:center; padding:15px;'>Không có dữ liệu học sinh...</span>";
-            updateAbsentOutput();
+            container.innerHTML = "<span style='color:#64748b; font-size:13px; display:block; text-align:center; padding:15px;'>Không có dữ liệu...</span>";
+            calculateAndOutput();
             return;
         }
 
@@ -256,9 +269,10 @@
             `;
             select.value = student.status;
 
+            // Lắng nghe sự kiện thay đổi trạng thái vắng/đủ
             select.addEventListener('change', function() {
                 studentArray[index].status = this.value;
-                updateAbsentOutput();
+                calculateAndOutput(); // Tính toán lại sĩ số ngay lập tức
             });
 
             tdSelect.appendChild(select);
@@ -270,35 +284,42 @@
         table.appendChild(tbody);
         container.appendChild(table);
 
-        updateAbsentOutput();
+        calculateAndOutput();
     }
 
-    // Hàm xuất nội dung text ra ô số 5 (Lấy Sĩ số trực tiếp từ số bạn nhập ở Ô 2)
-    function updateAbsentOutput() {
+    // Hàm cốt lõi: Tính toán số học sinh đi học (Tổng gốc - Số học sinh vắng) và kết xuất Ô 5
+    function calculateAndOutput() {
         const dropdown = document.getElementById('classDropdown');
-        const classText = dropdown.options[dropdown.selectedIndex].text;
-        
-        // Lấy giá trị chuỗi nhập tay từ Ô số 2 (gõ gì nhận nấy, không liên can tới danh sách)
-        const siso = document.getElementById('inputSiso').value; 
+        const classText = dropdown.value || "";
         const absentOutput = document.getElementById('absentOutput');
         
         let absentCount = 1;
-        let outputText = `Ca học: ${classText}\nSĩ số: ${siso}\n-----------------------\n`;
+        let totalAbsent = 0; // Biến đếm tổng số học sinh vắng trong lượt này
+        let textListAbsent = "";
 
         studentArray.forEach(student => {
             if (student.status === "Có phép") {
-                outputText += `${absentCount}. ${student.name} (Vắng có phép)\n`;
+                textListAbsent += `${absentCount}. ${student.name} (Vắng có phép)\n`;
                 absentCount++;
+                totalAbsent++;
             } else if (student.status === "Không phép") {
-                outputText += `${absentCount}. ${student.name} (Vắng KHÔNG phép)\n`;
+                textListAbsent += `${absentCount}. ${student.name} (Vắng KHÔNG phép)\n`;
                 absentCount++;
+                totalAbsent++;
             }
         });
 
-        if (absentCount === 1) {
-            absentOutput.value = `Ca học: ${classText}\nSĩ số: ${siso}\nLớp đi học đầy đủ 100%, không có bạn nào vắng.`;
+        // ⚡ Thuật toán xử lý yêu cầu: Sĩ số thực tế = Tổng gốc - Số bạn vắng
+        const currentSiso = totalOriginalCount - totalAbsent;
+        document.getElementById('inputSiso').value = currentSiso;
+
+        // Xây dựng chuỗi kết quả hoàn chỉnh hiển thị ở Ô 5
+        let outputText = `Ca học: ${classText}\nSĩ số: ${currentSiso}\n-----------------------\n`;
+
+        if (totalAbsent === 0) {
+            absentOutput.value = `Ca học: ${classText}\nSĩ số: ${currentSiso}\nLớp đi học đầy đủ 100%, không có bạn nào vắng.`;
         } else {
-            absentOutput.value = outputText;
+            absentOutput.value = outputText + textListAbsent;
         }
     }
 
