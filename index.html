@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Attendance - Auto Calculation Mode</title>
+    <title>Cyber Attendance - Note Enhancement Mode</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -73,7 +73,7 @@
             box-shadow: 0 0 5px rgba(0, 240, 255, 0.4);
         }
         #attendance-list {
-            max-height: 260px;
+            max-height: 300px;
             overflow-y: auto;
             border: 1px dashed #334155;
             padding: 5px;
@@ -85,13 +85,15 @@
             border-collapse: collapse;
         }
         td {
-            padding: 8px 6px;
+            padding: 8px 4px;
             border-bottom: 1px solid #1e293b;
             font-size: 14px;
             color: #ffffff;
+            vertical-align: middle;
         }
-        td.name-col { text-align: left; word-break: break-word; }
-        td.select-col { width: 130px; text-align: right; }
+        td.name-col { text-align: left; word-break: break-word; width: 35%; }
+        td.select-col { width: 110px; text-align: right; }
+        td.note-col { padding-left: 6px; }
         
         .status-dropdown {
             width: 100%;
@@ -107,6 +109,16 @@
         .status-dropdown option {
             background: #0d0e15;
             color: #ffffff;
+        }
+        .note-input {
+            padding: 6px 8px;
+            font-size: 13px;
+            border: 1px solid #1e293b;
+            color: #e2e8f0;
+        }
+        .note-input:focus {
+            border-color: #ff007f;
+            box-shadow: 0 0 4px rgba(255, 0, 127, 0.4);
         }
         .btn-copy {
             display: block;
@@ -166,10 +178,6 @@
 </div>
 
 <script>
-    /*****************************************************************
-     * 💡 DANH SÁCH DATABASE:
-     * Bạn chỉ cần sửa hoặc thêm lớp trực tiếp tại đây.
-     *****************************************************************/
     const database = {
         "Mickey. T2-237 18h45": [
             "Nguyễn Văn A", 
@@ -197,15 +205,13 @@
     };
 
     let studentArray = [];
-    let totalOriginalCount = 0; // Lưu tổng số học sinh gốc của lớp đang chọn
+    let totalOriginalCount = 0;
 
-    // Khởi chạy khi tải trang
     window.onload = function() {
         initDropdown();
         loadClassData();
     };
 
-    // Tự động sinh danh sách các lớp vào Ô số 1
     function initDropdown() {
         const dropdown = document.getElementById('classDropdown');
         dropdown.innerHTML = "";
@@ -218,7 +224,6 @@
         });
     }
 
-    // Tải dữ liệu lớp học
     function loadClassData() {
         const selectClass = document.getElementById('classDropdown').value;
         const currentList = database[selectClass] || [];
@@ -226,17 +231,17 @@
         totalOriginalCount = currentList.length;
         document.getElementById('totalCount').value = `Tổng số học sinh gốc: ${totalOriginalCount}`;
 
-        // Tạo mảng quản lý trạng thái điểm danh
+        // Thêm trường note để quản lý chuỗi ghi chú nhập vào
         studentArray = currentList.map((name, index) => ({
             id: index + 1,
             name: name,
-            status: "Đủ"
+            status: "Đủ",
+            note: ""
         }));
 
         renderAttendanceTable();
     }
 
-    // Tạo bảng điểm danh hàng dọc
     function renderAttendanceTable() {
         const container = document.getElementById('attendance-list');
         container.innerHTML = "";
@@ -253,10 +258,12 @@
         studentArray.forEach((student, index) => {
             const tr = document.createElement('tr');
 
+            // Cột 1: STT và Tên
             const tdName = document.createElement('td');
             tdName.className = 'name-col';
             tdName.innerText = `${student.id}. ${student.name}`;
 
+            // Cột 2: Dropdown trạng thái vắng/đủ
             const tdSelect = document.createElement('td');
             tdSelect.className = 'select-col';
 
@@ -269,15 +276,32 @@
             `;
             select.value = student.status;
 
-            // Lắng nghe sự kiện thay đổi trạng thái vắng/đủ
             select.addEventListener('change', function() {
                 studentArray[index].status = this.value;
-                calculateAndOutput(); // Tính toán lại sĩ số ngay lập tức
+                calculateAndOutput();
             });
-
             tdSelect.appendChild(select);
+
+            // Cột 3: Ô nhập ghi chú
+            const tdNote = document.createElement('td');
+            tdNote.className = 'note-col';
+
+            const inputNote = document.createElement('input');
+            inputNote.type = 'text';
+            inputNote.className = 'note-input';
+            inputNote.placeholder = 'Ghi chú...';
+            inputNote.value = student.note;
+
+            // Lắng nghe sự kiện gõ chữ ở ô ghi chú để cập nhật tự động lên Ô số 5
+            inputNote.addEventListener('input', function() {
+                studentArray[index].note = this.value.trim();
+                calculateAndOutput();
+            });
+            tdNote.appendChild(inputNote);
+
             tr.appendChild(tdName);
             tr.appendChild(tdSelect);
+            tr.appendChild(tdNote);
             tbody.appendChild(tr);
         });
 
@@ -287,33 +311,33 @@
         calculateAndOutput();
     }
 
-    // Hàm cốt lõi: Tính toán số học sinh đi học (Tổng gốc - Số học sinh vắng) và kết xuất Ô 5
     function calculateAndOutput() {
         const dropdown = document.getElementById('classDropdown');
         const classText = dropdown.value || "";
         const absentOutput = document.getElementById('absentOutput');
         
         let absentCount = 1;
-        let totalAbsent = 0; // Biến đếm tổng số học sinh vắng trong lượt này
+        let totalAbsent = 0;
         let textListAbsent = "";
 
         studentArray.forEach(student => {
+            // Định dạng chuỗi ghi chú kèm thêm nếu có nội dung viết vào ô note
+            let noteStr = student.note ? ` - ${student.note}` : "";
+
             if (student.status === "Có phép") {
-                textListAbsent += `${absentCount}. ${student.name} (Vắng có phép)\n`;
+                textListAbsent += `${absentCount}. ${student.name} (Vắng có phép${noteStr})\n`;
                 absentCount++;
                 totalAbsent++;
             } else if (student.status === "Không phép") {
-                textListAbsent += `${absentCount}. ${student.name} (Vắng KHÔNG phép)\n`;
+                textListAbsent += `${absentCount}. ${student.name} (Vắng KHÔNG phép${noteStr})\n`;
                 absentCount++;
                 totalAbsent++;
             }
         });
 
-        // ⚡ Thuật toán xử lý yêu cầu: Sĩ số thực tế = Tổng gốc - Số bạn vắng
         const currentSiso = totalOriginalCount - totalAbsent;
         document.getElementById('inputSiso').value = currentSiso;
 
-        // Xây dựng chuỗi kết quả hoàn chỉnh hiển thị ở Ô 5
         let outputText = `Ca học: ${classText}\nSĩ số: ${currentSiso}\n-----------------------\n`;
 
         if (totalAbsent === 0) {
@@ -323,7 +347,6 @@
         }
     }
 
-    // Hàm sao chép nhanh
     function copyToClipboard() {
         const textToCopy = document.getElementById('absentOutput').value;
         const btn = document.getElementById('copyBtn');
