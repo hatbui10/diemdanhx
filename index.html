@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Điểm Danh</title>
+    <title>Danh Sách Điểm Danh Chuyên Nghiệp</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 10px; }
         .o-a { border: 3px solid #3498db; padding: 10px; margin-bottom: 15px; border-radius: 8px; background-color: #fff; }
@@ -32,9 +32,12 @@
         .btn-di-hoc-tiep { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #3498db; background: white; color: #3498db; font-weight: bold; margin-top: 10px; margin-left: 5px; display: inline-block; }
         .btn-di-hoc-tiep.active { background: #3498db; color: white; }
 
+        /* Lớp khóa sau 2 giờ: Mờ đi và chặn mọi cú click */
+        .locked { opacity: 0.5; pointer-events: none; cursor: not-allowed !important; }
+
         .ds-vang { margin-top: 10px; padding: 8px; background: #fff3f3; border-left: 4px solid #e74c3c; font-size: 0.9em; color: #c0392b; }
-        .vang-item { padding: 8px 0; border-bottom: 1px solid #fbdada; }
-        .vang-dong-2 { font-size: 0.85em; color: #d35400; font-weight: bold; margin-top: 3px; }
+        .vang-item { padding: 8px 0; border-bottom: 1px solid #fbdada; display: flex; justify-content: space-between; align-items: center; }
+        .txt-vang { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -42,7 +45,6 @@
     <div id="container"></div>
 
     <script>
-        // DỮ LIỆU CÁC LỚP
         const duLieuLop = [
             {
                 tenLop: "Lớp 12A1",
@@ -58,10 +60,11 @@
                     { ten: "Phạm Thị D", lop: "Sun", sdt: "0934567890", hocPhi: "600.000" }
                 ]
             }
-            // Bạn có thể thêm Lớp 12A3, 12A4... vào đây theo cấu trúc tương tự
         ];
 
         const container = document.getElementById('container');
+        // Đặt thời gian khóa là 2 giờ (2 * 60 phút * 60 giây * 1000 mili-giây)
+        const THOI_GIAN_KHOA = 2 * 60 * 60 * 1000; 
 
         duLieuLop.forEach(lop => {
             let tongSiSo = lop.hocSinh.length;
@@ -71,23 +74,25 @@
                 <div class="ten-lop-header" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display=='block'?'none':'block')">
                     <div>
                         <div class="ten-lop">${lop.tenLop}</div>
-                        <div class="si-so">Sĩ số hiện tại: ${tongSiSo}/${tongSiSo}</div>
+                        <div class="si-so">Sĩ số: ${tongSiSo}/${tongSiSo}</div>
                     </div>
                     <span>▼</span>
                 </div>
                 <div class="noi-dung-lop">
-                    <div class="ds-vang"><b>Danh sách vắng:</b><div class="danh-sach-ten-vang">Không có ai</div></div>
+                    <div class="ds-vang"><b>Danh sách vắng mới nhất:</b><div class="danh-sach-ten-vang">Không có ai</div></div>
                     ${lop.hocSinh.map((hs, index) => `
                         <div class="hoc-sinh-card" data-stt="${index + 1}" data-ten="${hs.ten}" data-sdt="${hs.sdt}">
                             <div class="line"><b>${index + 1}. Họ tên:</b> ${hs.ten}</div>
-                            <div class="line"><b>Lớp riêng:</b> ${hs.lop}</div>
+                            <div class="line"><b>Lớp:</b> ${hs.lop}</div>
                             <div class="line">
                                 <b>SĐT:</b> ${hs.sdt} 
                                 <a href="tel:${hs.sdt}" class="btn-goi">📞 Gọi</a>
                             </div>
+                            <div class="line"><b>Vắng:</b> <span class="txt-vang">Không</span></div>
                             <div class="line"><b>Học phí:</b> ${hs.hocPhi} VNĐ</div>
                             <div class="line"><b>Ghi chú:</b></div>
                             <input type="text" class="ghi-chu-input" placeholder="Nhập ghi chú..." oninput="luuDuLieu()">
+                            
                             <div class="ds-buoi">
                                 ${Array(8).fill(0).map((_, i) => `<div class="o-buoi" onclick="toggleBuoi(this)" data-buoi="${i+1}"> ${i+1}</div>`).join('')}
                             </div>
@@ -107,10 +112,17 @@
                 let ghiChu = card.querySelector('.ghi-chu-input').value;
                 let isXinNghi = card.classList.contains('xin-nghi');
                 let isDiHocTiep = card.classList.contains('di-hoc-tiep');
-                let buoiVang = [];
-                card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
+                let timeXinNghi = card.querySelector('.btn-xin-nghi').getAttribute('data-time');
                 
-                data.push({ ten, ghiChu, isXinNghi, isDiHocTiep, buoiVang });
+                let buoiVangData = [];
+                card.querySelectorAll('.o-buoi.active').forEach(o => {
+                    buoiVangData.push({
+                        buoi: o.getAttribute('data-buoi'),
+                        time: o.getAttribute('data-time')
+                    });
+                });
+                
+                data.push({ ten, ghiChu, isXinNghi, isDiHocTiep, timeXinNghi, buoiVangData });
             });
             localStorage.setItem('diemDanhData', JSON.stringify(data));
         }
@@ -121,21 +133,33 @@
                 document.querySelectorAll('.o-a').forEach(div => updateVang(div));
                 return;
             }
+
+            const NOW = Date.now();
+
             data.forEach(item => {
                 let card = document.querySelector(`.hoc-sinh-card[data-ten="${item.ten}"]`);
                 if (card) {
                     card.querySelector('.ghi-chu-input').value = item.ghiChu;
+                    let btnXinNghi = card.querySelector('.btn-xin-nghi');
                     
                     if (item.isXinNghi) {
                         card.classList.add('xin-nghi');
-                        card.querySelector('.btn-xin-nghi').classList.add('active');
+                        btnXinNghi.classList.add('active');
+                        if (item.timeXinNghi) {
+                            btnXinNghi.setAttribute('data-time', item.timeXinNghi);
+                        }
                         if (!item.isDiHocTiep) card.querySelector('.btn-goi').classList.add('disabled');
                     }
                     
-                    item.buoiVang.forEach(b => {
-                        let o = card.querySelector(`.o-buoi[data-buoi="${b}"]`);
-                        if (o) o.classList.add('active');
-                    });
+                    if (item.buoiVangData) {
+                        item.buoiVangData.forEach(bData => {
+                            let o = card.querySelector(`.o-buoi[data-buoi="${bData.buoi}"]`);
+                            if (o) {
+                                o.classList.add('active');
+                                if (bData.time) o.setAttribute('data-time', bData.time);
+                            }
+                        });
+                    }
                     
                     if (item.isDiHocTiep) {
                         card.classList.add('di-hoc-tiep');
@@ -148,13 +172,37 @@
         }
 
         function toggleBuoi(el) {
+            let card = el.closest('.hoc-sinh-card');
+            let isXinNghi = card.classList.contains('xin-nghi');
+            let isDiHocTiep = card.classList.contains('di-hoc-tiep');
+
+            // Chặn bấm nếu học sinh đang nghỉ hẳn HOẶC nút đã bị khóa cứng sau 2h
+            if((isXinNghi && !isDiHocTiep) || el.classList.contains('locked')) return;
+
+            if (el.classList.contains('active')) {
+                // Hủy tích: Xóa timestamp
+                el.removeAttribute('data-time');
+            } else {
+                // Tích mới: Lưu timestamp
+                el.setAttribute('data-time', Date.now());
+            }
+
             el.classList.toggle('active');
-            updateVang(el.closest('.o-a'));
+            updateVang(card.closest('.o-a'));
             luuDuLieu();
         }
 
         function toggleXinNghi(el) {
+            if (el.classList.contains('locked')) return;
+
             let card = el.closest('.hoc-sinh-card');
+
+            if (el.classList.contains('active')) {
+                el.removeAttribute('data-time');
+            } else {
+                el.setAttribute('data-time', Date.now());
+            }
+
             let btnGoi = card.querySelector('.btn-goi');
             let isDiHocTiep = card.classList.contains('di-hoc-tiep');
             
@@ -167,7 +215,7 @@
                 btnGoi.classList.remove('disabled');
             }
             
-            updateVang(el.closest('.o-a'));
+            updateVang(card.closest('.o-a'));
             luuDuLieu();
         }
 
@@ -190,40 +238,96 @@
 
         function updateVang(lopDiv) {
             let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
-            let tongHocSinh = lopDiv.querySelectorAll('.hoc-sinh-card').length;
-            let soHocSinhVang = 0;
+            let tongHocSinhBanDau = lopDiv.querySelectorAll('.hoc-sinh-card').length;
+            
+            let soNghiHan = 0;
+            let soHocSinhVangMoi = 0;
             let vangList = [];
+            const NOW = Date.now();
             
             lopDiv.querySelectorAll('.hoc-sinh-card').forEach(card => {
                 let stt = card.getAttribute('data-stt');
                 let ten = card.getAttribute('data-ten');
                 let sdt = card.getAttribute('data-sdt');
+                
+                let btnXinNghi = card.querySelector('.btn-xin-nghi');
                 let isXinNghi = card.classList.contains('xin-nghi');
                 let isDiHocTiep = card.classList.contains('di-hoc-tiep');
-                let buoiVang = [];
+                let isActiveStudent = !isXinNghi || isDiHocTiep;
                 
-                card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
-                
-                if (isXinNghi || buoiVang.length > 0) {
-                    if (!isDiHocTiep) {
-                        soHocSinhVang++;
+                // --- Xử lý 2h đối với Xin Nghỉ ---
+                let timeXinNghi = btnXinNghi.getAttribute('data-time');
+                let isXinNghiMoi = false;
+                if (isXinNghi && timeXinNghi) {
+                    if (NOW - parseInt(timeXinNghi) > THOI_GIAN_KHOA) {
+                        btnXinNghi.classList.add('locked'); // Quá 2h -> Khóa nút
+                    } else {
+                        isXinNghiMoi = true; // Dưới 2h -> Tính là tác vụ mới
                     }
-                    vangList.push({ stt, ten, sdt, isXinNghi, isDiHocTiep, buoi: buoiVang.join(', ') });
+                }
+
+                // --- Xử lý 2h đối với các Buổi Vắng ---
+                let buoiVangMoi = [];
+                let tatCaBuoiVang = []; // Lưu TẤT CẢ các buổi vắng (kể cả đã khóa) để hiển thị trong thẻ HS
+                
+                card.querySelectorAll('.o-buoi.active').forEach(o => {
+                    let buoi = o.getAttribute('data-buoi');
+                    tatCaBuoiVang.push(buoi);
+                    
+                    let time = o.getAttribute('data-time');
+                    if (time && (NOW - parseInt(time) > THOI_GIAN_KHOA)) {
+                        o.classList.add('locked'); // Quá 2h -> Khóa ô
+                    } else {
+                        buoiVangMoi.push(buoi); // Dưới 2h -> Tính là tác vụ mới
+                    }
+                });
+
+                // --- CẬP NHẬT TRƯỜNG "Vắng" TRONG THẺ HỌC SINH ---
+                let txtVang = card.querySelector('.txt-vang');
+                if (!isActiveStudent) {
+                    txtVang.innerHTML = "Đã xin nghỉ";
+                } else if (tatCaBuoiVang.length > 0) {
+                    txtVang.innerHTML = `Buổi ${tatCaBuoiVang.join(', ')}`;
+                } else {
+                    txtVang.innerHTML = "Không";
+                }
+                
+                // Tính toán Sĩ Số
+                if (!isActiveStudent) {
+                    soNghiHan++; // Trừ Sĩ số tổng (mẫu số) vì đã nghỉ hẳn
+                } else {
+                    if (buoiVangMoi.length > 0) {
+                        soHocSinhVangMoi++; // Trừ Sĩ số có mặt (tử số) nếu vắng trong hôm nay (2h đổ lại)
+                    }
+                }
+
+                // Danh sách vắng ở trên cùng: CHỈ HIỂN THỊ CÁC THAO TÁC TRONG 2 GIỜ ĐỔ LẠI (RESET)
+                if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
+                    vangList.push({ 
+                        stt, ten, sdt, 
+                        isXinNghiMoi 
+                    });
                 }
             });
             
-            let siSoHienTai = tongHocSinh - soHocSinhVang;
-            lopDiv.querySelector('.si-so').innerText = `Sĩ số hiện tại: ${siSoHienTai}/${tongHocSinh}`;
+            // Sĩ số tổng tự động thích ứng với trạng thái Xin nghỉ / Đi học tiếp
+            let siSoTongHienTai = tongHocSinhBanDau - soNghiHan; 
+            let siSoCoMat = siSoTongHienTai - soHocSinhVangMoi;
             
+            lopDiv.querySelector('.si-so').innerText = `Sĩ số: ${siSoCoMat}/${siSoTongHienTai}`;
+            
+            // Render Danh sách vắng (Chỉ có Tên và nút Gọi)
             dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
                 <div class="vang-item">
-                    <div>${hs.stt}. ${hs.ten} <a href="tel:${hs.sdt}" class="btn-goi ${(hs.isXinNghi && !hs.isDiHocTiep) ? 'disabled' : ''}">📞 Gọi</a></div>
-                    <div class="vang-dong-2">
-                        ${hs.isXinNghi ? "Đã xin nghỉ" : "Buổi vắng: " + hs.buoi}
-                        ${hs.isDiHocTiep ? '<span style="color: #3498db; margin-left: 10px;">(Đã đi học lại)</span>' : ''}
-                    </div>
+                    <span>${hs.stt}. ${hs.ten}</span>
+                    <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghiMoi ? 'disabled' : ''}">📞 Gọi</a>
                 </div>`).join('');
         }
+
+        // Kiểm tra định kỳ mỗi 5 phút (300000ms) để tự động khóa các ô đã quá 2 giờ mà không cần tải lại trang
+        setInterval(() => {
+            document.querySelectorAll('.o-a').forEach(div => updateVang(div));
+        }, 300000);
 
         window.onload = taiDuLieu;
     </script>
