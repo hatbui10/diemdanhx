@@ -396,83 +396,92 @@ function doiPhong(selectElem) {
             updateVang(el.closest('.o-a'));
             luuDuLieu();
         }
+
         function updateVang(lopDiv) {
-            let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
-            let tongHocSinhBanDau = lopDiv.querySelectorAll('.hoc-sinh-card').length;
-            
-            let soNghiHan = 0;
-            let soHocSinhVangMoi = 0;
-            let vangList = [];
-            const NOW = Date.now();
-            
-            lopDiv.querySelectorAll('.hoc-sinh-card').forEach(card => {
-                let stt = card.getAttribute('data-stt');
-                let ten = card.getAttribute('data-ten');
-                let sdt = card.getAttribute('data-sdt');
-                
-                let btnXinNghi = card.querySelector('.btn-xin-nghi');
-                let isXinNghi = card.classList.contains('xin-nghi');
-                let isDiHocTiep = card.classList.contains('di-hoc-tiep');
-                let isActiveStudent = !isXinNghi || isDiHocTiep;
-                
-                let timeXinNghi = btnXinNghi.getAttribute('data-time');
-                let isXinNghiMoi = false;
-                if (isXinNghi && timeXinNghi) {
-                    if (NOW - parseInt(timeXinNghi) > THOI_GIAN_KHOA) {
-                        btnXinNghi.classList.add('locked'); 
-                    } else {
-                        isXinNghiMoi = true; 
-                    }
-                }
-
-                let buoiVangMoi = [];
-                let tatCaBuoiVang = [];
-                
-                card.querySelectorAll('.o-buoi.active').forEach(o => {
-                    let buoi = o.getAttribute('data-buoi');
-                    tatCaBuoiVang.push(buoi);
-                    
-                    let time = o.getAttribute('data-time');
-                    if (time && (NOW - parseInt(time) > THOI_GIAN_KHOA)) {
-                        o.classList.add('locked'); 
-                    } else {
-                        buoiVangMoi.push(buoi); 
-                                        txtVang.innerHTML = "Đã xin nghỉ";
-                } else if (tatCaBuoiVang.length > 0) {
-                    txtVang.innerHTML = `Buổi ${tatCaBuoiVang.join(', ')}`;
-                } else {
-                    txtVang.innerHTML = "Không";
-                }
-                
-                if (!isActiveStudent) {
-                    soNghiHan++; 
-                } else {
-                    if (buoiVangMoi.length > 0) {
-                        soHocSinhVangMoi++; 
-                    }
-                }
-
-                if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
-                    vangList.push({ stt, ten, sdt, isXinNghiMoi });
-                }
-            });
-            
-            let siSoTongHienTai = tongHocSinhBanDau - soNghiHan; 
-            let siSoCoMat = siSoTongHienTai - soHocSinhVangMoi;
-            
-            lopDiv.querySelector('.si-so').innerText = `Sĩ số: ${siSoCoMat}/${siSoTongHienTai}`;
-            
-            dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
-                <div class="vang-item">
-                    <span>${hs.stt}. ${hs.ten}</span>
-                    <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghiMoi ? 'disabled' : ''}">📞 Gọi</a>
-                </div>`).join('');
+    let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
+    let tongHocSinhBanDau = lopDiv.querySelectorAll('.hoc-sinh-card').length;
+    
+    let soNghiHan = 0;
+    let soHocSinhVangMoi = 0;
+    let vangList = [];
+    const NOW = Date.now();
+    
+    lopDiv.querySelectorAll('.hoc-sinh-card').forEach(card => {
+        let stt = card.getAttribute('data-stt');
+        let ten = card.getAttribute('data-ten');
+        let sdt = card.getAttribute('data-sdt');
+        
+        let btnXinNghi = card.querySelector('.btn-xin-nghi');
+        let isXinNghi = card.classList.contains('xin-nghi');
+        let isDiHocTiep = card.classList.contains('di-hoc-tiep');
+        let isActiveStudent = !isXinNghi || isDiHocTiep;
+        
+        let timeXinNghi = btnXinNghi.getAttribute('data-time');
+        let isXinNghiMoi = false;
+        if (isXinNghi && timeXinNghi) {
+            if (NOW - parseInt(timeXinNghi) > THOI_GIAN_KHOA) {
+                btnXinNghi.classList.add('locked'); 
+            } else {
+                isXinNghiMoi = true; 
+            }
         }
 
-        setInterval(() => {
-            document.querySelectorAll('.o-a').forEach(div => updateVang(div));
-        }, 300000);
+        let buoiVangMoi = [];
+        let tatCaBuoiVang = [];
         
+        // Xử lý các ô buổi
+        card.querySelectorAll('.o-buoi.active').forEach(o => {
+            let buoi = o.getAttribute('data-buoi');
+            tatCaBuoiVang.push(buoi);
+            
+            let time = o.getAttribute('data-time');
+            if (time && (NOW - parseInt(time) > THOI_GIAN_KHOA)) {
+                o.classList.add('locked'); 
+            } else {
+                buoiVangMoi.push(buoi); 
+            }
+        });
+
+        // Xử lý hiển thị chữ vắng trên card
+        let txtVang = card.querySelector('.txt-vang');
+        if (!isActiveStudent) {
+            txtVang.innerHTML = "Đã xin nghỉ";
+        } else if (tatCaBuoiVang.length > 0) {
+            txtVang.innerHTML = `Buổi ${tatCaBuoiVang.join(', ')}`;
+        } else {
+            txtVang.innerHTML = "Không";
+        }
+        
+        // Đếm số lượng
+        if (!isActiveStudent) {
+            soNghiHan++; 
+        } else if (buoiVangMoi.length > 0) {
+            soHocSinhVangMoi++; 
+        }
+
+        if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
+            vangList.push({ stt, ten, sdt, isXinNghiMoi });
+        }
+    });
+    
+    let siSoTongHienTai = tongHocSinhBanDau - soNghiHan; 
+    let siSoCoMat = siSoTongHienTai - soHocSinhVangMoi;
+    
+    lopDiv.querySelector('.si-so').innerText = `Sĩ số: ${siSoCoMat}/${siSoTongHienTai}`;
+    
+    dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
+        <div class="vang-item">
+            <span>${hs.stt}. ${hs.ten}</span>
+            <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghiMoi ? 'disabled' : ''}">📞 Gọi</a>
+        </div>`).join('');
+}
+
+// CẬP NHẬT: Quét theo .lop-box thay vì .o-a để khớp với cấu trúc details mới
+setInterval(() => {
+    document.querySelectorAll('.lop-box').forEach(div => updateVang(div));
+}, 300000);
+
+
 
         function chuyenLop(btn) {
     let mk = prompt("Nhập mật khẩu để chuyển lớp:");
