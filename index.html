@@ -9,22 +9,33 @@
         .o-a { border: 3px solid #3498db; padding: 10px; margin-bottom: 15px; border-radius: 8px; background-color: #fff; }
         .ten-lop-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding: 10px; border-bottom: 2px solid #3498db; }
         .ten-lop { font-size: 1.2em; font-weight: bold; color: #2c3e50; }
-        .si-so { font-size: 0.9em; color: #7f8c8d; }
+        .si-so { font-size: 0.9em; color: #7f8c8d; font-weight: bold; }
         .noi-dung-lop { display: none; margin-top: 10px; }
+        
         .hoc-sinh-card { border: 1px solid #ddd; margin-bottom: 10px; padding: 10px; border-radius: 4px; background: #fafafa; transition: background 0.3s; }
         .hoc-sinh-card.xin-nghi { background: #fffde7; border-color: #fbc02d; }
+        /* Thêm viền xanh nhạt để nhận diện học sinh đã đi học lại */
+        .hoc-sinh-card.di-hoc-tiep { border-color: #3498db; }
+        
         .line { font-size: 0.95em; margin: 4px 0; }
         .ghi-chu-input { width: 100%; padding: 5px; box-sizing: border-box; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        
         .btn-goi { background: #27ae60; color: white; padding: 2px 8px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-left: 5px; display: inline-block; }
         .btn-goi.disabled { background: #bdc3c7; pointer-events: none; opacity: 0.5; }
+        
         .ds-buoi { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
         .o-buoi { width: 30px; height: 30px; border: 2px solid #999; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; font-weight: bold; border-radius: 4px; }
         .o-buoi.active { background-color: #e74c3c; color: white; border-color: #e74c3c; }
+        
         .btn-xin-nghi { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #fbc02d; background: white; color: #fbc02d; font-weight: bold; margin-top: 10px; display: inline-block; }
         .btn-xin-nghi.active { background: #fbc02d; color: white; }
+        
+        .btn-di-hoc-tiep { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #3498db; background: white; color: #3498db; font-weight: bold; margin-top: 10px; margin-left: 5px; display: inline-block; }
+        .btn-di-hoc-tiep.active { background: #3498db; color: white; }
+
         .ds-vang { margin-top: 10px; padding: 8px; background: #fff3f3; border-left: 4px solid #e74c3c; font-size: 0.9em; color: #c0392b; }
         .vang-item { padding: 8px 0; border-bottom: 1px solid #fbdada; }
-        .vang-dong-2 { font-size: 0.85em; color: #d35400; font-weight: bold; }
+        .vang-dong-2 { font-size: 0.85em; color: #d35400; font-weight: bold; margin-top: 3px; }
     </style>
 </head>
 <body>
@@ -35,7 +46,6 @@
         const duLieuLop = [
             {
                 tenLop: "Lớp 12A1",
-                siSo: 2,
                 hocSinh: [
                     { ten: "Nguyễn Văn A", lop: "Sun", sdt: "0901234567", hocPhi: "500.000" },
                     { ten: "Trần Thị B", lop: "Star", sdt: "0912345678", hocPhi: "500.000" }
@@ -46,13 +56,14 @@
         const container = document.getElementById('container');
 
         duLieuLop.forEach(lop => {
+            let tongSiSo = lop.hocSinh.length;
             let div = document.createElement('div');
             div.className = 'o-a';
             div.innerHTML = `
                 <div class="ten-lop-header" onclick="this.nextElementSibling.style.display=(this.nextElementSibling.style.display=='block'?'none':'block')">
                     <div>
                         <div class="ten-lop">${lop.tenLop}</div>
-                        <div class="si-so">Sĩ số: ${lop.siSo}</div>
+                        <div class="si-so">Sĩ số hiện tại: ${tongSiSo}/${tongSiSo}</div>
                     </div>
                     <span>▼</span>
                 </div>
@@ -73,6 +84,7 @@
                                 ${Array(8).fill(0).map((_, i) => `<div class="o-buoi" onclick="toggleBuoi(this)" data-buoi="${i+1}"> ${i+1}</div>`).join('')}
                             </div>
                             <div class="btn-xin-nghi" onclick="toggleXinNghi(this)">Đã xin nghỉ</div>
+                            <div class="btn-di-hoc-tiep" onclick="diHocTiep(this)">Đi học tiếp</div>
                         </div>
                     `).join('')}
                 </div>
@@ -86,67 +98,128 @@
                 let ten = card.getAttribute('data-ten');
                 let ghiChu = card.querySelector('.ghi-chu-input').value;
                 let isXinNghi = card.classList.contains('xin-nghi');
+                let isDiHocTiep = card.classList.contains('di-hoc-tiep');
                 let buoiVang = [];
                 card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
-                data.push({ ten, ghiChu, isXinNghi, buoiVang });
+                
+                data.push({ ten, ghiChu, isXinNghi, isDiHocTiep, buoiVang });
             });
             localStorage.setItem('diemDanhData', JSON.stringify(data));
         }
 
         function taiDuLieu() {
             let data = JSON.parse(localStorage.getItem('diemDanhData'));
-            if (!data) return;
+            if (!data) {
+                document.querySelectorAll('.o-a').forEach(div => updateVang(div));
+                return;
+            }
             data.forEach(item => {
                 let card = document.querySelector(`.hoc-sinh-card[data-ten="${item.ten}"]`);
                 if (card) {
                     card.querySelector('.ghi-chu-input').value = item.ghiChu;
-                    if (item.isXinNghi) toggleXinNghi(card.querySelector('.btn-xin-nghi'), true);
+                    
+                    if (item.isXinNghi) {
+                        card.classList.add('xin-nghi');
+                        card.querySelector('.btn-xin-nghi').classList.add('active');
+                        // Nếu chưa đi học tiếp thì mờ nút gọi
+                        if (!item.isDiHocTiep) card.querySelector('.btn-goi').classList.add('disabled');
+                    }
+                    
                     item.buoiVang.forEach(b => card.querySelector(`.o-buoi[data-buoi="${b}"]`).classList.add('active'));
+                    
+                    if (item.isDiHocTiep) {
+                        card.classList.add('di-hoc-tiep');
+                        card.querySelector('.btn-di-hoc-tiep').classList.add('active');
+                        card.querySelector('.btn-goi').classList.remove('disabled'); // Sáng nút gọi lại
+                    }
                 }
             });
             document.querySelectorAll('.o-a').forEach(div => updateVang(div));
         }
 
         function toggleBuoi(el) {
-            if(el.closest('.hoc-sinh-card').classList.contains('xin-nghi')) return;
             el.classList.toggle('active');
             updateVang(el.closest('.o-a'));
             luuDuLieu();
         }
 
-        function toggleXinNghi(el, isInitialLoad = false) {
+        function toggleXinNghi(el) {
             let card = el.closest('.hoc-sinh-card');
             let btnGoi = card.querySelector('.btn-goi');
+            let isDiHocTiep = card.classList.contains('di-hoc-tiep');
+            
             el.classList.toggle('active');
             card.classList.toggle('xin-nghi');
-            if(card.classList.contains('xin-nghi')) {
+            
+            // Chỉ làm mờ nút gọi nếu học sinh xin nghỉ VÀ CHƯA bấm "Đi học tiếp"
+            if(card.classList.contains('xin-nghi') && !isDiHocTiep) {
                 btnGoi.classList.add('disabled');
-                card.querySelectorAll('.o-buoi').forEach(o => o.classList.remove('active'));
             } else {
                 btnGoi.classList.remove('disabled');
             }
+            
             updateVang(el.closest('.o-a'));
-            if (!isInitialLoad) luuDuLieu();
+            luuDuLieu();
+        }
+
+        // Logic mới: Không xóa lịch sử, chỉ đánh dấu trạng thái "Đi học tiếp"
+        function diHocTiep(el) {
+            let card = el.closest('.hoc-sinh-card');
+            let btnGoi = card.querySelector('.btn-goi');
+            
+            el.classList.toggle('active');
+            card.classList.toggle('di-hoc-tiep');
+            
+            // Nếu bấm "Đi học tiếp" thì khôi phục khả năng gọi điện
+            if(card.classList.contains('di-hoc-tiep')) {
+                btnGoi.classList.remove('disabled');
+            } else if (card.classList.contains('xin-nghi')) {
+                // Nếu tắt "Đi học tiếp" mà vẫn đang bật "Xin nghỉ" thì mờ nút gọi lại
+                btnGoi.classList.add('disabled');
+            }
+            
+            updateVang(el.closest('.o-a'));
+            luuDuLieu();
         }
 
         function updateVang(lopDiv) {
             let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
+            let tongHocSinh = lopDiv.querySelectorAll('.hoc-sinh-card').length;
+            let soHocSinhVang = 0;
             let vangList = [];
+            
             lopDiv.querySelectorAll('.hoc-sinh-card').forEach(card => {
                 let stt = card.getAttribute('data-stt');
                 let ten = card.getAttribute('data-ten');
                 let sdt = card.getAttribute('data-sdt');
                 let isXinNghi = card.classList.contains('xin-nghi');
+                let isDiHocTiep = card.classList.contains('di-hoc-tiep');
                 let buoiVang = [];
+                
                 card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
+                
                 if (isXinNghi || buoiVang.length > 0) {
-                    vangList.push({ stt, ten, sdt, isXinNghi, buoi: buoiVang.join(', ') });
+                    // Nếu có vắng mà KHÔNG bấm "Đi học tiếp" -> Trừ sĩ số
+                    if (!isDiHocTiep) {
+                        soHocSinhVang++;
+                    }
+                    // Vẫn giữ tên trong danh sách vắng để theo dõi lịch sử
+                    vangList.push({ stt, ten, sdt, isXinNghi, isDiHocTiep, buoi: buoiVang.join(', ') });
                 }
             });
+            
+            // Cập nhật Sĩ số
+            let siSoHienTai = tongHocSinh - soHocSinhVang;
+            lopDiv.querySelector('.si-so').innerText = `Sĩ số hiện tại: ${siSoHienTai}/${tongHocSinh}`;
+            
+            // Cập nhật danh sách vắng kèm thêm chú thích "Đi học lại" nếu có
             dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
                 <div class="vang-item">
-                    <div>${hs.stt}. ${hs.ten} <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghi ? 'disabled' : ''}">📞 Gọi</a></div>
-                    <div class="vang-dong-2">${hs.isXinNghi ? "Đã xin nghỉ" : "Buổi: " + hs.buoi}</div>
+                    <div>${hs.stt}. ${hs.ten} <a href="tel:${hs.sdt}" class="btn-goi ${(hs.isXinNghi && !hs.isDiHocTiep) ? 'disabled' : ''}">📞 Gọi</a></div>
+                    <div class="vang-dong-2">
+                        ${hs.isXinNghi ? "Đã xin nghỉ" : "Buổi vắng: " + hs.buoi}
+                        ${hs.isDiHocTiep ? '<span style="color: #3498db; margin-left: 10px;">(Đã đi học lại)</span>' : ''}
+                    </div>
                 </div>`).join('');
         }
 
