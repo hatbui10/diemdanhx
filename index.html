@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Điểm Danh Đầy Đủ</title>
+    <title>Danh Sách Điểm Danh</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 10px; }
         .o-a { border: 3px solid #3498db; padding: 10px; margin-bottom: 15px; border-radius: 8px; background-color: #fff; }
@@ -11,23 +11,17 @@
         .ten-lop { font-size: 1.2em; font-weight: bold; color: #2c3e50; }
         .si-so { font-size: 0.9em; color: #7f8c8d; }
         .noi-dung-lop { display: none; margin-top: 10px; }
-        
         .hoc-sinh-card { border: 1px solid #ddd; margin-bottom: 10px; padding: 10px; border-radius: 4px; background: #fafafa; transition: background 0.3s; }
         .hoc-sinh-card.xin-nghi { background: #fffde7; border-color: #fbc02d; }
-        
         .line { font-size: 0.95em; margin: 4px 0; }
         .ghi-chu-input { width: 100%; padding: 5px; box-sizing: border-box; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
-        
         .btn-goi { background: #27ae60; color: white; padding: 2px 8px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-left: 5px; display: inline-block; }
         .btn-goi.disabled { background: #bdc3c7; pointer-events: none; opacity: 0.5; }
-        
         .ds-buoi { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
         .o-buoi { width: 30px; height: 30px; border: 2px solid #999; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; font-weight: bold; border-radius: 4px; }
         .o-buoi.active { background-color: #e74c3c; color: white; border-color: #e74c3c; }
-        
         .btn-xin-nghi { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #fbc02d; background: white; color: #fbc02d; font-weight: bold; margin-top: 10px; display: inline-block; }
         .btn-xin-nghi.active { background: #fbc02d; color: white; }
-        
         .ds-vang { margin-top: 10px; padding: 8px; background: #fff3f3; border-left: 4px solid #e74c3c; font-size: 0.9em; color: #c0392b; }
         .vang-item { padding: 8px 0; border-bottom: 1px solid #fbdada; }
         .vang-dong-2 { font-size: 0.85em; color: #d35400; font-weight: bold; }
@@ -74,10 +68,9 @@
                             </div>
                             <div class="line"><b>Học phí:</b> ${hs.hocPhi} VNĐ</div>
                             <div class="line"><b>Ghi chú:</b></div>
-                            <input type="text" class="ghi-chu-input" placeholder="Nhập ghi chú...">
-                            
+                            <input type="text" class="ghi-chu-input" placeholder="Nhập ghi chú..." oninput="luuDuLieu()">
                             <div class="ds-buoi">
-                                ${Array(8).fill(0).map((_, i) => `<div class="o-buoi" onclick="toggleBuoi(this)">${i+1}</div>`).join('')}
+                                ${Array(8).fill(0).map((_, i) => `<div class="o-buoi" onclick="toggleBuoi(this)" data-buoi="${i+1}"> ${i+1}</div>`).join('')}
                             </div>
                             <div class="btn-xin-nghi" onclick="toggleXinNghi(this)">Đã xin nghỉ</div>
                         </div>
@@ -87,18 +80,45 @@
             container.appendChild(div);
         });
 
+        function luuDuLieu() {
+            let data = [];
+            document.querySelectorAll('.hoc-sinh-card').forEach(card => {
+                let ten = card.getAttribute('data-ten');
+                let ghiChu = card.querySelector('.ghi-chu-input').value;
+                let isXinNghi = card.classList.contains('xin-nghi');
+                let buoiVang = [];
+                card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
+                data.push({ ten, ghiChu, isXinNghi, buoiVang });
+            });
+            localStorage.setItem('diemDanhData', JSON.stringify(data));
+        }
+
+        function taiDuLieu() {
+            let data = JSON.parse(localStorage.getItem('diemDanhData'));
+            if (!data) return;
+            data.forEach(item => {
+                let card = document.querySelector(`.hoc-sinh-card[data-ten="${item.ten}"]`);
+                if (card) {
+                    card.querySelector('.ghi-chu-input').value = item.ghiChu;
+                    if (item.isXinNghi) toggleXinNghi(card.querySelector('.btn-xin-nghi'), true);
+                    item.buoiVang.forEach(b => card.querySelector(`.o-buoi[data-buoi="${b}"]`).classList.add('active'));
+                }
+            });
+            document.querySelectorAll('.o-a').forEach(div => updateVang(div));
+        }
+
         function toggleBuoi(el) {
             if(el.closest('.hoc-sinh-card').classList.contains('xin-nghi')) return;
             el.classList.toggle('active');
             updateVang(el.closest('.o-a'));
+            luuDuLieu();
         }
 
-        function toggleXinNghi(el) {
+        function toggleXinNghi(el, isInitialLoad = false) {
             let card = el.closest('.hoc-sinh-card');
             let btnGoi = card.querySelector('.btn-goi');
             el.classList.toggle('active');
             card.classList.toggle('xin-nghi');
-            
             if(card.classList.contains('xin-nghi')) {
                 btnGoi.classList.add('disabled');
                 card.querySelectorAll('.o-buoi').forEach(o => o.classList.remove('active'));
@@ -106,30 +126,31 @@
                 btnGoi.classList.remove('disabled');
             }
             updateVang(el.closest('.o-a'));
+            if (!isInitialLoad) luuDuLieu();
         }
 
         function updateVang(lopDiv) {
-            let vangContainer = lopDiv.querySelector('.danh-sach-ten-vang');
-            let html = "";
-            
+            let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
+            let vangList = [];
             lopDiv.querySelectorAll('.hoc-sinh-card').forEach(card => {
                 let stt = card.getAttribute('data-stt');
                 let ten = card.getAttribute('data-ten');
                 let sdt = card.getAttribute('data-sdt');
                 let isXinNghi = card.classList.contains('xin-nghi');
                 let buoiVang = [];
-                card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.innerText));
-                
+                card.querySelectorAll('.o-buoi.active').forEach(o => buoiVang.push(o.getAttribute('data-buoi')));
                 if (isXinNghi || buoiVang.length > 0) {
-                    html += `
-                        <div class="vang-item">
-                            <div>${stt}. ${ten} <a href="tel:${sdt}" class="btn-goi ${isXinNghi ? 'disabled' : ''}">📞 Gọi</a></div>
-                            <div class="vang-dong-2">${isXinNghi ? "Đã xin nghỉ" : "Buổi: " + buoiVang.join(', ')}</div>
-                        </div>`;
+                    vangList.push({ stt, ten, sdt, isXinNghi, buoi: buoiVang.join(', ') });
                 }
             });
-            vangContainer.innerHTML = html || "Không có ai";
+            dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
+                <div class="vang-item">
+                    <div>${hs.stt}. ${hs.ten} <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghi ? 'disabled' : ''}">📞 Gọi</a></div>
+                    <div class="vang-dong-2">${hs.isXinNghi ? "Đã xin nghỉ" : "Buổi: " + hs.buoi}</div>
+                </div>`).join('');
         }
+
+        window.onload = taiDuLieu;
     </script>
 </body>
 </html>
