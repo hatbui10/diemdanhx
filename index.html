@@ -81,6 +81,7 @@
 
         const container = document.getElementById('container');
         const THOI_GIAN_KHOA = 2 * 60 * 60 * 1000; 
+        const MAT_KHAU_ADMIN = "123456";
 
         duLieuLop.forEach(lop => {
             let tongSiSo = lop.hocSinh.length;
@@ -98,14 +99,18 @@
                     <div class="class-meta">
                         <div class="meta-row">
                             <b>Phòng:</b>
-                            <select class="select-phong" onchange="luuDuLieu()">
+                            <select class="select-phong"
+        onclick="this.dataset.oldValue=this.value"
+        onchange="doiPhong(this)">
                                 <option value="">-- Chọn tầng/nhà --</option>
                                 ${danhSachPhong.map(p => `<option value="${p}">${p}</option>`).join('')}
                             </select>
                         </div>
                         <div class="meta-row">
                             <b>Giáo viên:</b>
-                            <select class="select-gv" onchange="updateGiaoVien(this)">
+                            <select class="select-gv"
+        onclick="this.dataset.oldValue=this.value"
+        onchange="updateGiaoVien(this)">
                                 <option value="">-- Chọn giáo viên --</option>
                                 ${danhSachGiaoVien.map(gv => `<option value="${gv.sdt}">${gv.ten}</option>`).join('')}
                             </select>
@@ -142,18 +147,44 @@
 
         // Hàm cập nhật Nút Gọi Giáo Viên khi chọn trong Dropdown
         function updateGiaoVien(selectElem, skipSave = false) {
-            let sdt = selectElem.value;
-            let btnGoi = selectElem.nextElementSibling;
-            
-            if (sdt) {
-                btnGoi.href = `tel:${sdt}`;
-                btnGoi.classList.remove('disabled');
-            } else {
-                btnGoi.removeAttribute('href');
-                btnGoi.classList.add('disabled');
-            }
-            if (!skipSave) luuDuLieu();
+
+    if (!skipSave) {
+        let mk = prompt("Nhập mật khẩu để thay đổi giáo viên:");
+
+        if (mk !== MAT_KHAU_ADMIN) {
+            alert("Sai mật khẩu!");
+            selectElem.value = selectElem.dataset.oldValue || "";
+            return;
         }
+    }
+
+    let sdt = selectElem.value;
+    let btnGoi = selectElem.nextElementSibling;
+
+    if (sdt) {
+        btnGoi.href = `tel:${sdt}`;
+        btnGoi.classList.remove('disabled');
+    } else {
+        btnGoi.removeAttribute('href');
+        btnGoi.classList.add('disabled');
+    }
+
+    if (!skipSave) luuDuLieu();
+}
+
+
+function doiPhong(selectElem) {
+
+    let mk = prompt("Nhập mật khẩu để thay đổi phòng:");
+
+    if (mk !== MAT_KHAU_ADMIN) {
+        alert("Sai mật khẩu!");
+        selectElem.value = selectElem.dataset.oldValue || "";
+        return;
+    }
+
+    luuDuLieu();
+}
 
         function luuDuLieu() {
             // 1. Lưu thông tin điểm danh học sinh
