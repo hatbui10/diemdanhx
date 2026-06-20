@@ -40,6 +40,17 @@
         
         .btn-di-hoc-tiep { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #3498db; background: white; color: #3498db; font-weight: bold; margin-top: 10px; margin-left: 5px; display: inline-block; }
         .btn-di-hoc-tiep.active { background: #3498db; color: white; }
+        .btn-chuyen-lop{
+    background:#9b59b6;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    display:inline-block;
+    margin-left:5px;
+    margin-top:10px;
+    font-weight:bold;
+}
 
         .locked { opacity: 0.5; pointer-events: none; cursor: not-allowed !important; }
 
@@ -137,8 +148,13 @@
                                 ${Array(8).fill(0).map((_, i) => `<div class="o-buoi" onclick="toggleBuoi(this)" data-buoi="${i+1}"> ${i+1}</div>`).join('')}
                             </div>
                             <div class="btn-xin-nghi" onclick="toggleXinNghi(this)">Đã xin nghỉ</div>
+                           
                             <div class="btn-di-hoc-tiep" onclick="diHocTiep(this)">Đi học tiếp</div>
-                        </div>
+                            <div class="btn-chuyen-lop" onclick="chuyenLop(this)">
+    🔄 Chuyển lớp
+</div>
+         
+                   </div>
                     `).join('')}
                 </div>
             `;
@@ -425,6 +441,90 @@ function doiPhong(selectElem) {
         setInterval(() => {
             document.querySelectorAll('.o-a').forEach(div => updateVang(div));
         }, 300000);
+        
+
+        function chuyenLop(btn){
+
+    let mk = prompt("Nhập mật khẩu để chuyển lớp:");
+
+    if(mk !== MAT_KHAU_ADMIN){
+        alert("Sai mật khẩu!");
+        return;
+    }
+
+    const card = btn.closest(".hoc-sinh-card");
+    const lopHienTai = card.closest(".o-a");
+
+    let dsLop = [];
+    let menu = "===== DANH SÁCH LỚP =====\n\n";
+
+    document.querySelectorAll(".o-a").forEach(lop => {
+
+        if(lop !== lopHienTai){
+
+            let tenLop = lop.querySelector(".ten-lop").innerText;
+
+            dsLop.push({
+                ten: tenLop,
+                element: lop
+            });
+
+            menu += dsLop.length + ". " + tenLop + "\n";
+        }
+    });
+
+    menu += "\nNhập số lớp muốn chuyển tới:";
+
+    let chon = prompt(menu);
+
+    if(chon === null) return;
+
+    chon = parseInt(chon);
+
+    if(isNaN(chon) || chon < 1 || chon > dsLop.length){
+        alert("Lựa chọn không hợp lệ!");
+        return;
+    }
+
+    let lopMoi = dsLop[chon - 1].element;
+
+    lopMoi
+        .querySelector(".noi-dung-lop")
+        .appendChild(card);
+
+    capNhatSTT(lopHienTai);
+    capNhatSTT(lopMoi);
+
+    updateVang(lopHienTai);
+    updateVang(lopMoi);
+
+    luuDuLieu();
+
+    alert(
+        "Đã chuyển " +
+        card.getAttribute("data-ten") +
+        " sang " +
+        dsLop[chon - 1].ten
+    );
+}
+
+
+function capNhatSTT(lopDiv){
+
+    let cards = lopDiv.querySelectorAll(".hoc-sinh-card");
+
+    cards.forEach((card,index)=>{
+
+        card.setAttribute("data-stt",index+1);
+
+        let dongTen = card.querySelector(".line");
+
+        let ten = card.getAttribute("data-ten");
+
+        dongTen.innerHTML =
+            `<b>${index+1}. Họ tên:</b> ${ten}`;
+    });
+}
 
         window.onload = taiDuLieu;
     </script>
