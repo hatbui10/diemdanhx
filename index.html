@@ -264,37 +264,41 @@ function doiPhong(selectElem) {
 }
 
         function luuDuLieu() {
-            // 1. Lưu thông tin điểm danh học sinh
-            let dataHs = [];
-            document.querySelectorAll('.hoc-sinh-card').forEach(card => {
-                let ten = card.getAttribute('data-ten');
-                let ghiChu = card.querySelector('.ghi-chu-input').value;
-                let isXinNghi = card.classList.contains('xin-nghi');
-                let isDiHocTiep = card.classList.contains('di-hoc-tiep');
-                let timeXinNghi = card.querySelector('.btn-xin-nghi').getAttribute('data-time');
-                
-                let buoiVangData = [];
-                card.querySelectorAll('.o-buoi.active').forEach(o => {
-                    buoiVangData.push({
-                        buoi: o.getAttribute('data-buoi'),
-                        time: o.getAttribute('data-time')
-                    });
-                });
-                
-                dataHs.push({ ten, ghiChu, isXinNghi, isDiHocTiep, timeXinNghi, buoiVangData });
+    // 1. Lưu thông tin điểm danh học sinh
+    let dataHs = [];
+    document.querySelectorAll('.hoc-sinh-card').forEach(card => {
+        let ten = card.getAttribute('data-ten');
+        let ghiChu = card.querySelector('.ghi-chu-input').value;
+        let isXinNghi = card.classList.contains('xin-nghi');
+        let isDiHocTiep = card.classList.contains('di-hoc-tiep');
+        let timeXinNghi = card.querySelector('.btn-xin-nghi').getAttribute('data-time');
+        
+        let buoiVangData = [];
+        card.querySelectorAll('.o-buoi.active').forEach(o => {
+            buoiVangData.push({
+                buoi: o.getAttribute('data-buoi'),
+                time: o.getAttribute('data-time')
             });
-            localStorage.setItem('diemDanhData', JSON.stringify(dataHs));
+        });
+        
+        dataHs.push({ ten, ghiChu, isXinNghi, isDiHocTiep, timeXinNghi, buoiVangData });
+    });
+    localStorage.setItem('diemDanhData', JSON.stringify(dataHs));
 
-            // 2. Lưu thông tin Phòng và Giáo Viên của các lớp
-            let dataLop = {};
-            document.querySelectorAll('.o-a').forEach(lopDiv => {
-                let tenLop = lopDiv.querySelector('.ten-lop').innerText;
-                let phong = lopDiv.querySelector('.select-phong').value;
-                let gvSdt = lopDiv.querySelector('.select-gv').value;
-                dataLop[tenLop] = { phong, gvSdt };
-            });
-            localStorage.setItem('classMetaData', JSON.stringify(dataLop));
-        }
+    // 2. Lưu cấu trúc lớp (Để khi F5, học sinh vẫn ở lớp mới)
+    localStorage.setItem('duLieuLopDynamic', JSON.stringify(duLieuLop));
+
+    // 3. Lưu metadata (Phòng, GV)
+    let dataLop = {};
+    document.querySelectorAll('.lop-box').forEach(lopDiv => {
+        let tenLop = lopDiv.querySelector('.ten-lop').innerText;
+        let phong = lopDiv.querySelector('.select-phong').value;
+        let gvSdt = lopDiv.querySelector('.select-gv').value;
+        dataLop[tenLop] = { phong, gvSdt };
+    });
+    localStorage.setItem('classMetaData', JSON.stringify(dataLop));
+}
+
 
         function taiDuLieu() {
             // 1. Tải thông tin Phòng và Giáo viên
