@@ -55,6 +55,14 @@ details[open] summary::after { content: "▲"; }
     font-weight:bold;
 }
 
+/* Hiệu ứng khi kéo thẻ đi ngang qua lớp đích */
+.lop-box.drag-over {
+    border: 3px dashed #9b59b6 !important; /* Đổi viền sang màu tím */
+    transform: scale(1.02);                /* Phóng to nhẹ 2% */
+    transition: all 0.2s ease;             /* Mượt mà */
+    background: #fdfdff !important;
+}
+
         .locked { opacity: 0.5; pointer-events: none; cursor: not-allowed !important; }
 
         .ds-vang { margin-top: 10px; padding: 8px; background: #fff3f3; border-left: 4px solid #e74c3c; font-size: 0.9em; color: #c0392b; margin-bottom: 15px;}
@@ -167,7 +175,13 @@ lichDay.forEach(item => {
                             <div class="ds-vang"><b>Danh sách vắng:</b><div class="danh-sach-ten-vang">Không có ai</div></div>
                             
                             ${lop.hocSinh.map((hs, index) => `
-    <div class="hoc-sinh-card" data-stt="${index + 1}" data-ten="${hs.ten}" data-sdt="${hs.sdt}">
+    <div class="hoc-sinh-card" 
+         draggable="true" 
+         ondragstart="drag(event)" 
+         data-stt="${index + 1}" 
+         data-ten="${hs.ten}" 
+         data-sdt="${hs.sdt}">
+        
         <div class="line"><b>${index + 1}. Họ tên:</b> ${hs.ten}</div>
         <div class="line"><b>Lớp:</b> ${hs.lop}</div>
         <div class="line">
@@ -187,6 +201,7 @@ lichDay.forEach(item => {
         <div class="btn-chuyen-lop" onclick="chuyenLop(this)">🔄 Chuyển lớp</div>
     </div>
 `).join('')}
+
 
                         </div>
                     </div>
@@ -372,7 +387,6 @@ function doiPhong(selectElem) {
             } else {
                 el.setAttribute('data-time', Date.now());
             }
-
             let btnGoi = card.querySelector('.btn-goi');
             let isDiHocTiep = card.classList.contains('di-hoc-tiep');
             
@@ -388,8 +402,7 @@ function doiPhong(selectElem) {
             updateVang(card.closest('.o-a'));
             luuDuLieu();
         }
-
-        function diHocTiep(el) {
+function diHocTiep(el) {
             let card = el.closest('.hoc-sinh-card');
             let btnGoi = card.querySelector('.btn-goi');
             
@@ -406,7 +419,7 @@ function doiPhong(selectElem) {
             luuDuLieu();
         }
 
-        function updateVang(lopDiv) {
+function updateVang(lopDiv) {
     let dsVang = lopDiv.querySelector('.danh-sach-ten-vang');
     let tongHocSinhBanDau = lopDiv.querySelectorAll('.hoc-sinh-card').length;
     
@@ -552,8 +565,71 @@ function capNhatSTT(lopDiv) {
     });
 }
 
+// Hàm bắt đầu kéo
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.getAttribute('data-ten'));
+}
 
-        window.onload = taiDuLieu;
+// Hàm khởi tạo sự kiện thả (Drop) cho tất cả các lớp
+function initDragAndDrop() {
+    document.querySelectorAll(".noi-dung-lop").forEach(box => {
+        let lopBox = box.closest(".lop-box");
+
+        box.ondragover = (ev) => ev.preventDefault();
+
+        // KHI KÉO VÀO GẦN LỚP
+        box.ondragenter = (ev) => {
+            if (lopBox) lopBox.classList.add('drag-over');
+        };
+
+        // KHI KÉO RA KHỎI LỚP
+        box.ondragleave = (ev) => {
+            if (lopBox) lopBox.classList.remove('drag-over');
+        };
+
+        // KHI THẢ THẺ (DROP)
+        box.ondrop = (ev) => {
+            ev.preventDefault();
+            if (lopBox) lopBox.classList.remove('drag-over'); // Bỏ hiệu ứng khi thả
+
+            let tenHS = ev.dataTransfer.getData("text");
+            let card = document.querySelector(`.hoc-sinh-card[data-ten="${tenHS}"]`);
+            let lopCuDiv = card.closest(".lop-box");
+            let lopMoiDiv = box.closest(".lop-box");
+
+            if (lopMoiDiv && card && lopCuDiv !== lopMoiDiv) {
+                // Xử lý dữ liệu (như code đã hướng dẫn trước)
+                let tenLopCu = lopCuDiv.querySelector(".ten-lop").innerText;
+                let tenLopMoi = lopMoiDiv.querySelector(".ten-lop").innerText;
+
+                let lopCuData = duLieuLop.find(l => l.tenLop === tenLopCu);
+                let lopMoiData = duLieuLop.find(l => l.tenLop === tenLopMoi);
+                
+                let hsIndex = lopCuData.hocSinh.findIndex(hs => hs.ten === tenHS);
+                let hsData = lopCuData.hocSinh.splice(hsIndex, 1)[0];
+                lopMoiData.hocSinh.push(hsData);
+
+                box.appendChild(card); // Di chuyển card
+                
+                // Cập nhật lại giao diện
+                capNhatSTT(lopCuDiv);
+                capNhatSTT(lopMoiDiv);
+                updateVang(lopCuDiv);
+                updateVang(lopMoiDiv);
+                luuDuLieu();
+            }
+        };
+    });
+}
+
+
+
+
+        window.onload = function() {
+    taiDuLieu();        // Tải dữ liệu cũ lên
+    initDragAndDrop();  // Kích hoạt tính năng kéo thả
+};
+
     </script>
 </body>
 </html>
