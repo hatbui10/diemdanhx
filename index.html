@@ -25,7 +25,7 @@
         .hoc-sinh-card.di-hoc-tiep { border-color: #3498db; }
         
         .line { font-size: 0.95em; margin: 4px 0; }
-        .ghi-chu-input { width: 100%; padding: 5px; box-sizing: border-box; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        .ghi-chu-select { width: 100%; padding: 6px; box-sizing: border-box; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; outline: none; background: #fff; font-size: 0.9em; }
         
         .btn-goi { background: #27ae60; color: white; padding: 2px 8px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-left: 5px; display: inline-block; }
         .btn-goi.disabled { background: #bdc3c7; pointer-events: none; opacity: 0.5; }
@@ -46,8 +46,14 @@
 
         .lop-box.drag-over { border: 3px dashed #9b59b6 !important; transform: scale(1.02); transition: all 0.2s ease; background: #fdfdff !important; }
         .locked { opacity: 0.5; pointer-events: none; cursor: not-allowed !important; }
+        
+        /* Khu vực danh sách vắng */
         .ds-vang { margin-top: 10px; padding: 8px; background: #fff3f3; border-left: 4px solid #e74c3c; font-size: 0.9em; color: #c0392b; margin-bottom: 15px;}
-        .vang-item { padding: 8px 0; border-bottom: 1px solid #fbdada; display: flex; justify-content: space-between; align-items: center; }
+        .ds-vang-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px dashed #fbdada; padding-bottom: 5px; }
+        .btn-copy-vang { background: #e74c3c; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.8em; cursor: pointer; }
+        .btn-copy-vang:active { background: #c0392b; }
+        .vang-item { padding: 6px 0; border-bottom: 1px solid #fbdada; display: flex; justify-content: space-between; align-items: center; }
+        .vang-item:last-child { border-bottom: none; }
         .txt-vang { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
@@ -63,10 +69,9 @@
             { ten: "Cô Lan", sdt: "0983333333" }
         ];
 
-        // BẠN THAY ĐỔI TÊN LỚP VÀ THỨ TRỰC TIẾP TẠI ĐÂY LÀ ĐƯỢC (TỰ ĐỘNG ĐỒNG BỘ LỊCH DẠY)
         let duLieuLopGoc = [
-            
-                {
+            {
+               {
     tenLop: "SVIP",
     thu: "Thứ 3",
     hocSinh: [
@@ -651,14 +656,12 @@
         const MAT_KHAU_ADMIN = "123456";
         let trangThaiMoLop = {};
 
-        // Hàm tự động tạo lịch dạy dựa trên trường 'thu' của duLieuLop
         function layLichDayTuDong() {
             let danhSachThu = [];
-            // Định nghĩa thứ tự hiển thị để các Thứ xếp từ nhỏ đến lớn
             const thuTuThu = {"Thứ 2": 2, "Thứ 3": 3, "Thứ 4": 4, "Thứ 5": 5, "Thứ 6": 6, "Thứ 7": 7, "Chủ Nhật": 8};
             
             duLieuLop.forEach(lop => {
-                let thuCuaLop = lop.thu || "Thứ 2"; // Mặc định nếu quên nhập
+                let thuCuaLop = lop.thu || "Thứ 2";
                 let phanTuThu = danhSachThu.find(item => item.thu === thuCuaLop);
                 if (phanTuThu) {
                     if (!phanTuThu.tenLop.includes(lop.tenLop)) {
@@ -669,7 +672,6 @@
                 }
             });
 
-            // Sắp xếp thứ tự hiển thị tự động từ Thứ 2 -> Chủ Nhật
             return danhSachThu.sort((a, b) => (thuTuThu[a.thu] || 9) - (thuTuThu[b.thu] || 9));
         }
 
@@ -678,8 +680,6 @@
             container.innerHTML = ""; 
             
             let classMetaData = JSON.parse(localStorage.getItem('classMetaData')) || {};
-            
-            // Lấy lịch dạy được tạo tự động động bộ hoàn toàn
             let lichDayDynamic = layLichDayTuDong();
 
             lichDayDynamic.forEach(item => {
@@ -729,7 +729,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="ds-vang"><b>Danh sách vắng:</b><div class="danh-sach-ten-vang">Không có ai</div></div>
+                                        <div class="ds-vang">
+                                            <div class="ds-vang-header">
+                                                <b>Danh sách vắng:</b>
+                                                <button class="btn-copy-vang" onclick="copyDanhSachVang('${tenLop}')">📋 Copy danh sách vắng</button>
+                                            </div>
+                                            <div class="danh-sach-ten-vang">Không có ai</div>
+                                        </div>
                                         
                                         <div class="khu-vuc-hoc-sinh" data-lop="${tenLop}">
                                             ${lop.hocSinh.map((hs, index) => {
@@ -757,7 +763,14 @@
                                                         <div class="line"><b>Vắng:</b> <span class="txt-vang">Không</span></div>
                                                         <div class="line"><b>Học phí:</b> ${hs.hocPhi} VNĐ</div>
                                                         <div class="line"><b>Ghi chú:</b></div>
-                                                        <input type="text" class="ghi-chu-input" placeholder="Nhập ghi chú..." value="${hs.ghiChu || ''}" oninput="luuGhiChu('${tenLop}', '${hs.ten}', this.value)">
+                                                        
+                                                        <select class="ghi-chu-select" onchange="luuGhiChu('${tenLop}', '${hs.ten}', this.value)">
+                                                            <option value="" ${hs.ghiChu === '' ? 'selected' : ''}>-- Trống / Ghi chú khác --</option>
+                                                            <option value="xin nghỉ hôm nay" ${hs.ghiChu === 'xin nghỉ hôm nay' ? 'selected' : ''}>xin nghỉ hôm nay</option>
+                                                            <option value="xin nghỉ tuần này" ${hs.ghiChu === 'xin nghỉ tuần này' ? 'selected' : ''}>xin nghỉ tuần này</option>
+                                                            <option value="xin nghỉ đến cuối tháng" ${hs.ghiChu === 'xin nghỉ đến cuối tháng' ? 'selected' : ''}>xin nghỉ đến cuối tháng</option>
+                                                            <option value="đến muộn" ${hs.ghiChu === 'đến muộn' ? 'selected' : ''}>đến muộn</option>
+                                                        </select>
                                                         
                                                         <div class="ds-buoi">
                                                             ${Array(8).fill(0).map((_, i) => {
@@ -834,6 +847,9 @@
                 if(hs) hs.ghiChu = value;
             }
             localStorage.setItem('duLieuLopDynamic', JSON.stringify(duLieuLop));
+            
+            let lopDiv = document.querySelector(`.lop-box[data-lop="${tenLop}"]`);
+            if (lopDiv) updateVang(lopDiv);
         }
 
         function luuCoDinhMeta() {
@@ -855,11 +871,10 @@
                 try {
                     let tamDuLieu = JSON.parse(savedLop);
                     
-                    // Logic ánh xạ và đồng bộ thông minh theo cấu trúc mới
                     duLieuLop = duLieuLopGoc.map(goc => {
                         let trungData = tamDuLieu.find(t => t.tenLop === goc.tenLop);
                         if (trungData) {
-                            trungData.thu = goc.thu; // Đồng bộ Thứ luôn khớp với code gốc hiện tại
+                            trungData.thu = goc.thu;
                             return trungData;
                         }
                         return goc;
@@ -987,7 +1002,8 @@
                 }
 
                 if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
-                    vangList.push({ stt, ten, sdt, isXinNghiMoi });
+                    let chuoiGhiChu = hs.ghiChu ? ` (${hs.ghiChu})` : '';
+                    vangList.push({ stt, ten: `${hs.ten}${chuoiGhiChu}`, sdt, isXinNghiMoi });
                 }
             });
             
@@ -1000,6 +1016,49 @@
                     <span>${hs.stt}. ${hs.ten}</span>
                     <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghiMoi ? 'disabled' : ''}">📞 Gọi</a>
                 </div>`).join('');
+        }
+
+        // Hàm xử lý Copy danh sách vắng ra bộ nhớ tạm
+        function copyDanhSachVang(tenLop) {
+            let lopData = duLieuLop.find(l => l.tenLop === tenLop);
+            if(!lopData) return;
+
+            let textCopy = `DANH SÁCH VẮNG - LỚP ${tenLop.toUpperCase()}\n`;
+            let count = 0;
+            const NOW = Date.now();
+
+            lopData.hocSinh.forEach((hs, index) => {
+                let isActiveStudent = !hs.isXinNghi || hs.isDiHocTiep;
+                let isXinNghiMoi = (hs.isXinNghi && hs.timeXinNghi && (NOW - parseInt(hs.timeXinNghi) <= THOI_GIAN_KHOA));
+                
+                let buoiVangMoi = [];
+                if(hs.buoiVangData) {
+                    hs.buoiVangData.forEach(bData => {
+                        if (bData.time && (NOW - parseInt(bData.time) <= THOI_GIAN_KHOA)) {
+                            buoiVangMoi.push(bData.buoi);
+                        }
+                    });
+                }
+
+                // Nếu là học sinh mới xin nghỉ, hoặc học sinh đi học bình thường nhưng tích vắng trong 2h qua
+                if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
+                    count++;
+                    let chuoiGhiChu = hs.ghiChu ? ` (${hs.ghiChu})` : '';
+                    textCopy += `${count}. ${hs.ten}${chuoiGhiChu}\n`;
+                }
+            });
+
+            if (count === 0) {
+                alert(`Lớp ${tenLop} hiện tại không có ai vắng mới để copy!`);
+                return;
+            }
+
+            // Thực hiện sao chép bằng Clipboard API
+            navigator.clipboard.writeText(textCopy).then(() => {
+                alert(`Đã copy danh sách vắng lớp ${tenLop} vào bộ nhớ tạm!`);
+            }).catch(err => {
+                alert("Lỗi! Không thể sao chép tự động.");
+            });
         }
 
         function chuyenLop(tenLopCu, tenHS) {
@@ -1034,7 +1093,7 @@
             }
             
             let tenLopMoi = dsLop[IndexChon];
-            thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, tenHS);
+            thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, keyHocSinhMoi(tenLopCu, tenHS) ? tenHS : tenHS);
         }
 
         function thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, tenHS) {
@@ -1057,6 +1116,8 @@
                 }
             }
         }
+
+        function keyHocSinhMoi(lop, ten) { return true; }
 
         function drag(ev) {
             ev.dataTransfer.setData("text/ten", ev.target.getAttribute('data-ten'));
