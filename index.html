@@ -21,8 +21,8 @@
         .btn-goi-gv.disabled { background: #bdc3c7; pointer-events: none; opacity: 0.5; }
 
         .hoc-sinh-card { border: 1px solid #ddd; margin-bottom: 10px; padding: 10px; border-radius: 4px; background: #fafafa; transition: background 0.3s; }
-        .hoc-sinh-card.xin-nghi { background: #fffde7; border-color: #fbc02d; }
-        .hoc-sinh-card.di-hoc-tiep { border-color: #3498db; }
+        .hoc-sinh-card.xin-nghi { background: #fff3f3; border-color: #e74c3c; }
+        .hoc-sinh-card.di-hoc-tiep { border-color: #27ae60; background: #ebf7ee; }
         
         .line { font-size: 0.95em; margin: 4px 0; }
         .ghi-chu-select { width: 100%; padding: 6px; box-sizing: border-box; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; outline: none; background: #fff; font-size: 0.9em; }
@@ -30,19 +30,19 @@
         .btn-goi { background: #27ae60; color: white; padding: 2px 8px; text-decoration: none; border-radius: 4px; font-weight: bold; font-size: 0.8em; margin-left: 5px; display: inline-block; }
         .btn-goi.disabled { background: #bdc3c7; pointer-events: none; opacity: 0.5; }
         
-        .ds-buoi { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
-        .o-buoi { width: 30px; height: 30px; border: 2px solid #999; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; font-weight: bold; border-radius: 4px; }
-        .o-buoi.active { background-color: #e74c3c; color: white; border-color: #e74c3c; }
-        
-        .btn-xin-nghi { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #fbc02d; background: white; color: #fbc02d; font-weight: bold; margin-top: 10px; display: inline-block; }
-        .btn-xin-nghi.active { background: #fbc02d; color: white; }
+        /* CSS Nút Vắng */
+        .btn-xin-nghi { padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #e74c3c; background: white; color: #e74c3c; font-weight: bold; margin-top: 10px; display: inline-block; transition: all 0.2s; }
+        .btn-xin-nghi.active { background: #e74c3c; color: white; }
+
+        /* CSS Nút Có đi học */
+        .btn-di-hoc-tiep { padding: 6px 12px; cursor: pointer; border-radius: 4px; border: 1px solid #27ae60; background: white; color: #27ae60; font-weight: bold; margin-top: 10px; margin-left: 5px; display: inline-block; transition: all 0.2s; }
+        .btn-di-hoc-tiep.active { background: #27ae60; color: white; }
+
+        .btn-chuyen-lop { background:#9b59b6; color:#fff; padding:6px 12px; border-radius:4px; cursor:pointer; display:inline-block; margin-left:5px; margin-top:10px; font-weight:bold; }
+
         details summary { list-style: none; display: flex; justify-content: space-between; align-items: center; }
         details summary::after { content: "▼"; font-size: 0.8em; }
         details[open] summary::after { content: "▲"; }
-
-        .btn-di-hoc-tiep { padding: 5px 10px; cursor: pointer; border-radius: 4px; border: 1px solid #3498db; background: white; color: #3498db; font-weight: bold; margin-top: 10px; margin-left: 5px; display: inline-block; }
-        .btn-di-hoc-tiep.active { background: #3498db; color: white; }
-        .btn-chuyen-lop { background:#9b59b6; color:#fff; padding:5px 10px; border-radius:4px; cursor:pointer; display:inline-block; margin-left:5px; margin-top:10px; font-weight:bold; }
 
         .lop-box.drag-over { border: 3px dashed #9b59b6 !important; transform: scale(1.02); transition: all 0.2s ease; background: #fdfdff !important; }
         .locked { opacity: 0.5; pointer-events: none; cursor: not-allowed !important; }
@@ -54,7 +54,6 @@
         .btn-copy-vang:active { background: #c0392b; }
         .vang-item { padding: 6px 0; border-bottom: 1px solid #fbdada; display: flex; justify-content: space-between; align-items: center; }
         .vang-item:last-child { border-bottom: none; }
-        .txt-vang { color: #e74c3c; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -70,585 +69,26 @@
         ];
 
         let duLieuLopGoc = [
-            
-               {
-    tenLop: "SVIP",
-    thu: "Thứ 3",
-    hocSinh: [
-        { ten: "Nguyễn Giản Long Vũ", lop: "Lớp 4", sdt: "098 988 2688", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn An Như (Cún)", lop: "Lớp 4", sdt: "096 424 3909", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lưu Gia Bảo", lop: "Lớp 4", sdt: "097 412 5490", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Ngọc Bảo Anh", lop: "Lớp 4", sdt: "093 220 3210", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Anh Thư", lop: "Lớp 4", sdt: "038 996 8457", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Âu Sơn Bách", lop: "Lớp 4", sdt: "090 223 2838", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Thảo Ngân", lop: "Lớp 4", sdt: "098 626 7588", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Yến Nhi", lop: "Lớp 4", sdt: "090 469 2238", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Thế Quang Minh", lop: "Lớp 4", sdt: "098 628 9268", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Minh Vân", lop: "Lớp 4", sdt: "098 463 6941", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Ngọc Khôi Nguyên", lop: "Lớp 4", sdt: "093 600 8127", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Bách Diệp", lop: "Lớp 4", sdt: "094 482 7284", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Linh Đan (Sam)", lop: "Lớp 4", sdt: "093 268 8675", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo Sơn mẹ Ngọc", lop: "Lớp 4", sdt: "090 326 5409", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đình Minh Quang", lop: "Lớp 4", sdt: "097 978 6105", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Khánh Nam", lop: "Lớp 4", sdt: "090 448 5858", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Minh Đức A", lop: "Lớp 4", sdt: "094 815 0891", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nhật Nam 2013", lop: "Lớp 4", sdt: "091 434 9267", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Quỳnh", lop: "Lớp 4", sdt: "098 699 3026", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Gia Bảo B", lop: "Lớp 4", sdt: "094 828 3328", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quốc Bảo Nam", lop: "Lớp 4", sdt: "097 388 7192", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Ngô Thị Vân Khánh", lop: "Lớp 4", sdt: "035 990 9689", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Hải Phong", lop: "Lớp 4", sdt: "094 272 1357", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "SKY - KID",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Nguyễn An Nhiên (Bơ)", lop: "Lớp 1", sdt: "039 696 3955", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trung Đức (Bon)", lop: "Lớp 1", sdt: "033 980 4981", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Đình Bách", lop: "Lớp 1", sdt: "090 451 1462", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lâm Duy Anh", lop: "Lớp 1", sdt: "090 223 9258", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Nguyễn Hải Anh 23/11/20", lop: "Lớp 1", sdt: "033 607 6895", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lan Anh em Tuấn Anh B", lop: "Lớp 1", sdt: "Tháng 7 mới học; Ngày lẻ học võ", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Khánh Ngân", lop: "Lớp 1", sdt: "094 209 3566", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Lê Tuệ Linh", lop: "Lớp 1", sdt: "098 874 2202", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trâm Anh", lop: "Lớp 1", sdt: "091 940 3848", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tú Anh", lop: "Lớp 1", sdt: "091 940 3848", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hà My", lop: "Lớp 1", sdt: "094 368 1990", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Hoàng Ngọc Phương Linh", lop: "Lớp 1", sdt: "091 273 1673", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "SMART-KID",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Phạm Gia Huy", lop: "Lớp 2", sdt: "037 890 3698", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Mai Anh", lop: "Lớp 2", sdt: "097 822 6749", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Duy Minh Quang (Sóc)", lop: "Lớp 2", sdt: "091 424 2132", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Cát Tiên", lop: "Lớp 2", sdt: "091 189 8323", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trịnh Phúc An", lop: "Lớp 2", sdt: "097 122 7992", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Yên Lệ Nhật Minh (Mít)", lop: "Lớp 2", sdt: "091 928 1776", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đoàn Gia Mỹ", lop: "Lớp 2", sdt: "033 573 8702", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "CLOUD-KID MG+1",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Trần Thanh Tùng", lop: "Lớp 2", sdt: "096 172 1015", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Đức Phúc", lop: "Lớp 2", sdt: "097 466 5636", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Đức Minh", lop: "Lớp 2", sdt: "097 466 5636", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Chu Huyền Anh", lop: "Lớp 2", sdt: "098 289 6335", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Triệu Trúc An", lop: "Lớp 2", sdt: "034 648 5202", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Minh Quân", lop: "Lớp 2", sdt: "097 234 2286", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Khánh Linh", lop: "Lớp 2", sdt: "098 179 6729", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Ngọc An Nhiên", lop: "Lớp 2", sdt: "090 803 6029", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "OZON-L2+3/Ngô Hằng",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Nguyễn Tú Anh", lop: "Lớp 3", sdt: "038 996 8457", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Gia Hân", lop: "Lớp 3", sdt: "098 594 6797", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Gia Hưng", lop: "Lớp 3", sdt: "090 223 4092", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Nam Phong", lop: "Lớp 3", sdt: "098 351 5583", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Đăng Khôi", lop: "Lớp 3", sdt: "096 254 5673", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Khuất Minh Quân", lop: "Lớp 3", sdt: "094 308 4625", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Thanh Loan", lop: "Lớp 3", sdt: "097 275 0405", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bình Minh", lop: "Lớp 3", sdt: "082 808 3333", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Linh", lop: "Lớp 3", sdt: "098 988 5241", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tiến Thái Dương", lop: "Lớp 3", sdt: "091 726 6222", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Quang Tiến", lop: "Lớp 3", sdt: "093 653 8868", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tuệ An", lop: "Lớp 3", sdt: "032 987 1880", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Thiên An", lop: "Lớp 3", sdt: "039 956 2525", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "MICKEY - L2+3/Thị Phương",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Đỗ Bảo Linh", lop: "Lớp 3", sdt: "097 375 5730", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đào Đức Minh Khôi (Sữa)", lop: "Lớp 3", sdt: "096 998 6889", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Bảo Nam", lop: "Lớp 3", sdt: "098 985 0687", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Hồ Tuệ Nhi MIC", lop: "Lớp 3", sdt: "093 914 2870", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Minh Khoa", lop: "Lớp 3", sdt: "033 983 0886", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê An Nhi (Ri)", lop: "Lớp 3", sdt: "079 735 0000", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phùng Thanh Thảo", lop: "Lớp 3", sdt: "093 466 8644", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Ngọc Gia Khôi", lop: "Lớp 3", sdt: "096 914 6280", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Khải An", lop: "Lớp 3", sdt: "098 738 5591", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Đức Trung", lop: "Lớp 3", sdt: "097 777 9698", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo Anh", lop: "Lớp 3", sdt: "032 567 0039", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Phương Uyên", lop: "Lớp 3", sdt: "036 770 1993", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Ngô Thị Ngọc Diệp", lop: "Lớp 3", sdt: "096 580 1726", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo Hân", lop: "Lớp 3", sdt: "098 908 2066", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Khôi", lop: "Lớp 3", sdt: "094 883 0246", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Quang Anh 1D NQ", lop: "Lớp 3", sdt: "091 189 8323", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Thảo", lop: "Lớp 3", sdt: "039 935 1432", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "OXFORD  L4/Thu Phương",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Lê Gia Hân", lop: "Lớp 4", sdt: "097 846 3483", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Đặng Đức Huy (Bắp)", lop: "Lớp 4", sdt: "098 494 9103", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Loan (Bông)", lop: "Lớp 4", sdt: "096 670 2084", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Anh Khoa", lop: "Lớp 4", sdt: "098 895 3288", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Khang (Bi)", lop: "Lớp 4", sdt: "096 426 5190", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Hồ Phúc Nguyên", lop: "Lớp 4", sdt: "093 600 8127", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đoàn Đức Huy B", lop: "Lớp 4", sdt: "096 668 7892", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lưu Minh Châu mẹ Phượng", lop: "Lớp 4", sdt: "097 412 5490", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Đức Anh", lop: "Lớp 4", sdt: "094 768 8890", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tô Diệp Vy", lop: "Lớp 4", sdt: "094 768 8890", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đào Nguyễn Thế Bảo", lop: "Lớp 4", sdt: "094 629 3398", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm An Khang", lop: "Lớp 4", sdt: "083 919 9199", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Châu mẹ Chiến", lop: "Lớp 4", sdt: "097 953 8636", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Kiều Đức Anh", lop: "Lớp 4", sdt: "090 626 9239", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Lê Dũng", lop: "Lớp 4", sdt: "097 441 3662", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "QUEST - L4 Thu Phương",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Nguyễn Thu An", lop: "Lớp 4", sdt: "098 151 7872", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tô Trần Gia Hưng", lop: "Lớp 4", sdt: "093 466 0145", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Phương Thảo", lop: "Lớp 4", sdt: "097 771 3604", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nhật Minh", lop: "Lớp 4", sdt: "038 998 6968", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nam Anh", lop: "Lớp 4", sdt: "078 728 6186", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Trung Kiên", lop: "Lớp 4", sdt: "090 213 4609", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo Hân (Bống)", lop: "Lớp 4", sdt: "093 680 6006", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quang Bách", lop: "Lớp 4", sdt: "091 524 6426", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tuấn Minh Khôi", lop: "Lớp 4", sdt: "036 677 6360", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Nguyễn Hữu Bách", lop: "Lớp 4", sdt: "039 358 8800", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "CAMBRIDGE - L4/Nhung",
-    thu: "Thứ 3",
-    hocSinh: [
-        { ten: "Trần Hà My (Su)", lop: "Lớp 4", sdt: "096 604 9391", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Kim Ngân", lop: "Lớp 4", sdt: "097 354 9189", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tấn Nhật Anh", lop: "Lớp 4", sdt: "098 459 1586", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn An Bảo Ngọc", lop: "Lớp 4", sdt: "037 454 6363", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Đăng", lop: "Lớp 4", sdt: "098 304 9684", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tạ Hồng Phúc Nguyên", lop: "Lớp 4", sdt: "093 625 5655", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Hoàng Trần Diên Phúc", lop: "Lớp 4", sdt: "096 840 9989", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Trúc Lâm (Rubi)", lop: "Lớp 4", sdt: "097 239 4345", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Mỹ An", lop: "Lớp 4", sdt: "098 352 0087", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo An", lop: "Lớp 4", sdt: "098 536 8466", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trúc Anh", lop: "Lớp 4", sdt: "094 883 0246", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Văn Phúc", lop: "Lớp 4", sdt: "090 323 6135", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "CAMBRIDGE - L4/Nhung",
-    thu: "Thứ 5",
-    hocSinh: [
-        { ten: "Trần Hà My (Su)", lop: "Lớp 4", sdt: "096 604 9391", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Kim Ngân", lop: "Lớp 4", sdt: "097 354 9189", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tấn Nhật Anh", lop: "Lớp 4", sdt: "098 459 1586", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn An Bảo Ngọc", lop: "Lớp 4", sdt: "037 454 6363", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Đăng", lop: "Lớp 4", sdt: "098 304 9684", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tạ Hồng Phúc Nguyên", lop: "Lớp 4", sdt: "093 625 5655", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Hoàng Trần Diên Phúc", lop: "Lớp 4", sdt: "096 840 9989", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Trúc Lâm (Rubi)", lop: "Lớp 4", sdt: "097 239 4345", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Mỹ An", lop: "Lớp 4", sdt: "098 352 0087", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo An", lop: "Lớp 4", sdt: "098 536 8466", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trúc Anh", lop: "Lớp 4", sdt: "094 883 0246", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Văn Phúc", lop: "Lớp 4", sdt: "090 323 6135", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "KING - L4/Thu Phương",
-    thu: "Thứ 5",
-    hocSinh: [
-        { ten: "Lê Quốc Khánh Minh", lop: "Lớp 4", sdt: "097 966 6560", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đào Thị Trúc Vy", lop: "Lớp 4", sdt: "093 456 8609", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tạ Đức Nam", lop: "Lớp 4", sdt: "097 599 8885", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Cát Tuệ An (Sam)", lop: "Lớp 4", sdt: "098 195 1661", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Nam Khánh (khoai tây)", lop: "Lớp 4", sdt: "078 528 5678", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tú Anh (Bống)", lop: "Lớp 4", sdt: "097 629 6696", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đức Anh (Tũn)", lop: "Lớp 4", sdt: "097 629 6696", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Tú Linh", lop: "Lớp 4", sdt: "035 861 0285", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Công Hiếu", lop: "Lớp 4", sdt: "090 440 7080", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Gia Huy", lop: "Lớp 4", sdt: "083 773 6017", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Ngô Xuân Phúc", lop: "Lớp 4", sdt: "098 230 9936", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "GALAXY - L4/Minh Phương",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Nguyễn Hà Phương Vy (Thỏ)", lop: "Lớp 3", sdt: "093 468 6663", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Phương Anh (Gạo)", lop: "Lớp 3", sdt: "091 240 1266", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Hoàng Quân", lop: "Lớp 3", sdt: "096 777 3782", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Mai Huy Khôi", lop: "Lớp 3", sdt: "094 876 3223", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Minh Vũ", lop: "Lớp 3", sdt: "098 463 6941", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Kim Khánh Linh", lop: "Lớp 3", sdt: "039 623 5657", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trương Thế Quyết", lop: "Lớp 3", sdt: "035 630 1012", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-{
-    tenLop: "KIND L5 /Tân",
-    thu: "Thứ 4",
-    hocSinh: [
-        { ten: "Nguyễn Minh Phúc", lop: "Lớp 5", sdt: "094 291 6191", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Nguyễn Gia Hân (kẹo)", lop: "Lớp 5", sdt: "091 153 6555", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Gia An", lop: "Lớp 5", sdt: "038 528 5928", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Diệu Vy (susu)", lop: "Lớp 5", sdt: "038 686 5566", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Hoài Dương", lop: "Lớp 5", sdt: "032 932 5053", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Tú Uyên", lop: "Lớp 5", sdt: "090 643 6736", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "KIND L5 /Tân",
-    thu: "Thứ 6",
-    hocSinh: [
-        { ten: "Nguyễn Minh Phúc", lop: "Lớp 5", sdt: "094 291 6191", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Nguyễn Gia Hân (kẹo)", lop: "Lớp 5", sdt: "091 153 6555", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Gia An", lop: "Lớp 5", sdt: "038 528 5928", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Diệu Vy (susu)", lop: "Lớp 5", sdt: "038 686 5566", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Hoài Dương", lop: "Lớp 5", sdt: "032 932 5053", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Tú Uyên", lop: "Lớp 5", sdt: "090 643 6736", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "APOLLO L5/Yến ",
-    thu: "Thứ 6",
-    hocSinh: [
-        { ten: "Trần Minh Châu", lop: "Lớp 5", sdt: "091 440 2665", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trung Hiếu", lop: "Lớp 5", sdt: "033 339 9559", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Phương Linh (Mít)", lop: "Lớp 5", sdt: "035 283 5535", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Công Danh", lop: "Lớp 5", sdt: "098 292 0983", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Quang Minh (Tít)", lop: "Lớp 5", sdt: "097 965 3238", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Nam Anh", lop: "Lớp 5", sdt: "039 915 5568", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn An Huy", lop: "Lớp 5", sdt: "091 398 2531", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Minh Đức", lop: "Lớp 5", sdt: "097 293 2188", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Khánh Long", lop: "Lớp 5", sdt: "034 252 6283", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vương Xuân Vũ", lop: "Lớp 5", sdt: "098 725 0888", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Lâm", lop: "Lớp 5", sdt: "098 699 3026", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quốc Gia Bảo", lop: "Lớp 5", sdt: "097 388 7192", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "APOLLO L5/Yến ",
-    thu: "Thứ 7",
-    hocSinh: [
-        { ten: "Trần Minh Châu", lop: "Lớp 5", sdt: "091 440 2665", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Trung Hiếu", lop: "Lớp 5", sdt: "033 339 9559", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Phương Linh (Mít)", lop: "Lớp 5", sdt: "035 283 5535", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Công Danh", lop: "Lớp 5", sdt: "098 292 0983", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Quang Minh (Tít)", lop: "Lớp 5", sdt: "097 965 3238", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Nam Anh", lop: "Lớp 5", sdt: "039 915 5568", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn An Huy", lop: "Lớp 5", sdt: "091 398 2531", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Minh Đức", lop: "Lớp 5", sdt: "097 293 2188", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Khánh Long", lop: "Lớp 5", sdt: "034 252 6283", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vương Xuân Vũ", lop: "Lớp 5", sdt: "098 725 0888", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Lâm", lop: "Lớp 5", sdt: "098 699 3026", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quốc Gia Bảo", lop: "Lớp 5", sdt: "097 388 7192", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "LIKE L5/Thu Phương",
-    thu: "Thứ 3",
-    hocSinh: [
-        { ten: "Hoàng Lê Minh Châu", lop: "Lớp 5", sdt: "082 398 2281", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Quỳnh Chi", lop: "Lớp 5", sdt: "097 375 5730", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Lâm", lop: "Lớp 5", sdt: "098 926 1380", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tuấn Khang", lop: "Lớp 5", sdt: "097 525 7800", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dư Thanh Hương", lop: "Lớp 5", sdt: "096 448 6678", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bủi Minh Hiếu", lop: "Lớp 5", sdt: "097 264 8276", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lưu Thiện Nhân", lop: "Lớp 5", sdt: "038 265 4007", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nghiêm Vũ Trà My (Xinh cao)", lop: "Lớp 5", sdt: "098 860 8866", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Hà Linh (Mun)", lop: "Lớp 5", sdt: "091 529 8019", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Xuân Bách", lop: "Lớp 5", sdt: "098 913 7308", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Ngọc Trúc Diễm", lop: "Lớp 5", sdt: "096 199 6698", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "LIKE L5/Thu Phương",
-    thu: "Thứ 5",
-    hocSinh: [
-        { ten: "Hoàng Lê Minh Châu", lop: "Lớp 5", sdt: "082 398 2281", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Quỳnh Chi", lop: "Lớp 5", sdt: "097 375 5730", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Lâm", lop: "Lớp 5", sdt: "098 926 1380", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tuấn Khang", lop: "Lớp 5", sdt: "097 525 7800", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dư Thanh Hương", lop: "Lớp 5", sdt: "096 448 6678", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bủi Minh Hiếu", lop: "Lớp 5", sdt: "097 264 8276", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lưu Thiện Nhân", lop: "Lớp 5", sdt: "038 265 4007", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nghiêm Vũ Trà My (Xinh cao)", lop: "Lớp 5", sdt: "098 860 8866", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Hà Linh (Mun)", lop: "Lớp 5", sdt: "091 529 8019", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Xuân Bách", lop: "Lớp 5", sdt: "098 913 7308", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Ngọc Trúc Diễm", lop: "Lớp 5", sdt: "096 199 6698", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "SMILE-L6-Hà An",
-    thu: "Thứ 3",
-    hocSinh: [
-        { ten: "Dương Ngọc Thảo Anh", lop: "Lớp 6", sdt: "034 873 8159", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tiến Sơn", lop: "Lớp 6", sdt: "097 247 2383", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Hồ Đức Lượng", lop: "Lớp 6", sdt: "093 914 2870", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Phú Thảo (trai)", lop: "Lớp 6", sdt: "091 264 2998", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tạ Hồng Phương Vy", lop: "Lớp 6", sdt: "093 625 5655", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Đức Bảo An", lop: "Lớp 6", sdt: "039 627 4479", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Minh Khoa", lop: "Lớp 6", sdt: "037 373 3368", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hữu Bảo Phú", lop: "Lớp 6", sdt: "098 352 0087", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Xuân Phú", lop: "Lớp 6", sdt: "090 558 3399", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Triết", lop: "Lớp 6", sdt: "033 573 8702", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đức Quang", lop: "Lớp 6", sdt: "098 226 2873", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "SMILE-L6-Hà An",
-    thu: "Thứ 5",
-    hocSinh: [
-        { ten: "Dương Ngọc Thảo Anh", lop: "Lớp 6", sdt: "034 873 8159", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tiến Sơn", lop: "Lớp 6", sdt: "097 247 2383", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Hồ Đức Lượng", lop: "Lớp 6", sdt: "093 914 2870", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Phú Thảo (trai)", lop: "Lớp 6", sdt: "091 264 2998", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tạ Hồng Phương Vy", lop: "Lớp 6", sdt: "093 625 5655", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Đức Bảo An", lop: "Lớp 6", sdt: "039 627 4479", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Minh Khoa", lop: "Lớp 6", sdt: "037 373 3368", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hữu Bảo Phú", lop: "Lớp 6", sdt: "098 352 0087", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Xuân Phú", lop: "Lớp 6", sdt: "090 558 3399", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Triết", lop: "Lớp 6", sdt: "033 573 8702", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đức Quang", lop: "Lớp 6", sdt: "098 226 2873", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "STAR-L6-Thanh Thảo",
-    thu: "Thứ 7",
-    hocSinh: [
-        { ten: "Lê Hà My Bánh gạo", lop: "Lớp 6", sdt: "038 209 4451", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hồng Anh", lop: "Lớp 6", sdt: "038 996 8457", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Minh Hiếu", lop: "Lớp 6", sdt: "097 899 0613", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tô Khoa", lop: "Lớp 6", sdt: "091 214 5662", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Gia Phú", lop: "Lớp 6", sdt: "098 280 2158", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Khánh An", lop: "Lớp 6", sdt: "098 280 2158", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phùng Phương Chi", lop: "Lớp 6", sdt: "097 678 6762", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quỳnh Phương", lop: "Lớp 6", sdt: "094 300 9820", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo An", lop: "Lớp 6", sdt: "096 426 5190", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Việt Anh", lop: "Lớp 6", sdt: "097 723 5829", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Thảo Quyên", lop: "Lớp 6", sdt: "097 644 7281", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nghiêm Yến My", lop: "Lớp 6", sdt: "038 551 6886", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Việt Quân", lop: "Lớp 6", sdt: "091 822 2626", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Đức Anh", lop: "Lớp 6", sdt: "097 441 3662", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "STAR-L6-Thanh Thảo",
-    thu: "Chủ Nhật",
-    hocSinh: [
-        { ten: "Lê Hà My Bánh gạo", lop: "Lớp 6", sdt: "038 209 4451", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hồng Anh", lop: "Lớp 6", sdt: "038 996 8457", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Minh Hiếu", lop: "Lớp 6", sdt: "097 899 0613", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tô Khoa", lop: "Lớp 6", sdt: "091 214 5662", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Gia Phú", lop: "Lớp 6", sdt: "098 280 2158", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Khánh An", lop: "Lớp 6", sdt: "098 280 2158", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phùng Phương Chi", lop: "Lớp 6", sdt: "097 678 6762", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quỳnh Phương", lop: "Lớp 6", sdt: "094 300 9820", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo An", lop: "Lớp 6", sdt: "096 426 5190", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Việt Anh", lop: "Lớp 6", sdt: "097 723 5829", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Thảo Quyên", lop: "Lớp 6", sdt: "097 644 7281", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nghiêm Yến My", lop: "Lớp 6", sdt: "038 551 6886", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Việt Quân", lop: "Lớp 6", sdt: "091 822 2626", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Đức Anh", lop: "Lớp 6", sdt: "097 441 3662", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "GOOD-L6-Hà An ",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Nguyễn Thu Mai Hương", lop: "Lớp 6", sdt: "034 937 4280", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Hoàng Thảo An", lop: "Lớp 6", sdt: "091 291 5863", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo An", lop: "Lớp 6", sdt: "091 940 3848", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đào Phú Khang", lop: "Lớp 6", sdt: "036 274 5377", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Tùng Lâm", lop: "Lớp 6", sdt: "085 519 3868", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Minh Ánh", lop: "Lớp 6", sdt: "081 265 8908", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Điền Đăng Khoa", lop: "Lớp 6", sdt: "097 915 3900", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đoàn Đắc Khang", lop: "Lớp 6", sdt: "097 600 1849", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Huỳnh Gia Khang", lop: "Lớp 6", sdt: "097 259 3526", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Khanh", lop: "Lớp 6", sdt: "090 448 5858", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Đình Vinh", lop: "Lớp 6", sdt: "097 697 1924", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "GOOD-L6-Hà An ",
-    thu: "Thứ 4",
-    hocSinh: [
-        { ten: "Nguyễn Thu Mai Hương", lop: "Lớp 6", sdt: "034 937 4280", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Hoàng Thảo An", lop: "Lớp 6", sdt: "091 291 5863", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Bảo An", lop: "Lớp 6", sdt: "091 940 3848", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đào Phú Khang", lop: "Lớp 6", sdt: "036 274 5377", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Tùng Lâm", lop: "Lớp 6", sdt: "085 519 3868", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Minh Ánh", lop: "Lớp 6", sdt: "081 265 8908", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Điền Đăng Khoa", lop: "Lớp 6", sdt: "097 915 3900", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đoàn Đắc Khang", lop: "Lớp 6", sdt: "097 600 1849", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Huỳnh Gia Khang", lop: "Lớp 6", sdt: "097 259 3526", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Khanh", lop: "Lớp 6", sdt: "090 448 5858", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Đình Vinh", lop: "Lớp 6", sdt: "097 697 1924", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "MARS - L6-Ngô Hằng",
-    thu: "Thứ 4",
-    hocSinh: [
-        { ten: "Nguyễn Hà Vy B 6/12/15", lop: "Lớp 6", sdt: "098 888 0534", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Ngọc Diệp", lop: "Lớp 6", sdt: "097 771 3604", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Tùng", lop: "Lớp 6", sdt: "096 815 5311", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Xuân Mai", lop: "Lớp 6", sdt: "098 734 0014", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Thảo Vy", lop: "Lớp 6", sdt: "094 802 2886", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hà Vy (A-cũ) 28/9/15", lop: "Lớp 6", sdt: "097 365 8805", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tưởng Đăng Khoa", lop: "Lớp 6", sdt: "094 456 2088", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Linh", lop: "Lớp 6", sdt: "098 146 3664", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tiến Đạt (Tôm)", lop: "Lớp 6", sdt: "083 329 1234", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "MARS - L6-Ngô Hằng",
-    thu: "Thứ 6",
-    hocSinh: [
-        { ten: "Nguyễn Hà Vy B 6/12/15", lop: "Lớp 6", sdt: "098 888 0534", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Ngọc Diệp", lop: "Lớp 6", sdt: "097 771 3604", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Minh Tùng", lop: "Lớp 6", sdt: "096 815 5311", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Xuân Mai", lop: "Lớp 6", sdt: "098 734 0014", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Thảo Vy", lop: "Lớp 6", sdt: "094 802 2886", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hà Vy (A-cũ) 28/9/15", lop: "Lớp 6", sdt: "097 365 8805", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Tưởng Đăng Khoa", lop: "Lớp 6", sdt: "094 456 2088", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Ngọc Linh", lop: "Lớp 6", sdt: "098 146 3664", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tiến Đạt (Tôm)", lop: "Lớp 6", sdt: "083 329 1234", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "PARIS-L6/Minh Phương",
-    thu: "Thứ 3",
-    hocSinh: [
-        { ten: "Nguyễn Gia Hưng (Út)", lop: "Lớp 6", sdt: "078 222 9349", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nhà Khánh", lop: "Lớp 6", sdt: "078 222 9349", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Chúc An", lop: "Lớp 6", sdt: "096 833 8686", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Khánh Nam", lop: "Lớp 6", sdt: "090 718 0000", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nam Phong", lop: "Lớp 6", sdt: "093 226 4999", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo Nguyên", lop: "Lớp 6", sdt: "097 450 5336", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Ngô Phương Anh", lop: "Lớp 6", sdt: "056 999 9398", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "PARIS-L6/Minh Phương",
-    thu: "Thứ 7",
-    hocSinh: [
-        { ten: "Nguyễn Gia Hưng (Út)", lop: "Lớp 6", sdt: "078 222 9349", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nhà Khánh", lop: "Lớp 6", sdt: "078 222 9349", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Chúc An", lop: "Lớp 6", sdt: "096 833 8686", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Khánh Nam", lop: "Lớp 6", sdt: "090 718 0000", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Nam Phong", lop: "Lớp 6", sdt: "093 226 4999", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo Nguyên", lop: "Lớp 6", sdt: "097 450 5336", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Ngô Phương Anh", lop: "Lớp 6", sdt: "056 999 9398", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "EVIC",
-    thu: "Thứ 4",
-    hocSinh: [
-        { ten: "Phan Gia Bảo", lop: "Lớp 5", sdt: "097 216 4536", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Chử Nhật Minh", lop: "Lớp 5", sdt: "097 447 8232", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Quang Minh Bon", lop: "Lớp 5", sdt: "093 644 9009", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Minh Vũ", lop: "Lớp 5", sdt: "096 392 2936", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Dương", lop: "Lớp 5", sdt: "086 729 1368", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Hương Giang", lop: "Lớp 5", sdt: "091 589 0069", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Khánh My (Thỏ)", lop: "Lớp 5", sdt: "097 234 2286", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hoàng Yến", lop: "Lớp 5", sdt: "084 547 7789", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Thùy Dương", lop: "Lớp 5", sdt: "084 547 7789", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Đăng Khoa", lop: "Lớp 5", sdt: "076 827 9199", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Minh Anh", lop: "Lớp 5", sdt: "091 292 1228", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vương Ngọc Khánh Linh", lop: "Lớp 5", sdt: "094 968 6899", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Gia Bảo", lop: "Lớp 5", sdt: "038 832 7989", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Bảo Nam", lop: "Lớp 5", sdt: "033 463 3675", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "EVIC",
-    thu: "Chủ Nhật",
-    hocSinh: [
-        { ten: "Phan Gia Bảo", lop: "Lớp 5", sdt: "097 216 4536", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Chử Nhật Minh", lop: "Lớp 5", sdt: "097 447 8232", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đỗ Quang Minh Bon", lop: "Lớp 5", sdt: "093 644 9009", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Minh Vũ", lop: "Lớp 5", sdt: "096 392 2936", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Tùng Dương", lop: "Lớp 5", sdt: "086 729 1368", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Bùi Hương Giang", lop: "Lớp 5", sdt: "091 589 0069", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Khánh My (Thỏ)", lop: "Lớp 5", sdt: "097 234 2286", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hoàng Yến", lop: "Lớp 5", sdt: "084 547 7789", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Thùy Dương", lop: "Lớp 5", sdt: "084 547 7789", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Đặng Đăng Khoa", lop: "Lớp 5", sdt: "076 827 9199", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Phạm Minh Anh", lop: "Lớp 5", sdt: "091 292 1228", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vương Ngọc Khánh Linh", lop: "Lớp 5", sdt: "094 968 6899", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Gia Bảo", lop: "Lớp 5", sdt: "038 832 7989", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Bảo Nam", lop: "Lớp 5", sdt: "033 463 3675", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "KID - L7- Thanh Thảo",
-    thu: "Thứ 2",
-    hocSinh: [
-        { ten: "Lê Phương Linh (Bông)", lop: "Lớp 7", sdt: "091 593 6459", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Hoài An", lop: "Lớp 7", sdt: "094 506 8878", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đăng Phong (bé)", lop: "Lớp 7", sdt: "035 834 2931", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Quang Điền", lop: "Lớp 7", sdt: "091 263 5718", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Diệp Anh", lop: "Lớp 7", sdt: "098 895 3288", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Điền Phương Linh", lop: "Lớp 7", sdt: "097 915 3900", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hà My", lop: "Lớp 7", sdt: "037 742 1228", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quỳnh Anh", lop: "Lớp 7", sdt: "033 980 4981", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Minh Phương", lop: "Lớp 7", sdt: "097 800 7173", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Quang Huy", lop: "Lớp 7", sdt: "098 828 4122", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Phương Linh", lop: "Lớp 7", sdt: "091 240 1266", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo Châu", lop: "Lớp 7", sdt: "091 796 1055", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Nguyễn Tùng Lâm", lop: "Lớp 7", sdt: "039 358 8800", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-},
-
-{
-    tenLop: "KID - L7- Thanh Thảo",
-    thu: "Thứ 4",
-    hocSinh: [
-        { ten: "Lê Phương Linh (Bông)", lop: "Lớp 7", sdt: "091 593 6459", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Vũ Hoài An", lop: "Lớp 7", sdt: "094 506 8878", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Đăng Phong (bé)", lop: "Lớp 7", sdt: "035 834 2931", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Quang Điền", lop: "Lớp 7", sdt: "091 263 5718", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Diệp Anh", lop: "Lớp 7", sdt: "098 895 3288", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Điền Phương Linh", lop: "Lớp 7", sdt: "097 915 3900", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Hà My", lop: "Lớp 7", sdt: "037 742 1228", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Nguyễn Quỳnh Anh", lop: "Lớp 7", sdt: "033 980 4981", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Minh Phương", lop: "Lớp 7", sdt: "097 800 7173", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Quang Huy", lop: "Lớp 7", sdt: "098 828 4122", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Trần Phương Linh", lop: "Lớp 7", sdt: "091 240 1266", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Lê Bảo Châu", lop: "Lớp 7", sdt: "091 796 1055", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
-        { ten: "Dương Nguyễn Tùng Lâm", lop: "Lớp 7", sdt: "039 358 8800", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
-    ]
-}
+            {
+                tenLop: "SVIP",
+                thu: "Thứ 3",
+                hocSinh: [
+                    { ten: "Nguyễn Giản Long Vũ", lop: "Lớp 4", sdt: "098 988 2688", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
+                    { ten: "Nguyễn Yến Nhi", lop: "Lớp 4", sdt: "090 469 2238", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
+                    { ten: "Ngô Thị Vân Khánh", lop: "Lớp 4", sdt: "035 990 9689", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] },
+                    { ten: "Lê Hải Phong", lop: "Lớp 4", sdt: "094 272 1357", hocPhi: "0", ghiChu: "", isXinNghi: false, isDiHocTiep: false, timeXinNghi: null, buoiVangData: [] }
+                ]
+            },
+            {
+                tenLop: "CAMBRIDGE - L4/Nhung",
+                thu: "Thứ 3",
+                hocSinh: [
+                    { ten: "Trần Hà My (Su)", sdt: "096 604 9391" },
+                    { ten: "Nguyễn Kim Ngân", sdt: "097 354 9189" },
+                    { ten: "Nguyễn Trúc Anh", sdt: "094 883 0246" },
+                    { ten: "Nguyễn Văn Phúc", sdt: "090 323 6135" }
+                ]
+            }
         ];
 
         let duLieuLop = [];
@@ -742,6 +182,7 @@
                                                 let isXinNghi = hs.isXinNghi;
                                                 let isDiHocTiep = hs.isDiHocTiep;
                                                 let cardClass = "hoc-sinh-card";
+                                                
                                                 if(isXinNghi) cardClass += " xin-nghi";
                                                 if(isDiHocTiep) cardClass += " di-hoc-tiep";
 
@@ -755,37 +196,23 @@
                                                          data-sdt="${hs.sdt}">
                                                         
                                                         <div class="line"><b>${index + 1}. Họ tên:</b> ${hs.ten}</div>
-                                                        <div class="line"><b>Lớp:</b> ${hs.lop}</div>
                                                         <div class="line">
                                                             <b>SĐT:</b> ${hs.sdt} 
-                                                            <a href="tel:${hs.sdt}" class="btn-goi ${(isXinNghi && !isDiHocTiep) ? 'disabled' : ''}">📞 Gọi</a>
+                                                            <a href="tel:${hs.sdt}" class="btn-goi">📞 Gọi</a>
                                                         </div>
-                                                        <div class="line"><b>Vắng:</b> <span class="txt-vang">Không</span></div>
-                                                        <div class="line"><b>Học phí:</b> ${hs.hocPhi} VNĐ</div>
                                                         <div class="line"><b>Ghi chú:</b></div>
                                                         
                                                         <select class="ghi-chu-select" onchange="luuGhiChu('${tenLop}', '${hs.ten}', this.value)">
-                                                            <option value="" ${hs.ghiChu === '' ? 'selected' : ''}>-- Trống / Ghi chú khác --</option>
+                                                            <option value="" ${hs.ghiChu === '' ? 'selected' : ''}>-- Ghi chú --</option>
                                                             <option value="xin nghỉ hôm nay" ${hs.ghiChu === 'xin nghỉ hôm nay' ? 'selected' : ''}>xin nghỉ hôm nay</option>
                                                             <option value="xin nghỉ tuần này" ${hs.ghiChu === 'xin nghỉ tuần này' ? 'selected' : ''}>xin nghỉ tuần này</option>
                                                             <option value="xin nghỉ đến cuối tháng" ${hs.ghiChu === 'xin nghỉ đến cuối tháng' ? 'selected' : ''}>xin nghỉ đến cuối tháng</option>
+                                                            <option value="không nghe máy" ${hs.ghiChu === 'không nghe máy' ? 'selected' : ''}>không nghe máy</option>
                                                             <option value="đến muộn" ${hs.ghiChu === 'đến muộn' ? 'selected' : ''}>đến muộn</option>
                                                         </select>
                                                         
-                                                        <div class="ds-buoi">
-                                                            ${Array(8).fill(0).map((_, i) => {
-                                                                let bNum = i + 1;
-                                                                let bData = hs.buoiVangData ? hs.buoiVangData.find(b => parseInt(b.buoi) === bNum) : null;
-                                                                let activeClass = bData ? "active" : "";
-                                                                let lockedClass = "";
-                                                                if(bData && bData.time && (Date.now() - parseInt(bData.time) > THOI_GIAN_KHOA)) {
-                                                                    lockedClass = "locked";
-                                                                }
-                                                                return `<div class="o-buoi ${activeClass} ${lockedClass}" onclick="toggleBuoi('${tenLop}', '${hs.ten}', ${bNum}, this)" data-buoi="${bNum}"> ${bNum}</div>`;
-                                                            }).join('')}
-                                                        </div>
-                                                        <div class="btn-xin-nghi ${isXinNghi ? 'active' : ''}" onclick="toggleXinNghi('${tenLop}', '${hs.ten}', this)">Đã xin nghỉ</div>
-                                                        <div class="btn-di-hoc-tiep ${isDiHocTiep ? 'active' : ''}" onclick="diHocTiep('${tenLop}', '${hs.ten}', this)">Đi học tiếp</div>
+                                                        <div class="btn-xin-nghi ${isXinNghi ? 'active' : ''}" onclick="toggleXinNghi('${tenLop}', '${hs.ten}', this)">Vắng</div>
+                                                        <div class="btn-di-hoc-tiep ${isDiHocTiep ? 'active' : ''}" onclick="diHocTiep('${tenLop}', '${hs.ten}', this)">Có đi học</div>
                                                         <div class="btn-chuyen-lop" onclick="chuyenLop('${tenLop}', '${hs.ten}')">🔄 Chuyển lớp</div>
                                                     </div>
                                                 `;
@@ -888,28 +315,7 @@
             renderGiaoDien(); 
         }
 
-        function toggleBuoi(tenLop, tenHS, buoiNum, el) {
-            if(el.classList.contains('locked')) return;
-            let lop = duLieuLop.find(l => l.tenLop === tenLop);
-            if(!lop) return;
-            let hs = lop.hocSinh.find(h => h.ten === tenHS);
-            if(!hs) return;
-
-            if((hs.isXinNghi && !hs.isDiHocTiep)) return;
-
-            if(!hs.buoiVangData) hs.buoiVangData = [];
-            let index = hs.buoiVangData.findIndex(b => parseInt(b.buoi) === buoiNum);
-            
-            if(index !== -1) {
-                hs.buoiVangData.splice(index, 1);
-            } else {
-                hs.buoiVangData.push({ buoi: buoiNum, time: Date.now() });
-            }
-
-            localStorage.setItem('duLieuLopDynamic', JSON.stringify(duLieuLop));
-            renderGiaoDien(); 
-        }
-
+        // KHI BẤM NÚT VẮNG
         function toggleXinNghi(tenLop, tenHS, el) {
             if (el.classList.contains('locked')) return;
             let lop = duLieuLop.find(l => l.tenLop === tenLop);
@@ -917,13 +323,19 @@
             let hs = lop.hocSinh.find(h => h.ten === tenHS);
             if(!hs) return;
 
-            hs.isXinNghi = !hs.isXinNghi;
-            hs.timeXinNghi = hs.isXinNghi ? Date.now() : null;
+            hs.isXinNghi = !hs.isXinNghi; 
+            if(hs.isXinNghi) {
+                hs.isDiHocTiep = false; // Tắt trạng thái có đi học khi bật vắng
+                hs.timeXinNghi = Date.now();
+            } else {
+                hs.timeXinNghi = null;
+            }
 
             localStorage.setItem('duLieuLopDynamic', JSON.stringify(duLieuLop));
             renderGiaoDien();
         }
 
+        // KHI BẤM NÚT CÓ ĐI HỌC
         function diHocTiep(tenLop, tenHS, el) {
             let lop = duLieuLop.find(l => l.tenLop === tenLop);
             if(!lop) return;
@@ -931,6 +343,10 @@
             if(!hs) return;
 
             hs.isDiHocTiep = !hs.isDiHocTiep;
+            if(hs.isDiHocTiep) {
+                hs.isXinNghi = false; // Tắt trạng thái vắng khi bật có đi học
+                hs.timeXinNghi = null;
+            }
 
             localStorage.setItem('duLieuLopDynamic', JSON.stringify(duLieuLop));
             renderGiaoDien();
@@ -947,8 +363,7 @@
             if(!lopData) return;
 
             let tongHocSinhBanDau = lopData.hocSinh.length;
-            let soNghiHan = 0;
-            let soHocSinhVangMoi = 0;
+            let soNghiHan = 0; 
             let vangList = [];
             const NOW = Date.now();
             
@@ -960,88 +375,40 @@
                 let hs = lopData.hocSinh.find(h => h.ten === ten);
                 if(!hs) return;
 
-                let isActiveStudent = !hs.isXinNghi || hs.isDiHocTiep;
-                let isXinNghiMoi = false;
-
                 if (hs.isXinNghi && hs.timeXinNghi) {
                     if (NOW - parseInt(hs.timeXinNghi) > THOI_GIAN_KHOA) {
                         let btnXN = card.querySelector('.btn-xin-nghi');
                         if(btnXN) btnXN.classList.add('locked');
-                    } else {
-                        isXinNghiMoi = true; 
-                    }
-                }
-
-                let buoiVangMoi = [];
-                let tatCaBuoiVang = [];
-                
-                if(hs.buoiVangData) {
-                    hs.buoiVangData.forEach(bData => {
-                        tatCaBuoiVang.push(bData.buoi);
-                        if (bData.time && (NOW - parseInt(bData.time) <= THOI_GIAN_KHOA)) {
-                            buoiVangMoi.push(bData.buoi); 
-                        }
-                    });
-                }
-
-                let txtVang = card.querySelector('.txt-vang');
-                if (txtVang) {
-                    if (!isActiveStudent) {
-                        txtVang.innerHTML = "Đã xin nghỉ";
-                    } else if (tatCaBuoiVang.length > 0) {
-                        txtVang.innerHTML = `Buổi ${tatCaBuoiVang.sort((a,b)=>a-b).join(', ')}`;
-                    } else {
-                        txtVang.innerHTML = "Không";
                     }
                 }
                 
-                if (!isActiveStudent) {
+                // Học sinh lọt vào danh sách vắng khi: isXinNghi thực sự bật và không bấm đi học tiếp
+                if (hs.isXinNghi) {
                     soNghiHan++; 
-                } else if (buoiVangMoi.length > 0) {
-                    soHocSinhVangMoi++; 
-                }
-
-                if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
                     let chuoiGhiChu = hs.ghiChu ? ` (${hs.ghiChu})` : '';
-                    vangList.push({ stt, ten: `${hs.ten}${chuoiGhiChu}`, sdt, isXinNghiMoi });
+                    vangList.push({ stt, ten: `${hs.ten}${chuoiGhiChu}`, sdt });
                 }
             });
             
-            let siSoTongHienTai = tongHocSinhBanDau - soNghiHan; 
-            let siSoCoMat = siSoTongHienTai - soHocSinhVangMoi;
-            siSoText.innerText = `Sĩ số: ${siSoCoMat}/${siSoTongHienTai}`;
+            let siSoCoMat = tongHocSinhBanDau - soNghiHan; 
+            siSoText.innerText = `Sĩ số: ${siSoCoMat}/${tongHocSinhBanDau}`;
             
             dsVang.innerHTML = vangList.length === 0 ? "Không có ai" : vangList.map(hs => `
                 <div class="vang-item">
                     <span>${hs.stt}. ${hs.ten}</span>
-                    <a href="tel:${hs.sdt}" class="btn-goi ${hs.isXinNghiMoi ? 'disabled' : ''}">📞 Gọi</a>
+                    <a href="tel:${hs.sdt}" class="btn-goi">📞 Gọi</a>
                 </div>`).join('');
         }
 
-        // Hàm xử lý Copy danh sách vắng ra bộ nhớ tạm
         function copyDanhSachVang(tenLop) {
             let lopData = duLieuLop.find(l => l.tenLop === tenLop);
             if(!lopData) return;
 
             let textCopy = `DANH SÁCH VẮNG - LỚP ${tenLop.toUpperCase()}\n`;
             let count = 0;
-            const NOW = Date.now();
 
             lopData.hocSinh.forEach((hs, index) => {
-                let isActiveStudent = !hs.isXinNghi || hs.isDiHocTiep;
-                let isXinNghiMoi = (hs.isXinNghi && hs.timeXinNghi && (NOW - parseInt(hs.timeXinNghi) <= THOI_GIAN_KHOA));
-                
-                let buoiVangMoi = [];
-                if(hs.buoiVangData) {
-                    hs.buoiVangData.forEach(bData => {
-                        if (bData.time && (NOW - parseInt(bData.time) <= THOI_GIAN_KHOA)) {
-                            buoiVangMoi.push(bData.buoi);
-                        }
-                    });
-                }
-
-                // Nếu là học sinh mới xin nghỉ, hoặc học sinh đi học bình thường nhưng tích vắng trong 2h qua
-                if (isXinNghiMoi || (isActiveStudent && buoiVangMoi.length > 0)) {
+                if (hs.isXinNghi) {
                     count++;
                     let chuoiGhiChu = hs.ghiChu ? ` (${hs.ghiChu})` : '';
                     textCopy += `${count}. ${hs.ten}${chuoiGhiChu}\n`;
@@ -1049,11 +416,10 @@
             });
 
             if (count === 0) {
-                alert(`Lớp ${tenLop} hiện tại không có ai vắng mới để copy!`);
+                alert(`Lớp ${tenLop} hiện tại không có ai vắng để copy!`);
                 return;
             }
 
-            // Thực hiện sao chép bằng Clipboard API
             navigator.clipboard.writeText(textCopy).then(() => {
                 alert(`Đã copy danh sách vắng lớp ${tenLop} vào bộ nhớ tạm!`);
             }).catch(err => {
@@ -1093,7 +459,7 @@
             }
             
             let tenLopMoi = dsLop[IndexChon];
-            thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, keyHocSinhMoi(tenLopCu, tenHS) ? tenHS : tenHS);
+            thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, tenHS);
         }
 
         function thựcThiChuyenLopDữLiệu(tenLopCu, tenLopMoi, tenHS) {
@@ -1116,8 +482,6 @@
                 }
             }
         }
-
-        function keyHocSinhMoi(lop, ten) { return true; }
 
         function drag(ev) {
             ev.dataTransfer.setData("text/ten", ev.target.getAttribute('data-ten'));
