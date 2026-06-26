@@ -11,12 +11,20 @@
         .section { display: none; margin-left: 15px; border-left: 1px solid #334155; padding-left: 15px; }
         .time-btn { background: #1e293b; color: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; border: 1px solid #475569; }
         .class-btn { background: #0f172a; border: 1px solid #334155; color: #94a3b8; padding: 12px; margin: 5px 0; border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* STUDENT CARD & TRẠNG THÁI ĐIỂM DANH */
         .student-card { background: rgba(255,255,255,0.03); border: 1px solid #334155; padding: 10px; margin: 8px 0; border-radius: 8px; transition: 0.3s; }
         .is-absent { border: 1px solid #dc2626; background: rgba(220, 38, 38, 0.1); }
+        .is-present { border: 1px solid #10b981; background: rgba(16, 185, 129, 0.1); }
+
         .btn-group { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-        button { border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        button { border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        
+        /* STYLE CHO NÚT MỚI */
+        .btn-yes { background: #10b981; color: white; }
         .btn-no { background: #dc2626; color: white; }
-        .btn-call { background: #2563eb; color: white; text-decoration: none; display: inline-block; padding: 6px 10px; }
+        .btn-call { background: #2563eb; color: white; text-decoration: none; display: inline-block; padding: 6px 10px; border-radius: 4px; font-size: 11px;}
+        
         select { width: 100%; margin-top: 8px; padding: 5px; background: #000; color: #fbbf24; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
         .class-absent-list { margin-top: 10px; padding: 10px; border: 1px dashed #dc2626; color: #f87171; border-radius: 5px; font-size: 0.85em; font-weight: bold; }
         .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; cursor: pointer; }
@@ -24,126 +32,184 @@
 </head>
 <body onload="loadData()">
 
-    <div class="main-btn" onclick="toggle('day2')">► THỨ 2</div>
-    <div id="day2" class="section">
-        <div class="time-btn" onclick="toggle('t18')">18:00 — PHIÊN HỌC</div>
-        <div id="t18" class="section">
+<div class="main-btn" onclick="toggle('thu-3')">► THỨ 3</div>
+<div id="thu-3" class="section">
+    <div class="time-btn" onclick="toggle('t1800_thu-3')">18:00 — PHIÊN HỌC</div>
+    <div id="t1800_thu-3" class="section">
+        
+        <div class="class-btn" onclick="toggle('list-SVIP')">LỚP SVIP <span id="count-SVIP" style="color:#fbbf24;">(0/0)</span> ▼</div>
+        <div id="list-SVIP" class="section" data-id="SVIP">
             
-            <div class="class-btn" onclick="toggle('list1')">LỚP A1 <span id="count-class1" style="color:#fbbf24;">(0/0)</span> ▼</div>
-            <div id="list1" class="section" data-id="class1">
-                <div class="student-card" id="st1">
-                    <div>1. Nguyễn Văn A</div>
-                    <div class="btn-group">
-                        <button class="btn-no" onclick="toggleAttendance('st1', 'class1')">Vắng / Có</button>
-                        <a href="tel:0901234567" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="moveStudentDirect('st1', this.value)">
-                        <option value="">➡️ Chuyển lớp...</option>
-                        <option value="class1">Lớp A1</option>
-                        <option value="class2">Lớp A2</option>
-                    </select>
-                    <select onchange="updateClassAbsentList('class1')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Ốm">Ốm</option>
-                    </select>
+            <div class="student-card" id="st_SVIP_1">
+                <div>1. Nguyễn Minh Phúc</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_1', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_1', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0942916191" class="btn-call">📞 094 291 6191</a>
                 </div>
-                <div class="student-card" id="st2">
-                    <div>2. Trần Thị B</div>
-                    <div class="btn-group">
-                        <button class="btn-no" onclick="toggleAttendance('st2', 'class1')">Vắng / Có</button>
-                        <a href="tel:0901234568" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="moveStudentDirect('st2', this.value)">
-                        <option value="">➡️ Chuyển lớp...</option>
-                        <option value="class1">Lớp A1</option>
-                        <option value="class2">Lớp A2</option>
-                    </select>
-                    <select onchange="updateClassAbsentList('class1')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Ốm">Ốm</option>
-                    </select>
-                </div>
-                <div class="class-absent-list" id="absent-class1">Danh sách vắng: Không có</div>
-                <button class="btn-copy" onclick="copyAbsentList('class1')">📋 Copy DS Vắng</button>
+                <select onchange="moveStudentDirect('st_SVIP_1', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
             </div>
 
-            <div class="class-btn" onclick="toggle('list2')">LỚP A2 <span id="count-class2" style="color:#fbbf24;">(0/0)</span> ▼</div>
-            <div id="list2" class="section" data-id="class2">
-                <div class="student-card" id="st3">
-                    <div>3. Lê Văn C</div>
-                    <div class="btn-group">
-                        <button class="btn-no" onclick="toggleAttendance('st3', 'class2')">Vắng / Có</button>
-                        <a href="tel:0901234569" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="moveStudentDirect('st3', this.value)">
-                        <option value="">➡️ Chuyển lớp...</option>
-                        <option value="class1">Lớp A1</option>
-                        <option value="class2">Lớp A2</option>
-                    </select>
-                    <select onchange="updateClassAbsentList('class2')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Ốm">Ốm</option>
-                    </select>
+            <div class="student-card" id="st_SVIP_2">
+                <div>2. Trần Nguyễn Gia Hân (kẹo)</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_2', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_2', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0911536555" class="btn-call">📞 091 153 6555</a>
                 </div>
-                <div class="student-card" id="st4">
-                    <div>4. Phạm Thị D</div>
-                    <div class="btn-group">
-                        <button class="btn-no" onclick="toggleAttendance('st4', 'class2')">Vắng / Có</button>
-                        <a href="tel:0901234570" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="moveStudentDirect('st4', this.value)">
-                        <option value="">➡️ Chuyển lớp...</option>
-                        <option value="class1">Lớp A1</option>
-                        <option value="class2">Lớp A2</option>
-                    </select>
-                    <select onchange="updateClassAbsentList('class2')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Ốm">Ốm</option>
-                    </select>
-                </div>
-                <div class="class-absent-list" id="absent-class2">Danh sách vắng: Không có</div>
-                <button class="btn-copy" onclick="copyAbsentList('class2')">📋 Copy DS Vắng</button>
+                <select onchange="moveStudentDirect('st_SVIP_2', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
             </div>
+
+            <div class="student-card" id="st_SVIP_3">
+                <div>3. Trần Gia An</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_3', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_3', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0385285928" class="btn-call">📞 038 528 5928</a>
+                </div>
+                <select onchange="moveStudentDirect('st_SVIP_3', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="student-card" id="st_SVIP_4">
+                <div>4. Nguyễn Diệu Vy (susu)</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_4', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_4', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0386865566" class="btn-call">📞 038 686 5566</a>
+                </div>
+                <select onchange="moveStudentDirect('st_SVIP_4', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="student-card" id="st_SVIP_5">
+                <div>5. Đỗ Hoài Dương</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_5', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_5', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0329325053" class="btn-call">📞 032 932 5053</a>
+                </div>
+                <select onchange="moveStudentDirect('st_SVIP_5', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="student-card" id="st_SVIP_6">
+                <div>6. Phạm Tú Uyên</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_SVIP_6', 'SVIP', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_SVIP_6', 'SVIP', false)">Vắng</button>
+                    <a href="tel:0906436736" class="btn-call">📞 090 643 6736</a>
+                </div>
+                <select onchange="moveStudentDirect('st_SVIP_6', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                    <option value="SVIP">Giữ nguyên</option>
+                </select>
+                <select onchange="updateClassAbsentList('SVIP')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="class-absent-list" id="absent-SVIP">Danh sách vắng:<br>Không có</div>
+            <button class="btn-copy" onclick="copyAbsentList('SVIP')">📋 Copy DS Vắng</button>
         </div>
+
     </div>
+</div>
 
     <script>
-        function toggle(id) { document.getElementById(id).style.display = (document.getElementById(id).style.display === 'block') ? 'none' : 'block'; }
+        function toggle(id) { 
+            const el = document.getElementById(id);
+            if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; 
+        }
 
-        function toggleAttendance(sid, classId) {
-            document.getElementById(sid).classList.toggle('is-absent');
+        // Hàm xử lý 2 nút bấm riêng biệt: Có (Xanh) hoặc Vắng (Đỏ)
+        function setAttendance(sid, classId, isPresent) {
+            const card = document.getElementById(sid);
+            if (!card) return;
+
+            if (isPresent) {
+                card.classList.add('is-present');
+                card.classList.remove('is-absent');
+            } else {
+                card.classList.add('is-absent');
+                card.classList.remove('is-present');
+            }
             updateClassAbsentList(classId);
         }
 
         function updateClassAbsentList(classId) {
-            const container = document.getElementById('list' + classId.replace('class', ''));
+            const container = document.getElementById('list-' + classId);
+            if (!container) return;
+
             const cards = container.querySelectorAll('.student-card');
             const absents = Array.from(container.querySelectorAll('.is-absent'));
             
-            document.getElementById('count-' + classId).innerText = `(${cards.length - absents.length}/${cards.length})`;
+            const countEl = document.getElementById('count-' + classId);
+            if(countEl) countEl.innerText = `(${cards.length - absents.length}/${cards.length})`;
 
             const absentNames = absents.map(card => {
-                const name = card.querySelector('div').innerText.split('. ')[1];
+                const fullText = card.querySelector('div').innerText;
+                const name = fullText.includes('. ') ? fullText.split('. ')[1] : fullText;
                 const note = card.querySelectorAll('select')[1].value;
                 return name + (note ? " [" + note + "]" : "");
             });
-            document.getElementById('absent-' + classId).innerHTML = "Danh sách vắng:<br>" + (absentNames.length ? absentNames.join('<br>') : "Không có");
+
+            const absentListEl = document.getElementById('absent-' + classId);
+            if(absentListEl) {
+                absentListEl.innerHTML = "Danh sách vắng:<br>" + (absentNames.length ? absentNames.join('<br>') : "Không có");
+            }
             saveData();
         }
 
         function moveStudentDirect(sid, targetClassId) {
             if (!targetClassId) return;
             const card = document.getElementById(sid);
-            const targetList = document.getElementById('list' + targetClassId.replace('class', ''));
-            targetList.appendChild(card);
-            updateClassAbsentList(targetClassId);
-            updateClassAbsentList('class1');
-            updateClassAbsentList('class2');
-            alert("Đã chuyển lớp!");
+            const targetList = document.getElementById('list-' + targetClassId);
+            
+            if(targetList) {
+                targetList.appendChild(card);
+                refreshAllLists();
+                alert("Đã chuyển lớp!");
+            }
         }
 
         function copyAbsentList(classId) {
@@ -154,7 +220,12 @@
         function saveData() {
             const data = {};
             document.querySelectorAll('.student-card').forEach(card => {
-                data[card.id] = { parent: card.parentElement.id, isAbsent: card.classList.contains('is-absent'), note: card.querySelectorAll('select')[1].value };
+                data[card.id] = { 
+                    parent: card.parentElement.id, 
+                    isAbsent: card.classList.contains('is-absent'), 
+                    isPresent: card.classList.contains('is-present'), 
+                    note: card.querySelectorAll('select')[1].value 
+                };
             });
             localStorage.setItem('classData', JSON.stringify(data));
         }
@@ -166,14 +237,24 @@
                 for (let id in data) {
                     const card = document.getElementById(id);
                     if (card) {
-                        document.getElementById(data[id].parent).appendChild(card);
-                        if (data[id].isAbsent) card.classList.add('is-absent');
-                        card.querySelectorAll('select')[1].value = data[id].note;
+                        const parentEl = document.getElementById(data[id].parent);
+                        if(parentEl) {
+                            parentEl.appendChild(card);
+                            if (data[id].isAbsent) card.classList.add('is-absent');
+                            if (data[id].isPresent) card.classList.add('is-present');
+                            card.querySelectorAll('select')[1].value = data[id].note || "";
+                        }
                     }
                 }
             }
-            updateClassAbsentList('class1');
-            updateClassAbsentList('class2');
+            refreshAllLists();
+        }
+
+        function refreshAllLists() {
+            document.querySelectorAll('[id^="list-"]').forEach(section => {
+                const cId = section.id.replace('list-', '');
+                updateClassAbsentList(cId);
+            });
         }
     </script>
 </body>
