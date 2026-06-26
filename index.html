@@ -25,6 +25,7 @@
         
         select { width: 100%; margin-top: 8px; padding: 5px; background: #000; color: #fbbf24; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
         .class-absent-list { margin-top: 10px; padding: 10px; border: 1px dashed #dc2626; color: #f87171; border-radius: 5px; font-size: 0.85em; font-weight: bold; }
+        .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -53,6 +54,7 @@
                 </div>
 
                 <div class="class-absent-list" id="absent-A1">Danh sách vắng: Không có</div>
+                <button class="btn-copy" onclick="copyAbsentList('A1')">📋 Copy danh sách vắng</button>
             </div>
         </div>
     </div>
@@ -78,8 +80,27 @@
                 return name + (note ? " [" + note + "]" : "");
             });
             
-            document.getElementById('absent-' + className).innerText = 
-                "Danh sách vắng: " + (absents.length ? absents.join(', ') : "Không có");
+            document.getElementById('absent-' + className).innerHTML = 
+                "Danh sách vắng:<br>" + (absents.length ? absents.join('<br>') : "Không có");
+        }
+
+        function copyAbsentList(className) {
+            const container = document.getElementById('list' + className);
+            const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
+                const name = card.querySelector('div').innerText.split('. ')[1];
+                const note = card.querySelector('select').value;
+                return name + (note ? " [" + note + "]" : "");
+            });
+
+            if (absents.length === 0) {
+                alert("Danh sách vắng trống!");
+                return;
+            }
+
+            const textToCopy = "DANH SÁCH VẮNG LỚP " + className + ":\n" + absents.join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Đã copy danh sách vắng!");
+            });
         }
     </script>
 </body>
