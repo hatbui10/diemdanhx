@@ -17,60 +17,43 @@
         button { border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; }
         .btn-yes { background: #059669; color: white; }
         .btn-no { background: #dc2626; color: white; }
-        .btn-move { background: #8b5cf6; color: white; }
         .btn-call { background: #2563eb; color: white; text-decoration: none; display: inline-block; padding: 6px 10px; }
         select { width: 100%; margin-top: 8px; padding: 5px; background: #000; color: #fbbf24; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
         .class-absent-list { margin-top: 10px; padding: 10px; border: 1px dashed #dc2626; color: #f87171; border-radius: 5px; font-size: 0.85em; font-weight: bold; }
-        .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; }
+        .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; cursor: pointer; }
     </style>
 </head>
-<body onload="loadData()"> <!-- Tự động tải dữ liệu khi mở web -->
+<body onload="loadData()">
 
-    <!-- THỨ 2 -->
     <div class="main-btn" onclick="toggle('day2')">► THỨ 2</div>
     <div id="day2" class="section">
         <div class="time-btn" onclick="toggle('t18')">18:00 — PHIÊN HỌC</div>
         <div id="t18" class="section">
             
-            <!-- LỚP A1 -->
             <div class="class-btn" onclick="toggle('listA1')">LỚP A1 ▼</div>
             <div id="listA1" class="section" data-class="A1">
-                
                 <div class="student-card" id="st1">
                     <div>1. Nguyễn Văn A</div>
                     <div class="btn-group">
                         <button class="btn-yes" onclick="setAttendance('st1', false, 'A1')">Có</button>
                         <button class="btn-no" onclick="setAttendance('st1', true, 'A1')">Vắng</button>
-                        <button class="btn-move" onclick="moveStudent('st1', 'listA2', 'A2')">Chuyển A2</button>
                         <a href="tel:0901234567" class="btn-call">📞 Gọi</a>
                     </div>
+                    <select onchange="moveStudentDirect('st1', this.value)">
+                        <option value="">➡️ Chuyển lớp...</option>
+                        <option value="A1">Lớp A1</option>
+                        <option value="A2">Lớp A2</option>
+                    </select>
                     <select onchange="updateClassAbsentList('A1')">
                         <option value="">-- Ghi chú --</option>
                         <option value="Nghỉ phép">Nghỉ phép</option>
                         <option value="Đi muộn">Đi muộn</option>
                     </select>
                 </div>
-
-                <div class="student-card" id="st2">
-                    <div>2. Trần Thị B</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st2', false, 'A1')">Có</button>
-                        <button class="btn-no" onclick="setAttendance('st2', true, 'A1')">Vắng</button>
-                        <button class="btn-move" onclick="moveStudent('st2', 'listA2', 'A2')">Chuyển A2</button>
-                        <a href="tel:0909876543" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('A1')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                    </select>
-                </div>
-
                 <div class="class-absent-list" id="absent-A1">Danh sách vắng: Không có</div>
                 <button class="btn-copy" onclick="copyAbsentList('A1')">📋 Copy DS Vắng A1</button>
             </div>
 
-            <!-- LỚP A2 -->
             <div class="class-btn" onclick="toggle('listA2')">LỚP A2 ▼</div>
             <div id="listA2" class="section" data-class="A2">
                 <div class="class-absent-list" id="absent-A2">Danh sách vắng: Không có</div>
@@ -80,139 +63,83 @@
     </div>
 
     <script>
-        let isLoading = false; // Tránh ghi đè dữ liệu lúc đang load
-
         function toggle(id) {
             const el = document.getElementById(id);
             el.classList.toggle('active');
             el.style.display = el.classList.contains('active') ? 'block' : 'none';
         }
 
-        // ĐIỂM DANH
         function setAttendance(sid, isAbsent, className) {
             const card = document.getElementById(sid);
             isAbsent ? card.classList.add('is-absent') : card.classList.remove('is-absent');
             updateClassAbsentList(className);
         }
 
-        // CHUYỂN LỚP (Hai chiều A1 <-> A2)
-        function moveStudent(sid, targetListId, targetClass) {
+        function moveStudentDirect(sid, targetClass) {
+            if (!targetClass) return;
             const card = document.getElementById(sid);
-            const targetList = document.getElementById(targetListId);
-            targetList.appendChild(card); // Chuyển HTML sang lớp mới
-            
-            // Cập nhật lại logic nút cho đúng lớp mới
-            card.querySelector('.btn-yes').setAttribute('onclick', `setAttendance('${sid}', false, '${targetClass}')`);
-            card.querySelector('.btn-no').setAttribute('onclick', `setAttendance('${sid}', true, '${targetClass}')`);
-            card.querySelector('select').setAttribute('onchange', `updateClassAbsentList('${targetClass}')`);
-            
-            // Đổi nút di chuyển thành chiều ngược lại
-            const moveBtn = card.querySelector('.btn-move');
-            if (targetClass === 'A2') {
-                moveBtn.setAttribute('onclick', `moveStudent('${sid}', 'listA1', 'A1')`);
-                moveBtn.innerText = 'Chuyển A1';
-            } else {
-                moveBtn.setAttribute('onclick', `moveStudent('${sid}', 'listA2', 'A2')`);
-                moveBtn.innerText = 'Chuyển A2';
+            const targetList = document.getElementById('list' + targetClass);
+            if (targetList) {
+                targetList.appendChild(card);
+                card.querySelector('.btn-yes').setAttribute('onclick', `setAttendance('${sid}', false, '${targetClass}')`);
+                card.querySelector('.btn-no').setAttribute('onclick', `setAttendance('${sid}', true, '${targetClass}')`);
+                updateClassAbsentList(targetClass);
+                alert("Đã chuyển sang lớp " + targetClass);
             }
-
-            // Làm mới cả hai danh sách vắng
-            updateClassAbsentList('A1');
-            updateClassAbsentList('A2');
         }
 
-        // CẬP NHẬT DANH SÁCH VÀ LƯU DATA
         function updateClassAbsentList(className) {
             const container = document.getElementById('list' + className);
-            if(!container) return;
-
             const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
-                let text = card.querySelector('div').innerText;
-                const name = text.includes('. ') ? text.split('. ')[1] : text;
-                const note = card.querySelector('select').value;
+                const name = card.querySelector('div').innerText.split('. ')[1];
+                const note = card.querySelectorAll('select')[1].value;
                 return name + (note ? " [" + note + "]" : "");
             });
-            
             document.getElementById('absent-' + className).innerHTML = 
                 "Danh sách vắng:<br>" + (absents.length ? absents.join('<br>') : "Không có");
-            
-            saveData(); // Gọi lưu tự động sau mỗi lần cập nhật
+            saveData();
         }
 
-        // COPY
         function copyAbsentList(className) {
             const container = document.getElementById('list' + className);
             const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
-                let text = card.querySelector('div').innerText;
-                const name = text.includes('. ') ? text.split('. ')[1] : text;
-                const note = card.querySelector('select').value;
+                const name = card.querySelector('div').innerText.split('. ')[1];
+                const note = card.querySelectorAll('select')[1].value;
                 return name + (note ? " [" + note + "]" : "");
             });
-            if (absents.length === 0) { alert("DS vắng trống!"); return; }
+            if (absents.length === 0) { alert("Danh sách trống!"); return; }
             navigator.clipboard.writeText("DS VẮNG LỚP " + className + ":\n" + absents.join('\n'));
-            alert("Đã copy danh sách vắng " + className + "!");
+            alert("Đã copy!");
         }
 
-        // --- HỆ THỐNG LOCAL STORAGE ---
-
         function saveData() {
-            if (isLoading) return; // Nếu đang load thì không lưu đè
-            const students = document.querySelectorAll('.student-card');
             const data = {};
-            
-            students.forEach(card => {
+            document.querySelectorAll('.student-card').forEach(card => {
                 data[card.id] = {
-                    parentList: card.parentElement.id,
+                    parent: card.parentElement.id,
                     className: card.parentElement.getAttribute('data-class'),
                     isAbsent: card.classList.contains('is-absent'),
-                    note: card.querySelector('select').value
+                    note: card.querySelectorAll('select')[1].value
                 };
             });
-            localStorage.setItem('managerData', JSON.stringify(data));
+            localStorage.setItem('classData', JSON.stringify(data));
         }
 
         function loadData() {
-            isLoading = true;
-            const saved = localStorage.getItem('managerData');
-            
+            const saved = localStorage.getItem('classData');
             if (saved) {
                 const data = JSON.parse(saved);
-                for (const [id, info] of Object.entries(data)) {
+                for (let id in data) {
                     const card = document.getElementById(id);
-                    const parent = document.getElementById(info.parentList);
-                    
+                    const parent = document.getElementById(data[id].parent);
                     if (card && parent) {
-                        parent.appendChild(card); // Đưa về đúng lớp đã lưu
-                        
-                        // Khôi phục logic tương tác
-                        card.querySelector('.btn-yes').setAttribute('onclick', `setAttendance('${id}', false, '${info.className}')`);
-                        card.querySelector('.btn-no').setAttribute('onclick', `setAttendance('${id}', true, '${info.className}')`);
-                        card.querySelector('select').setAttribute('onchange', `updateClassAbsentList('${info.className}')`);
-                        
-                        // Đổi trạng thái nút Chuyển lớp tương ứng
-                        const moveBtn = card.querySelector('.btn-move');
-                        if (info.className === 'A2') {
-                            moveBtn.setAttribute('onclick', `moveStudent('${id}', 'listA1', 'A1')`);
-                            moveBtn.innerText = 'Chuyển A1';
-                        } else {
-                            moveBtn.setAttribute('onclick', `moveStudent('${id}', 'listA2', 'A2')`);
-                            moveBtn.innerText = 'Chuyển A2';
-                        }
-
-                        // Khôi phục trạng thái vắng & ghi chú
-                        if (info.isAbsent) card.classList.add('is-absent');
-                        else card.classList.remove('is-absent');
-                        card.querySelector('select').value = info.note;
+                        parent.appendChild(card);
+                        if (data[id].isAbsent) card.classList.add('is-absent');
+                        card.querySelectorAll('select')[1].value = data[id].note;
                     }
                 }
             }
-            
-            // Quét lại toàn bộ và hiển thị danh sách vắng
-            document.querySelectorAll('[data-class]').forEach(el => {
-                updateClassAbsentList(el.getAttribute('data-class'));
-            });
-            
-            isLoading = false;
+            ['A1', 'A2'].forEach(c => updateClassAbsentList(c));
         }
     </script>
 </body>
