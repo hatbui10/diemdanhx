@@ -32,199 +32,241 @@
 </head>
 <body onload="loadData()">
 
-
 <div class="main-btn" onclick="toggle('thu-5')">► THỨ 5</div>
 <div id="thu-5" class="section">
     <div class="time-btn" onclick="toggle('t1830_thu-5')">18:30 — PHIÊN HỌC</div>
     <div id="t1830_thu-5" class="section">
         
         <div class="class-btn" onclick="toggle('list-APOLLO_L5_YEN')">APOLLO L5 - Yến <span id="count-APOLLO_L5_YEN" style="color:#fbbf24;">(0/0)</span> ▼</div>
-        <div id="list-APOLLO_L5_YEN" class="section" data-id="APOLLO_L5_YEN">
+        <div id="list-APOLLO_L5_YEN" class="section" data-id="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">
             
             <div class="student-card" id="st_APOLLO_L5_YEN_1">
                 <div>1. Trần Minh Châu	091 440 2665</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_1', 'APOLLO_L5_YEN', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_1', 'APOLLO_L5_YEN', false)">Vắng</button>
-                    <a href="tel:0000000000" class="btn-call">📞 0000000000</a>
+                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_1', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_1', false)">Vắng</button>
+                    <a href="tel:0914402665" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select onchange="moveStudentDirect('st_APOLLO_L5_YEN_1', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_1', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN">Giữ nguyên</option>
                 </select>
-                <select onchange="updateClassAbsentList('APOLLO_L5_YEN')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_2">
-                <div>2. Nguyễn Trung Hiếu	033 339 9559</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_2', 'APOLLO_L5_YEN', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_2', 'APOLLO_L5_YEN', false)">Vắng</button>
-                    <a href="tel:0000000000" class="btn-call">📞 0000000000</a>
-                </div>
-                <select onchange="moveStudentDirect('st_APOLLO_L5_YEN_2', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN">Giữ nguyên</option>
-                </select>
-                <select onchange="updateClassAbsentList('APOLLO_L5_YEN')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_3">
-                <div>3. Trần Phương Linh (Mít)	035 283 5535</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_3', 'APOLLO_L5_YEN', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_3', 'APOLLO_L5_YEN', false)">Vắng</button>
-                    <a href="tel:0000000000" class="btn-call">📞 0000000000</a>
-                </div>
-                <select onchange="moveStudentDirect('st_APOLLO_L5_YEN_3', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN">Giữ nguyên</option>
-                </select>
-                <select onchange="updateClassAbsentList('APOLLO_L5_YEN')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_4">
-                <div>4. Phạm Công Danh	098 292 0983</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_4', 'APOLLO_L5_YEN', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_4', 'APOLLO_L5_YEN', false)">Vắng</button>
-                    <a href="tel:0000000000" class="btn-call">📞 0000000000</a>
-                </div>
-                <select onchange="moveStudentDirect('st_APOLLO_L5_YEN_4', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN">Giữ nguyên</option>
-                </select>
-                <select onchange="updateClassAbsentList('APOLLO_L5_YEN')">
+                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_1')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
 
-            <div class="class-absent-list" id="absent-APOLLO_L5_YEN">Danh sách vắng:<br>Không có</div>
-            <button class="btn-copy" onclick="copyAbsentList('APOLLO_L5_YEN')">📋 Copy DS Vắng</button>
+            <div class="student-card" id="st_APOLLO_L5_YEN_2">
+                <div>2. Nguyễn Trung Hiếu	033 339 9559</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_2', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_2', false)">Vắng</button>
+                    <a href="tel:0333399559" class="btn-call">📞 Gọi điện</a>
+                </div>
+                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_2', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                </select>
+                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_2')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="bottom-controls">
+                <div class="class-absent-list" id="absent-APOLLO_L5_YEN">Danh sách vắng:<br>Không có</div>
+                <button class="btn-copy" onclick="copyAbsentList('APOLLO_L5_YEN')">📋 Copy DS Vắng</button>
+            </div>
+        </div>
+
+        <div class="class-btn" onclick="toggle('list-APOLLO_L6_NAM')">APOLLO L6 - Nam <span id="count-APOLLO_L6_NAM" style="color:#fbbf24;">(0/0)</span> ▼</div>
+        <div id="list-APOLLO_L6_NAM" class="section" data-id="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">
+            
+            <div class="student-card" id="st_APOLLO_L6_NAM_1">
+                <div>1. Hoàng Văn Đức	097 888 7766</div>
+                <div class="btn-group">
+                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L6_NAM_1', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L6_NAM_1', false)">Vắng</button>
+                    <a href="tel:0978887766" class="btn-call">📞 Gọi điện</a>
+                </div>
+                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L6_NAM_1', this.value)">
+                    <option value="">➡️ Chuyển lớp...</option>
+                </select>
+                <select onchange="updateStudentClassContext('st_APOLLO_L6_NAM_1')">
+                    <option value="">-- Ghi chú --</option>
+                    <option value="Nghỉ phép">Nghỉ phép</option>
+                    <option value="Đi muộn">Đi muộn</option>
+                </select>
+            </div>
+
+            <div class="bottom-controls">
+                <div class="class-absent-list" id="absent-APOLLO_L6_NAM">Danh sách vắng:<br>Không có</div>
+                <button class="btn-copy" onclick="copyAbsentList('APOLLO_L6_NAM')">📋 Copy DS Vắng</button>
+            </div>
         </div>
 
     </div>
 </div>
 
+<script>
+    function toggle(id) { 
+        const el = document.getElementById(id);
+        if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; 
+    }
 
-
-
-
-
-
-
-    <script>
-        function toggle(id) { 
-            const el = document.getElementById(id);
-            if(el) el.style.display = (el.style.display === 'block') ? 'none' : 'block'; 
-        }
-
-        // Hàm xử lý 2 nút bấm riêng biệt: Có (Xanh) hoặc Vắng (Đỏ)
-        function setAttendance(sid, classId, isPresent) {
-            const card = document.getElementById(sid);
-            if (!card) return;
-
-            if (isPresent) {
-                card.classList.add('is-present');
-                card.classList.remove('is-absent');
-            } else {
-                card.classList.add('is-absent');
-                card.classList.remove('is-present');
+    // Tự động tìm tất cả các lớp đang có trên giao diện và nạp vào Dropdown "Chuyển lớp..."
+    function populateClassDropdowns() {
+        const classes = [];
+        document.querySelectorAll('[id^="list-"]').forEach(section => {
+            const classId = section.getAttribute('data-id');
+            const className = section.getAttribute('data-name') || classId;
+            if(classId) {
+                classes.push({ id: classId, name: className });
             }
-            updateClassAbsentList(classId);
-        }
+        });
 
-        function updateClassAbsentList(classId) {
-            const container = document.getElementById('list-' + classId);
-            if (!container) return;
-
-            const cards = container.querySelectorAll('.student-card');
-            const absents = Array.from(container.querySelectorAll('.is-absent'));
-            
-            const countEl = document.getElementById('count-' + classId);
-            if(countEl) countEl.innerText = `(${cards.length - absents.length}/${cards.length})`;
-
-            const absentNames = absents.map(card => {
-                const fullText = card.querySelector('div').innerText;
-                const name = fullText.includes('. ') ? fullText.split('. ')[1] : fullText;
-                const note = card.querySelectorAll('select')[1].value;
-                return name + (note ? " [" + note + "]" : "");
+        document.querySelectorAll('.move-select').forEach(select => {
+            // Giữ lại option đầu tiên
+            select.innerHTML = '<option value="">➡️ Chuyển lớp...</option>';
+            classes.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.text = c.name;
+                select.appendChild(opt);
             });
+        });
+    }
 
-            const absentListEl = document.getElementById('absent-' + classId);
-            if(absentListEl) {
-                absentListEl.innerHTML = "Danh sách vắng:<br>" + (absentNames.length ? absentNames.join('<br>') : "Không có");
-            }
-            saveData();
+    // Điểm danh dựa trực tiếp vào vị trí hiện tại của thẻ học sinh
+    function setAttendance(sid, isPresent) {
+        const card = document.getElementById(sid);
+        if (!card) return;
+
+        if (isPresent) {
+            card.classList.add('is-present');
+            card.classList.remove('is-absent');
+        } else {
+            card.classList.add('is-absent');
+            card.classList.remove('is-present');
         }
+        
+        const currentClassId = card.parentElement.getAttribute('data-id');
+        if(currentClassId) updateClassAbsentList(currentClassId);
+    }
 
-        function moveStudentDirect(sid, targetClassId) {
-            if (!targetClassId) return;
-            const card = document.getElementById(sid);
-            const targetList = document.getElementById('list-' + targetClassId);
+    // Hỗ trợ cập nhật danh sách vắng khi thay đổi "Ghi chú"
+    function updateStudentClassContext(sid) {
+        const card = document.getElementById(sid);
+        if (!card) return;
+        const currentClassId = card.parentElement.getAttribute('data-id');
+        if(currentClassId) updateClassAbsentList(currentClassId);
+    }
+
+    function updateClassAbsentList(classId) {
+        const container = document.getElementById('list-' + classId);
+        if (!container) return;
+
+        const cards = container.querySelectorAll('.student-card');
+        const absents = Array.from(container.querySelectorAll('.is-absent'));
+        
+        const countEl = document.getElementById('count-' + classId);
+        if(countEl) countEl.innerText = `(${cards.length - absents.length}/${cards.length})`;
+
+        const absentNames = absents.map(card => {
+            const fullText = card.querySelector('div').innerText;
+            const name = fullText.includes('. ') ? fullText.split('. ')[1] : fullText;
+            const note = card.querySelectorAll('select')[1].value;
+            return name + (note ? " [" + note + "]" : "");
+        });
+
+        const absentListEl = document.getElementById('absent-' + classId);
+        if(absentListEl) {
+            absentListEl.innerHTML = "Danh sách vắng:<br>" + (absentNames.length ? absentNames.join('<br>') : "Không có");
+        }
+        saveData();
+    }
+
+    // XỬ LÝ CHUYỂN LỚP CHÍNH XÁC
+    function moveStudentDirect(sid, targetClassId) {
+        if (!targetClassId) return;
+        const card = document.getElementById(sid);
+        const targetList = document.getElementById('list-' + targetClassId);
+        
+        if(card && targetList) {
+            const oldClassId = card.parentElement.getAttribute('data-id');
             
-            if(targetList) {
+            // Chèn thẻ học sinh vào trước phần nút điều khiển góc dưới của lớp mới
+            const bottomControls = targetList.querySelector('.bottom-controls');
+            if(bottomControls) {
+                targetList.insertBefore(card, bottomControls);
+            } else {
                 targetList.appendChild(card);
-                refreshAllLists();
-                alert("Đã chuyển lớp!");
             }
-        }
+            
+            // Reset lại trạng thái của thanh chọn lớp về mặc định sau khi chuyển
+            card.querySelector('.move-select').value = "";
 
-        function copyAbsentList(classId) {
-            navigator.clipboard.writeText(document.getElementById('absent-' + classId).innerText);
-            alert("Đã copy!");
+            // Cập nhật lại số lượng sĩ số và danh sách vắng của cả lớp cũ lẫn lớp mới
+            if(oldClassId) updateClassAbsentList(oldClassId);
+            updateClassAbsentList(targetClassId);
+            
+            alert("Đã chuyển lớp thành công!");
         }
+    }
 
-        function saveData() {
-            const data = {};
-            document.querySelectorAll('.student-card').forEach(card => {
+    function copyAbsentList(classId) {
+        navigator.clipboard.writeText(document.getElementById('absent-' + classId).innerText);
+        alert("Đã copy!");
+    }
+
+    function saveData() {
+        const data = {};
+        document.querySelectorAll('.student-card').forEach(card => {
+            if(card.parentElement && card.parentElement.getAttribute('data-id')) {
                 data[card.id] = { 
                     parent: card.parentElement.id, 
                     isAbsent: card.classList.contains('is-absent'), 
                     isPresent: card.classList.contains('is-present'), 
                     note: card.querySelectorAll('select')[1].value 
                 };
-            });
-            localStorage.setItem('classData', JSON.stringify(data));
-        }
+            }
+        });
+        localStorage.setItem('classData', JSON.stringify(data));
+    }
 
-        function loadData() {
-            const saved = localStorage.getItem('classData');
-            if (saved) {
-                const data = JSON.parse(saved);
-                for (let id in data) {
-                    const card = document.getElementById(id);
-                    if (card) {
-                        const parentEl = document.getElementById(data[id].parent);
-                        if(parentEl) {
-                            parentEl.appendChild(card);
-                            if (data[id].isAbsent) card.classList.add('is-absent');
-                            if (data[id].isPresent) card.classList.add('is-present');
-                            card.querySelectorAll('select')[1].value = data[id].note || "";
-                        }
+    function loadData() {
+        populateClassDropdowns(); // Quét danh sách lớp trước
+
+        const saved = localStorage.getItem('classData');
+        if (saved) {
+            const data = JSON.parse(saved);
+            for (let id in data) {
+                const card = document.getElementById(id);
+                const parentEl = document.getElementById(data[id].parent);
+                if (card && parentEl) {
+                    const bottomControls = parentEl.querySelector('.bottom-controls');
+                    if(bottomControls) {
+                        parentEl.insertBefore(card, bottomControls);
+                    } else {
+                        parentEl.appendChild(card);
                     }
+                    
+                    if (data[id].isAbsent) card.classList.add('is-absent');
+                    if (data[id].isPresent) card.classList.add('is-present');
+                    card.querySelectorAll('select')[1].value = data[id].note || "";
                 }
             }
-            refreshAllLists();
         }
+        refreshAllLists();
+    }
 
-        function refreshAllLists() {
-            document.querySelectorAll('[id^="list-"]').forEach(section => {
-                const cId = section.id.replace('list-', '');
-                updateClassAbsentList(cId);
-            });
-        }
-    </script>
+    function refreshAllLists() {
+        document.querySelectorAll('[id^="list-"]').forEach(section => {
+            const cId = section.getAttribute('data-id');
+            if(cId) updateClassAbsentList(cId);
+        });
+    }
+</script>
 </body>
 </html>
