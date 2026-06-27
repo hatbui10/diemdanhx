@@ -1,3 +1,13 @@
+📂 Mở File
+🔄 Reset
+↩ Undo
+↪ Redo
+⌨️ Phím nhanh
+HTML
+CSS
+JS
+💾 LƯU FILE
+CHẠY ▶
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -35,28 +45,23 @@
 
 
     <//2//////////////////////////////////////////////////////////////////////////>
-         <div class="main-btn" onclick="toggle('thu-5')">► THỨ 5</div>
-         <div id="thu-5" class="section">
-         <div class="time-btn" onclick="toggle('t1830_thu-5')">Ca : 18h30</div>
-         <div id="t1830_thu-5" class="section">
+         <div class="main-btn" onclick="toggle('thu-2')">► THỨ 2</div>
+         <div id="thu-2" class="section">
+         <div class="time-btn" onclick="toggle('t1815_thu-2')">Ca : 18h15</div>
+         <div id="t1815_thu-2" class="section">
                 <///2//*************************************************///////>
         
-        <div class="class-btn" onclick="toggle('list-APOLLO_L5_YEN')">APOLLO L5 - Yến <span id="count-APOLLO_L5_YEN" style="color:#fbbf24;">(0/0)</span> ▼</div>
-        <div id="list-APOLLO_L5_YEN" class="section" data-id="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">
-                  
-                <div class="bottom-controls">
-                <div class="class-absent-list" id="absent-APOLLO_L5_YEN">Danh sách vắng:<br>Không có</div>
-                <button class="btn-copy" onclick="copyAbsentList('APOLLO_L5_YEN')">📋 Copy DS Vắng</button>
-                </div>
-    
-            <div class="student-card" id="st_APOLLO_L5_YEN_1">
+        <div class="class-btn" onclick="toggle('list-VICTORYA')">VICTORYA <span id="count-VICTORYA" style="color:#fbbf24;">(0/0)</span> ▼</div>
+        <div id="list-VICTORYA" class="section" data-id="VICTORYA" data-name="VICTORYA">
+            
+            <div class="student-card" id="st_VICTORYA_1">
                 <div>1. Nguyễn An Nhiên (Bơ)	</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_1', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_1', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
+                    <button class="btn-yes" onclick="setAttendance('st_VICTORYA_1', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_VICTORYA_1', false)">Vắng</button>
+                    <a href="tel:0396963955" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_1', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_VICTORYA_1', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
                     <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
             <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
@@ -110,20 +115,20 @@
             <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
             <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
                 </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_1')">
+                <select onchange="updateStudentClassContext('st_VICTORYA_1')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_2">
+            <div class="student-card" id="st_VICTORYA_2">
                 <div>2. Nguyễn Trung Đức (Bon)	</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_2', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_2', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
+                    <button class="btn-yes" onclick="setAttendance('st_VICTORYA_2', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_VICTORYA_2', false)">Vắng</button>
+                    <a href="tel:0339804981" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_2', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_VICTORYA_2', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
                     <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
             <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
@@ -177,20 +182,20 @@
             <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
             <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
                 </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_2')">
+                <select onchange="updateStudentClassContext('st_VICTORYA_2')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_3">
+            <div class="student-card" id="st_VICTORYA_3">
                 <div>3. Đặng Đình Bách	</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_3', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_3', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
+                    <button class="btn-yes" onclick="setAttendance('st_VICTORYA_3', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_VICTORYA_3', false)">Vắng</button>
+                    <a href="tel:0904511462" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_3', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_VICTORYA_3', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
                     <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
             <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
@@ -244,20 +249,20 @@
             <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
             <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
                 </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_3')">
+                <select onchange="updateStudentClassContext('st_VICTORYA_3')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_4">
+            <div class="student-card" id="st_VICTORYA_4">
                 <div>4. Lâm Duy Anh	</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_4', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_4', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
+                    <button class="btn-yes" onclick="setAttendance('st_VICTORYA_4', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_VICTORYA_4', false)">Vắng</button>
+                    <a href="tel:0902239258" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_4', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_VICTORYA_4', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
                     <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
             <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
@@ -311,20 +316,20 @@
             <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
             <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
                 </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_4')">
+                <select onchange="updateStudentClassContext('st_VICTORYA_4')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_5">
+            <div class="student-card" id="st_VICTORYA_5">
                 <div>5. Vũ Nguyễn Hải Anh 23/11/20	</div>
                 <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_5', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_5', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
+                    <button class="btn-yes" onclick="setAttendance('st_VICTORYA_5', true)">Có</button>
+                    <button class="btn-no" onclick="setAttendance('st_VICTORYA_5', false)">Vắng</button>
+                    <a href="tel:0336076895" class="btn-call">📞 Gọi điện</a>
                 </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_5', this.value)">
+                <select class="move-select" onchange="moveStudentDirect('st_VICTORYA_5', this.value)">
                     <option value="">➡️ Chuyển lớp...</option>
                     <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
             <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
@@ -378,488 +383,23 @@
             <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
             <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
                 </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_5')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_6">
-                <div>6. Lan Anh em Tuấn Anh B	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_6', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_6', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_6', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_6')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_7">
-                <div>7. Đặng Khánh Ngân	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_7', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_7', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_7', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_7')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_8">
-                <div>8. Trần Lê Tuệ Linh	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_8', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_8', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_8', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_8')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_9">
-                <div>9. Nguyễn Trâm Anh	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_9', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_9', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_9', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_9')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_10">
-                <div>10. Nguyễn Tú Anh	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_10', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_10', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_10', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_10')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_11">
-                <div>11. Nguyễn Hà My	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_11', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_11', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_11', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_11')">
-                    <option value="">-- Ghi chú --</option>
-                    <option value="Nghỉ phép">Nghỉ phép</option>
-                    <option value="Đi muộn">Đi muộn</option>
-                </select>
-            </div>
-            <div class="student-card" id="st_APOLLO_L5_YEN_12">
-                <div>12. Hoàng Ngọc Phương Linh	</div>
-                <div class="btn-group">
-                    <button class="btn-yes" onclick="setAttendance('st_APOLLO_L5_YEN_12', true)">Có</button>
-                    <button class="btn-no" onclick="setAttendance('st_APOLLO_L5_YEN_12', false)">Vắng</button>
-                    <a href="tel:" class="btn-call">📞 Gọi điện</a>
-                </div>
-                <select class="move-select" onchange="moveStudentDirect('st_APOLLO_L5_YEN_12', this.value)">
-                    <option value="">➡️ Chuyển lớp...</option>
-                    <option value="APOLLO_L5_YEN" data-name="APOLLO L5 - Yến">APOLLO L5 - Yến</option>
-            <option value="APOLLO_L6_NAM" data-name="APOLLO L6 - Nam">APOLLO L6 - Nam</option>
-            <option value="class1" data-name="LỚP A1">LỚP A1</option>
-            <option value="class2" data-name="LỚP A2">LỚP A2</option>
-            <option value="SVIP" data-name="SVIP - L4-7/Lê Thu Hà">SVIP - L4-7/Lê Thu Hà</option>
-            <option value="SKY_KID" data-name="SKY - KID">SKY - KID</option>
-            <option value="SMART_KID" data-name="SMART-KID">SMART-KID</option>
-            <option value="CLOUDKID_MG1" data-name="CLOUD-KID MG+1">CLOUD-KID MG+1</option>
-            <option value="OZON_L23_NGOHANG" data-name="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng</option>
-            <option value="MICKEY_L23_THIPHUONG" data-name="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
-            <option value="OXFORD_L4_THIPHUONG" data-name="OXFORD L4/Thu Phương">OXFORD L4/Thu Phương</option>
-            <option value="QUEST_L4_THUPHUONG" data-name="QUEST - L4 Thu Phương">QUEST - L4 Thu Phương</option>
-            <option value="CAMBRIDGE_L4_NHUNG" data-name="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
-            <option value="KING_L4_THUPHUONG" data-name="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY_L4_MINHPHUONG" data-name="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND_L5_TAN" data-name="KIND L5 - Tân">KIND L5 - Tân</option>
-            <option value="LIKE_L5_THUPHUONG" data-name="LIKE L5-Thu Phương">LIKE L5-Thu Phương</option>
-            <option value="SMILE_L6_HAAN" data-name="SMILE-L6-Hà An">SMILE-L6-Hà An</option>
-            <option value="STAR_L6_THANHTHAO" data-name="STAR-L6-Thanh Thảo">STAR-L6-Thanh Thảo</option>
-            <option value="GOOD_L6_HAAN" data-name="GOOD-L6-Hà An">GOOD-L6-Hà An</option>
-            <option value="MARS_L6_NGOHANG" data-name="MARS - L6-Ngô Hằng">MARS - L6-Ngô Hằng</option>
-            <option value="PARIS_L6_MINHPHUONG" data-name="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC" data-name="EVIC">EVIC</option>
-            <option value="KID_L7_THANHTHAO" data-name="KID - L7- Thanh Thảo">KID - L7- Thanh Thảo</option>
-            <option value="BOSS_VIP_L7_LETHUHA" data-name="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON_L7_TRAMY" data-name="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA_L7_THUHA" data-name="ILA-L7/Thu Hà">ILA-L7/Thu Hà</option>
-            <option value="DELTA_L7_PHUONG" data-name="DELTA-L7/Phương">DELTA-L7/Phương</option>
-            <option value="HAPPY_L8_MAILY" data-name="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="SUN_L8_MAILY" data-name="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="HIGH_L8_THUHA" data-name="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE_L8_TRAMY" data-name="HOPE-L8/TRÀ MY">HOPE-L8/TRÀ MY</option>
-            <option value="BIG_L9_MAILY" data-name="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER_L9_THUHA" data-name="SUPER - L9/Thu Hà">SUPER - L9/Thu Hà</option>
-            <option value="SEA_L9_THUHA" data-name="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC_L9_THUHA" data-name="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN_L10_THUHA" data-name="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART_L10_HAAN" data-name="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD_L10_HAAN" data-name="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY_L10_THUHA" data-name="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN_L11_LETHUHA" data-name="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="OCEAN_L11" data-name="OCEAN-L11">OCEAN-L11</option>
-            <option value="OCE" data-name="OCE">OCE</option>
-            <option value="VICTORYA" data-name="VICTORYA">VICTORYA</option>
-            <option value="ATHENA_L12_MAILY" data-name="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS_WONDERFUL_THUHA" data-name="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX" data-name="SPACEX">SPACEX</option>
-            <option value="FUN_IE_L12_LETHUHA" data-name="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="IELTS_326" data-name="IELTS 3/26">IELTS 3/26</option>
-            <option value="L12_BLUE" data-name="L12-BLUE">L12-BLUE</option>
-            <option value="E1A_L12_LETHUHA" data-name="E1A - L12/ Lê Thu Hà">E1A - L12/ Lê Thu Hà</option>
-                </select>
-                <select onchange="updateStudentClassContext('st_APOLLO_L5_YEN_12')">
+                <select onchange="updateStudentClassContext('st_VICTORYA_5')">
                     <option value="">-- Ghi chú --</option>
                     <option value="Nghỉ phép">Nghỉ phép</option>
                     <option value="Đi muộn">Đi muộn</option>
                 </select>
             </div>
 
-           
+            <div class="bottom-controls">
+                <div class="class-absent-list" id="absent-VICTORYA">Danh sách vắng:<br>Không có</div>
+                <button class="btn-copy" onclick="copyAbsentList('VICTORYA')">📋 Copy DS Vắng</button>
+            </div>
         </div>
-                <///2//****************Dán lớp khác ở ngay bên dưới*********************************///////>
+                <///2//****************Dán lớp tiếp theo ở ngay bên dưới dòng này*********************************///////>
     </div>
 </div>;
-  <//2//////////////////////////////////////////////////////////////////////////>
+  <//2//////////////////////////Dán Thứ tiếp theo xuông dưới dòng này////////////////////////////////////////////////>
+
 
 
 
