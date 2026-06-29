@@ -1,443 +1,106 @@
-📂 Mở File
-🔄 Reset
-↩ Undo
-↪ Redo
-⌨️ Phím nhanh
-HTML
-CSS
-JS
-💾 LƯU FILE
-CHẠY ▶
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Tự Động Phân Lịch & Điểm Danh</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>Premium Class Manager</title>
     <style>
-        :root {
-            --bg-color: #0c0d0f;
-            --card-bg: #1e1e1e;
-            --text-color: #d1d5db;
-            --accent-color: #fbbf24;
-            --border-color: #334155;
-            --ca-bg: #0f172a;
-            --lop-bg: #1a202c;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 15px;
-        }
-
-        h1 {
-            text-align: center;
-            color: var(--accent-color);
-            font-size: 22px;
-            text-transform: uppercase;
-        }
-
-        /* Khu vực Upload File */
-        .upload-box {
-            background-color: #1a202c;
-            border: 2px dashed var(--accent-color);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .upload-box input {
-            display: none;
-        }
-
-        .upload-label {
-            background-color: var(--accent-color);
-            color: #000;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        /* Thanh chọn Thứ */
-        .thu-navigation {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 20px;
-        }
-
-        .thu-btn {
-            background-color: #252525;
-            color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 12px 2px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 13px;
-            text-align: center;
-        }
-
-        .thu-btn.active {
-            background-color: var(--accent-color);
-            color: #000;
-            border-color: var(--accent-color);
-        }
-
-        /* Giao diện Ca & Lớp */
-        .ca-box {
-            background-color: var(--ca-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow: hidden;
-        }
-
-        .ca-header {
-            background: linear-gradient(90deg, #1e293b, #334155);
-            padding: 12px 15px;
-            font-weight: bold;
-            font-size: 15px;
-            color: #fff;
-        }
-
-        .ca-content { padding: 10px; }
-
-        .lop-box {
-            background-color: var(--lop-bg);
-            border: 1px solid #2d3748;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .lop-header {
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-color);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .lop-content {
-            padding: 0 10px 10px 10px;
-            display: none;
-            border-top: 1px solid #2d3748;
-        }
-
-        /* Bảng hiển thị học sinh */
-        .student-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-
-        .student-table th, .student-table td {
-            padding: 10px 6px;
-            text-align: left;
-            border-bottom: 1px solid #2d3748;
-        }
-
-        .btn-call {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: bold;
-            white-space: nowrap;
-        }
-
-        /* Dropdown chọn lý do nghỉ học */
-        .reason-select {
-            background-color: #2d3748;
-            color: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 4px;
-            font-size: 12px;
-            width: 100%;
-        }
-
-        /* Đánh dấu màu sắc khi học sinh nghỉ có lý do */
-        tr.has-reason {
-            background-color: rgba(231, 76, 60, 0.15); /* Màu đỏ nhạt nền hàng */
-        }
+        body { background: #0c0d0f; color: #d1d5db; font-family: 'Segoe UI', sans-serif; margin: 30px 3px 0 3px; }
+        .main-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid #fbbf24; color: #fbbf24; padding: 20px; text-align: center; border-radius: 12px; cursor: pointer; font-weight: bold; }
         
-        tr.has-reason td {
-            color: #f87171;
-        }
-
-        .icon::after { content: ' ▶'; font-size: 10px; }
-        .open .icon::after { content: ' ▼'; }
-        .show { display: block !important; }
+        .section { display: none; margin-left: 15px; border-left: 1px solid #334155; padding-left: 15px; }
+        .active { display: block; }
+        
+        .time-btn { background: #1e293b; color: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; border: 1px solid #475569; }
+        .class-btn { background: #0f172a; border: 1px solid #334155; color: #94a3b8; padding: 12px; margin: 5px 0; border-radius: 6px; cursor: pointer; }
+        
+        .student-card { background: rgba(255,255,255,0.03); border: 1px solid #334155; padding: 10px; margin: 8px 0; border-radius: 8px; transition: 0.3s; }
+        .is-absent { border: 1px solid #dc2626; background: rgba(220, 38, 38, 0.1); }
+        
+        .btn-group { display: flex; gap: 5px; margin-top: 8px; }
+        button { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
+        .btn-yes { background: #059669; color: white; }
+        .btn-no { background: #dc2626; color: white; }
+        .btn-call { background: #2563eb; color: white; text-decoration: none; display: inline-block; padding: 6px 12px; }
+        
+        select { width: 100%; margin-top: 8px; padding: 5px; background: #000; color: #fbbf24; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
+        .class-absent-list { margin-top: 10px; padding: 10px; border: 1px dashed #dc2626; color: #f87171; border-radius: 5px; font-size: 0.85em; font-weight: bold; }
+        .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-    <h1>📅 HỆ THỐNG TỰ ĐỘNG XỬ LÝ LỊCH HỌC</h1>
+    <div class="main-btn" onclick="toggle('day2')">► THỨ 2</div>
+    
+    <div id="day2" class="section">
+        <div class="time-btn" onclick="toggle('t18')">18:00 — PHIÊN HỌC</div>
+        <div id="t18" class="section">
+            <div class="class-btn" onclick="toggle('listA1')">LỚP A1 ▼</div>
+            <div id="listA1" class="section" data-class="A1">
+                
+                <div class="student-card" id="st1">
+                    <div>1. Nguyễn Văn A</div>
+                    <div class="btn-group">
+                        <button class="btn-yes" onclick="setAttendance('st1', false, 'A1')">Có mặt</button>
+                        <button class="btn-no" onclick="setAttendance('st1', true, 'A1')">Vắng</button>
+                        <a href="tel:0901234567" class="btn-call">📞 Gọi</a>
+                    </div>
+                    <select onchange="updateClassAbsentList('A1')">
+                        <option value="">-- Ghi chú --</option>
+                        <option value="Nghỉ phép">Nghỉ phép</option>
+                        <option value="Đi muộn">Đi muộn</option>
+                        <option value="Quên sách">Quên sách</option>
+                    </select>
+                </div>
 
-    <div class="upload-box">
-        <p id="upload-status" style="margin-top:0;">Chưa nạp dữ liệu. Vui lòng chọn file danh sách Excel!</p>
-        <label for="excel-file" class="upload-label">📁 Chọn File Excel (.xlsx / .csv)</label>
-        <input type="file" id="excel-file" accept=".xlsx, .xls, .csv" onchange="handleFile(this)">
+                <div class="class-absent-list" id="absent-A1">Danh sách vắng: Không có</div>
+                <button class="btn-copy" onclick="copyAbsentList('A1')">📋 Copy danh sách vắng</button>
+            </div>
+        </div>
     </div>
-
-    <div class="thu-navigation">
-        <button class="thu-btn active" onclick="changeThu('Thu 2', this)">Thứ 2</button>
-        <button class="thu-btn" onclick="changeThu('Thu 3', this)">Thứ 3</button>
-        <button class="thu-btn" onclick="changeThu('Thu 4', this)">Thứ 4</button>
-        <button class="thu-btn" onclick="changeThu('Thu 5', this)">Thứ 5</button>
-        <button class="thu-btn" onclick="changeThu('Thu 6', this)">Thứ 6</button>
-        <button class="thu-btn" onclick="changeThu('Thu 7', this)">Thứ 7</button>
-        <button class="thu-btn" onclick="changeThu('Chu Nhat', this)">Chủ Nhật</button>
-    </div>
-
-    <div id="schedule-container"></div>
 
     <script>
-        // Các biến lưu trữ dữ liệu toàn cục
-        let processedDatabase = {}; 
-        let activeThu = "Thu 2";
-        let absenceReasons = JSON.parse(localStorage.getItem('absenceReasons')) || {};
-
-        // 1. HÀM TỰ ĐỘNG ĐỌC VÀ PHÂN TÍCH CẤU TRÚC FILE EXCEL
-        function handleFile(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            document.getElementById('upload-status').innerText = "⌛ Đang xử lý phân tích dữ liệu...";
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, {type: 'array'});
-                
-                // Lấy trang tính đầu tiên trong file Excel làm chuẩn
-                const firstSheetName = workbook.SheetNames[0];
-                const worksheet = workbook.Sheets[firstSheetName];
-                
-                // Chuyển dữ liệu thành dạng mảng 2 chiều dễ duyệt dòng-cột
-                const rows = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-                
-                // Reset lại database cũ trước khi nạp mới
-                processedDatabase = { "Thu 2": {}, "Thu 3": {}, "Thu 4": {}, "Thu 5": {}, "Thu 6": {}, "Thu 7": {}, "Chu Nhat": {} };
-
-                // Duyệt qua từng cột trong hàng đầu tiên để tìm tên các lớp học
-                if(rows.length > 0) {
-                    const headerRow = rows[0];
-                    
-                    for(let colIndex = 0; colIndex < headerRow.length; colIndex += 3) {
-                        let className = headerRow[colIndex];
-                        let scheduleInfo = rows[1] ? rows[1][colIndex] : '';
-
-                        if (className && className !== 'Điện thoại' && className !== 'TT' && className !== 'I') {
-                            // Làm sạch chuỗi tên lớp phòng trường hợp lỗi khoảng cách dữ liệu trống
-                            className = className.toString().trim();
-                            scheduleInfo = scheduleInfo ? scheduleInfo.toString().trim() : '';
-
-                            // Xác định xem lớp học rơi vào những Thứ nào và những Ca nào thông qua dòng thông tin lịch
-                            let foundSchedule = parseSchedule(scheduleInfo, className);
-
-                            // Tiến hành bốc tách danh sách học sinh của cột lớp hiện tại
-                            let studentsInClass = [];
-                            let sttCounter = 1;
-                            for(let rowIndex = 2; rowIndex < rows.length; rowIndex++) {
-                                let studentName = rows[rowIndex][colIndex + 1];
-                                let studentPhone = rows[rowIndex][colIndex + 2];
-
-                                if(studentName && studentName.toString().trim() !== '-' && studentName.toString().trim() !== '') {
-                                    // Định dạng lại chuẩn hiển thị số điện thoại (thêm số 0 nếu Excel làm mất đầu số)
-                                    let cleanPhone = studentPhone ? studentPhone.toString().trim() : '';
-                                    if(cleanPhone && !cleanPhone.startsWith('0') && cleanPhone.length >= 9) {
-                                        cleanPhone = '0' + cleanPhone;
-                                    }
-
-                                    studentsInClass.push({
-                                        stt: sttCounter++,
-                                        name: studentName.toString().trim(),
-                                        phone: cleanPhone
-                                    });
-                                }
-                            }
-
-                            // Đổ dữ liệu đã bốc tách phân nhóm vào từng Thứ và Ca tương ứng tự động
-                            if(studentsInClass.length > 0) {
-                                foundSchedule.forEach(sch => {
-                                    if(!processedDatabase[sch.thu]) processedDatabase[sch.thu] = {};
-                                    if(!processedDatabase[sch.thu][sch.ca]) processedDatabase[sch.thu][sch.ca] = {};
-                                    
-                                    // Tạo bản sao danh sách để không lỗi ghi đè chỉ số STT chéo các ngày học
-                                    processedDatabase[sch.thu][sch.ca][className] = studentsInClass;
-                                });
-                            }
-                        }
-                    }
-                }
-
-                document.getElementById('upload-status').innerHTML = "✅ Đã tải và tự động phân lịch thành công!";
-                renderSchedule();
-            };
-
-            reader.readAsArrayBuffer(file);
+        function toggle(id) {
+            const el = document.getElementById(id);
+            el.classList.toggle('active');
+            el.style.display = el.classList.contains('active') ? 'block' : 'none';
         }
 
-        // 2. BỘ PHÂN TÍCH THÔNG MINH: Tự bóc tách chuỗi lịch học ("T2-1/158 Thứ 2+4 từ 18h15-19h45")
-        function parseSchedule(infoStr, className) {
-            let results = [];
-            let lowerStr = infoStr.toLowerCase();
+        function setAttendance(sid, isAbsent, className) {
+            const card = document.getElementById(sid);
+            isAbsent ? card.classList.add('is-absent') : card.classList.remove('is-absent');
+            updateClassAbsentList(className);
+        }
 
-            // Mặc định giả định nếu không tìm thấy chuỗi thời gian cụ thể
-            let caHoc = "18h30 - 20h00"; 
-            if(lowerStr.includes("18h15") || lowerStr.includes("18h15-19h45")) caHoc = "18h15 - 19h45";
-            if(lowerStr.includes("9h30") || lowerStr.includes("09h30")) caHoc = "09h30 - 11h00";
-            if(lowerStr.includes("16h00") || lowerStr.includes("16h00")) caHoc = "16h00 - 17h30";
+        function updateClassAbsentList(className) {
+            const container = document.getElementById('list' + className);
+            const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
+                const name = card.querySelector('div').innerText.split('. ')[1];
+                const note = card.querySelector('select').value;
+                return name + (note ? " [" + note + "]" : "");
+            });
+            
+            document.getElementById('absent-' + className).innerHTML = 
+                "Danh sách vắng:<br>" + (absents.length ? absents.join('<br>') : "Không có");
+        }
 
-            // Kiểm tra các từ khóa chỉ định ngày học
-            let luongThu = [];
-            if(lowerStr.includes("thứ 2") || lowerStr.includes("t2") || lowerStr.includes("thứ 2+4") || lowerStr.includes("t2+4") || lowerStr.includes("t2+t6")) luongThu.push("Thu 2");
-            if(lowerStr.includes("thứ 3") || lowerStr.includes("t3")) luongThu.push("Thu 3");
-            if(lowerStr.includes("thứ 4") || lowerStr.includes("t4") || lowerStr.includes("t2+4") || lowerStr.includes("thứ 2+4")) luongThu.push("Thu 4");
-            if(lowerStr.includes("thứ 5") || lowerStr.includes("t5")) luongThu.push("Thu 5");
-            if(lowerStr.includes("thứ 6") || lowerStr.includes("t6") || lowerStr.includes("t2+t6")) luongThu.push("Thu 6");
-            if(lowerStr.includes("thứ 7") || lowerStr.includes("t7")) luongThu.push("Thu 7");
-            if(lowerStr.includes("chủ nhật") || lowerStr.includes("cn")) luongThu.push("Chu Nhat");
-
-            // Trường hợp dữ liệu đặc biệt của lớp BIG 9 MAI LY (Học Ca khác nhau chéo ngày)
-            if(className.includes("BIG 9 MAI LY") || lowerStr.includes("t4 18h15 cn 9h30")) {
-                return [
-                    { thu: "Thu 4", ca: "18h15 - 19h45" },
-                    { thu: "Chu Nhat", ca: "09h30 - 11h00" }
-                ];
-            }
-
-            // Nếu không quét ra được thứ nào, gán tạm vào Thứ 2 để tránh mất dữ liệu
-            if(luongThu.length === 0) luongThu.push("Thu 2");
-
-            luongThu.forEach(t => {
-                results.push({ thu: t, ca: caHoc });
+        function copyAbsentList(className) {
+            const container = document.getElementById('list' + className);
+            const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
+                const name = card.querySelector('div').innerText.split('. ')[1];
+                const note = card.querySelector('select').value;
+                return name + (note ? " [" + note + "]" : "");
             });
 
-            return results;
-        }
-
-        // 3. HÀM VẼ GIAO DIỆN RA MÀN HÌNH THEO NGÀY ĐƯỢC CHỌN
-        function renderSchedule() {
-            const container = document.getElementById('schedule-container');
-            container.innerHTML = '';
-
-            const dayData = processedDatabase[activeThu];
-            if (!dayData || Object.keys(dayData).length === 0) {
-                container.innerHTML = '<div style="text-align:center; padding:30px; color:#64748b;">Không tìm thấy lớp học nào cho ngày này hoặc chưa nạp File Excel.</div>';
+            if (absents.length === 0) {
+                alert("Danh sách vắng trống!");
                 return;
             }
 
-            // Duyệt đổ các Ca
-            for (const [caTime, lops] of Object.entries(dayData)) {
-                if(Object.keys(lops).length === 0) continue;
-
-                const caBox = document.createElement('div');
-                caBox.className = 'ca-box';
-
-                let lopHtml = '';
-                // Duyệt đổ các Lớp trong Ca
-                for (const [lopName, students] of Object.entries(lops)) {
-                    lopHtml += `
-                        <div class="lop-box">
-                            <div class="lop-header" onclick="toggleLop(this)">
-                                <span>🏫 Lớp: ${lopName} (${students.length} Học sinh)</span>
-                                <span class="icon"></span>
-                            </div>
-                            <div class="lop-content">
-                                <table class="student-table">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:10%">STT</th>
-                                            <th style="width:40%">Họ Tên</th>
-                                            <th style="width:25%">Gọi Điện</th>
-                                            <th style="width:25%">Lý Do Nghỉ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${students.map(s => {
-                                            // Tạo khoá ID định danh duy nhất cho từng học sinh để lưu lý do nghỉ
-                                            const uniqueStudentKey = `${activeThu}_${caTime}_${lopName}_${s.name}`;
-                                            const savedReason = absenceReasons[uniqueStudentKey] || "";
-                                            const rowClass = savedReason ? "has-reason" : "";
-
-                                            return `
-                                                <tr id="row_${btoa(unescape(encodeURIComponent(uniqueStudentKey))).replace(/=/g, '')}" class="${rowClass}">
-                                                    <td>${s.stt}</td>
-                                                    <td><strong>${s.name}</strong></td>
-                                                    <td><a href="tel:${s.phone}" class="btn-call">📞 Gọi ngay</a></td>
-                                                    <td>
-                                                        <select class="reason-select" onchange="updateAbsenceReason('${uniqueStudentKey}', this.value, this)">
-                                                            <option value="">-- Đi học --</option>
-                                                            <option value="Ốm" ${savedReason === 'Ốm' ? 'selected' : ''}>🤒 Bị ốm</option>
-                                                            <option value="Về quê" ${savedReason === 'Về quê' ? 'selected' : ''}>🏡 Về quê</option>
-                                                            <option value="Quên lịch" ${savedReason === 'Quên lịch' ? 'selected' : ''}>⏰ Quên lịch</option>
-                                                            <option value="Trùng lịch" ${savedReason === 'Trùng lịch' ? 'selected' : ''}>📚 Trùng lịch học</option>
-                                                            <option value="Khác" ${savedReason === 'Khác' ? 'selected' : ''}>❓ Lý do khác</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                            `;
-                                        }).join('')}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                caBox.innerHTML = `
-                    <div class="ca-header">⏰ Ca học: ${caTime}</div>
-                    <div class="ca-content">${lopHtml}</div>
-                `;
-                container.appendChild(caBox);
-            }
-        }
-
-        // 4. LOGIC TƯƠNG TÁC: Đánh dấu lý do học sinh nghỉ học và đổi màu cảnh báo
-        function updateAbsenceReason(studentKey, value, selectElement) {
-            // Lưu lý do vào bộ nhớ tạm toàn cục
-            if(value === "") {
-                delete absenceReasons[studentKey];
-            } else {
-                absenceReasons[studentKey] = value;
-            }
-
-            // Lưu trực tiếp vào LocalStorage máy để tránh bị mất khi làm mới trang
-            localStorage.setItem('absenceReasons', JSON.stringify(absenceReasons));
-
-            // Đổi màu trực quan dòng học sinh đó ngay trên màn hình
-            const rowElement = selectElement.closest('tr');
-            if(value !== "") {
-                rowElement.classList.add('has-reason');
-            } else {
-                rowElement.classList.remove('has-reason');
-            }
-        }
-
-        // Thay đổi Thứ khi click nút điều hướng
-        function changeThu(thuKey, button) {
-            document.querySelectorAll('.thu-btn').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            activeThu = thuKey;
-            renderSchedule();
-        }
-
-        // Đóng mở hộp danh sách học sinh của từng lớp học
-        function toggleLop(headerElement) {
-            const content = headerElement.nextElementSibling;
-            content.classList.toggle('show');
-            headerElement.classList.toggle('open');
+            const textToCopy = "DANH SÁCH VẮNG LỚP " + className + ":\n" + absents.join('\n');
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Đã copy danh sách vắng!");
+            });
         }
     </script>
 </body>
