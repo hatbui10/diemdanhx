@@ -21,7 +21,9 @@
         .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fafafa; }
         
         /* Tiêu đề dòng trên cùng */
-        .box-title { font-weight: bold; font-size: 1.1em; color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-bottom: 10px; }
+        .box-header { border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-bottom: 10px; }
+        .box-title { font-weight: bold; font-size: 1.1em; color: #007bff; display: inline-block; }
+        .box-stats { font-size: 0.9em; color: #666; margin-top: 4px; font-weight: 500; }
         
         /* Khu vực danh sách vắng ở trên */
         .absent-section { background: #fff5f5; border: 1px dashed #e53e3e; border-radius: 10px; padding: 10px; margin-bottom: 15px; }
@@ -58,7 +60,7 @@
         .student-item.absent { background-color: #ffe6e6; border-radius: 10px; }
         
         /* Nút xóa hộp lớp học */
-        .btn-delete-box { background: #dc3545; padding: 5px 10px; font-size: 0.8em; width: auto; border-radius: 5px; display: inline-block; float: right; margin-top: -5px;}
+        .btn-delete-box { background: #dc3545; padding: 5px 10px; font-size: 0.8em; width: auto; border-radius: 5px; display: inline-block; float: right; margin-top: -2px;}
         .btn-delete-box:hover { background: #bd2130; }
     </style>
 </head>
@@ -85,7 +87,7 @@
             { id: "hs_12A1_03", ten: "Đặng Đình Bách", sdt: "0904511462" },
             { id: "hs_12A1_04", ten: "Lâm Duy Anh", sdt: "0902239258" },
             { id: "hs_12A1_05", ten: "Vũ Nguyễn Hải Anh 23/11/20", sdt: "0336076895" },
-            { id: "hs_12A1_06", ten:"Lan Anh em Tuấn Anh B", sdt: "KhôngcóSĐT" },
+            { id: "hs_12A1_06", ten: "Lan Anh em Tuấn Anh B", sdt: "KhôngcóSĐT" },
             { id: "hs_12A1_07", ten: "Đặng Khánh Ngân", sdt: "0942093566" },
             { id: "hs_12A1_08", ten: "Trần Lê Tuệ Linh", sdt: "0988742202" },
             { id: "hs_12A1_09", ten: "Nguyễn Trâm Anh", sdt: "0919403848" },
@@ -99,11 +101,9 @@
         ]
     };
     
-    // Khởi tạo hoặc tải dữ liệu cũ từ localStorage
     let danhSachVangData = JSON.parse(localStorage.getItem('danhSachVangData')) || {};
     let danhSachHopList = JSON.parse(localStorage.getItem('danhSachHopList')) || [];
 
-    // Danh mục ghi chú nhanh
     const ghiChuOptions = {
         "": "Chưa chọn lý do",
         "muon": "Đi muộn",
@@ -112,7 +112,6 @@
         "khac": "Lý do khác..."
     };
 
-    // Hàm gọi khi người dùng chủ động nhấn nút XÁC NHẬN để tạo lớp mới
     function taoHopMoi() {
         const ca = document.getElementById('caHoc').value;
         const lopKey = document.getElementById('tenLop').value;
@@ -121,17 +120,13 @@
         
         const boxId = 'box_' + Date.now(); 
         
-        // Cập nhật bộ nhớ dữ liệu vắng
         danhSachVangData[boxId] = { _lopKey: lopKey }; 
-        
-        // Lưu thông tin cấu trúc hộp vào danh sách quản lý
         danhSachHopList.push({ boxId, title: `${ca} - ${lopText} - ${phong}`, lopKey });
         
         luuVaoLocalStorage();
         dungGiaoDienHop(boxId, `${ca} - ${lopText} - ${phong}`, lopKey);
     }
 
-    // Hàm phụ trách render giao diện HTML cho từng hộp lớp học
     function dungGiaoDienHop(boxId, boxTitle, lopKey) {
         const container = document.getElementById('danhSachHop');
         const danhSachHocSinhCuaLop = dataHocSinh[lopKey] || [];
@@ -141,9 +136,10 @@
         div.id = boxId;
         
         div.innerHTML = `
-            <div class="box-title">
-                <span>${boxTitle}</span>
+            <div class="box-header">
                 <button class="btn-delete-box" onclick="xoaHopLop(event, '${boxId}')">Xóa</button>
+                <div class="box-title">${boxTitle}</div>
+                <div class="box-stats">Sĩ số: <span class="present-count">0</span>/${danhSachHocSinhCuaLop.length}</div>
             </div>
             <div class="list" style="display:none;">
                 <div class="absent-section" style="display: none;">
@@ -155,7 +151,7 @@
         `;
         
         div.onclick = function(e) { 
-            if(e.target === this || e.target.className === 'box-title' || e.target.tagName === 'SPAN') {
+            if(e.target === this || e.target.className === 'box-header' || e.target.className === 'box-title' || e.target.className === 'box-stats') {
                 const list = this.querySelector('.list');
                 list.style.display = list.style.display === 'none' ? 'block' : 'none';
             }
@@ -163,12 +159,11 @@
 
         const mainListDiv = div.querySelector('.main-student-list');
         
-        danhSachHocSinhCuaLop.forEach(hs => {
+        dataHocSinh[lopKey].forEach(hs => {
             const item = document.createElement('div');
             item.className = 'student-item';
             item.setAttribute('data-id', hs.id);
             
-            // Kiểm tra trạng thái lưu trữ cũ xem học sinh này có đang vắng không
             const đangVang = danhSachVangData[boxId] && danhSachVangData[boxId][hs.id] !== undefined;
             if (đangVang) item.classList.add('absent');
 
@@ -181,7 +176,6 @@
                 selectOptions += `<option value="${key}" ${selected}>${textHienThi}</option>`;
             }
 
-            // ĐÃ FIX: Bọc nháy đơn '${hs.id}' đầy đủ toàn bộ
             item.innerHTML = `
                 <div class="student-info">${hs.ten} <small>(${hs.sdt})</small></div>
                 
@@ -199,8 +193,6 @@
         });
         
         container.appendChild(div);
-        
-        // Khôi phục lại hiển thị của vùng danh sách vắng nếu có dữ liệu cũ
         taiLaiDanhSachVangGiaoDien(boxId);
     }
 
@@ -240,6 +232,7 @@
         const absentSection = box.querySelector('.absent-section');
         const absentListContainer = box.querySelector('.absent-list');
         const absentCountSpan = box.querySelector('.absent-count');
+        const presentCountSpan = box.querySelector('.present-count');
         
         absentListContainer.innerHTML = ''; 
         
@@ -249,7 +242,11 @@
         
         const cacStudentIdVang = Object.keys(danhSachVangHienTai).filter(k => !k.startsWith('_'));
         
+        // Cập nhật số lượng vắng lên nhãn danh sách vắng
         absentCountSpan.textContent = cacStudentIdVang.length;
+        
+        // Cập nhật sĩ số đi học thời gian thực lên dòng thống kê sĩ số
+        presentCountSpan.textContent = listHocSinhCuaLop.length - cacStudentIdVang.length;
 
         if (cacStudentIdVang.length === 0) {
             absentSection.style.display = 'none';
@@ -280,27 +277,21 @@
         });
     }
 
-    // Hàm xóa hoàn toàn hộp lớp học ra khỏi danh sách và bộ nhớ
     function xoaHopLop(event, boxId) {
         event.stopPropagation();
         if(confirm("Bạn có chắc chắn muốn xóa lớp học này không?")) {
-            // Xóa trên giao diện
             document.getElementById(boxId).remove();
-            // Xóa trong bộ nhớ dữ liệu
             delete danhSachVangData[boxId];
             danhSachHopList = danhSachHopList.filter(h => h.boxId !== boxId);
-            // Cập nhật lại localStorage
             luuVaoLocalStorage();
         }
     }
 
-    // Hàm đóng gói và lưu dữ liệu vào LocalStorage
     function luuVaoLocalStorage() {
         localStorage.setItem('danhSachVangData', JSON.stringify(danhSachVangData));
         localStorage.setItem('danhSachHopList', JSON.stringify(danhSachHopList));
     }
 
-    // TỰ ĐỘNG KHÔI PHỤC KHI TRANH ĐƯỢC TẢI LẠI (F5)
     window.onload = function() {
         danhSachHopList.forEach(hop => {
             dungGiaoDienHop(hop.boxId, hop.title, hop.lopKey);
