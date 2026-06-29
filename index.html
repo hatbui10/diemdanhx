@@ -2,283 +2,249 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Class Manager</title>
+    <title>Quản Lý Lớp Học</title>
     <style>
         body { 
-            background: #0c0d0f; 
-            color: #d1d5db; 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 30px 3px 0 3px; 
+            background-color: #f0f2f5; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            margin-top: 30px; 
+            margin-left: 3px; 
+            margin-right: 3px; 
+            color: #333;
         }
-        .main-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid #fbbf24; color: #fbbf24; padding: 20px; text-align: center; border-radius: 12px; cursor: pointer; font-weight: bold; }
+        .container { max-width: 500px; margin: auto; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 25px; border: 1px solid #ddd; outline: none; transition: 0.3s; }
+        button { background: #007bff; color: white; font-weight: bold; cursor: pointer; border: none; }
+        button:hover { background: #0056b3; }
         
-        .section { display: none; margin-left: 15px; border-left: 1px solid #334155; padding-left: 15px; }
-        .active { display: block; }
+        .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fafafa; }
         
-        .time-btn { background: #1e293b; color: #fff; padding: 15px; margin: 10px 0; border-radius: 8px; cursor: pointer; border: 1px solid #475569; }
-        .class-btn { background: #0f172a; border: 1px solid #334155; color: #94a3b8; padding: 12px; margin: 5px 0; border-radius: 6px; cursor: pointer; }
+        /* Tiêu đề dòng trên cùng */
+        .box-title { font-weight: bold; font-size: 1.1em; color: #007bff; border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-bottom: 10px; }
         
-        .student-card { background: rgba(255,255,255,0.03); border: 1px solid #334155; padding: 10px; margin: 8px 0; border-radius: 8px; transition: 0.3s; }
-        .is-absent { border: 1px solid #dc2626; background: rgba(220, 38, 38, 0.1); }
+        /* Khu vực danh sách vắng ở trên */
+        .absent-section { background: #fff5f5; border: 1px dashed #e53e3e; border-radius: 10px; padding: 10px; margin-bottom: 15px; }
+        .absent-section h4 { margin: 0 0 8px 0; color: #e53e3e; font-size: 0.95em; }
         
-        .btn-group { display: flex; gap: 5px; margin-top: 8px; }
-        button { border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; }
-        .btn-yes { background: #059669; color: white; }
-        .btn-no { background: #dc2626; color: white; }
-        .btn-call { background: #2563eb; color: white; text-decoration: none; display: inline-block; padding: 6px 12px; }
+        /* Cấu trúc 2 DÒNG của danh sách vắng (Họ tên - Chữ lý do + Nút gọi) */
+        .absent-item { display: flex; flex-direction: column; padding: 8px 5px; border-bottom: 1px dashed #fecaca; gap: 4px; }
+        .absent-item:last-child { border-bottom: none; }
         
-        select { width: 100%; margin-top: 8px; padding: 5px; background: #000; color: #fbbf24; border: 1px solid #475569; border-radius: 4px; cursor: pointer; }
-        .class-absent-list { margin-top: 10px; padding: 10px; border: 1px dashed #dc2626; color: #f87171; border-radius: 5px; font-size: 0.85em; font-weight: bold; }
-        .btn-copy { background: #6366f1; color: white; margin-top: 8px; width: 100%; padding: 10px; font-size: 13px; }
+        /* Dòng 2 danh sách vắng */
+        .absent-row2 { display: flex; justify-content: space-between; align-items: center; }
+        .absent-reason { color: #c53030; font-size: 0.9em; font-style: italic; font-weight: 500; }
+        .absent-row2 a { text-decoration: none; }
+        .btn-goi-small { width: auto; padding: 5px 15px; margin: 0; font-size: 0.8em; border-radius: 8px; background: #28a745; text-align: center; }
+
+        /* Cấu trúc từng hàng dọc cho học sinh danh sách chính */
+        .student-item { display: flex; flex-direction: column; padding: 12px 5px; border-bottom: 1px solid #eee; gap: 8px; transition: background 0.2s; }
+        
+        /* Dòng 1: Họ tên chính */
+        .student-info { font-weight: 600; font-size: 1.05em; color: #222; }
+        .student-info small { font-weight: normal; color: #666; margin-left: 10px; }
+        
+        /* Dòng 2: Các nút bấm chính */
+        .student-actions { display: flex; gap: 5px; }
+        .btn-action { width: auto; flex: 1; padding: 8px; font-size: 0.85em; margin: 0; border-radius: 8px; }
+        .btn-goi { background: #28a745; text-align: center; }
+        .btn-goi:hover { background: #218838; }
+        .student-actions a { flex: 1; text-decoration: none; }
+        
+        /* Dòng 3: Dropdown ghi chú chính */
+        .student-note { width: 100%; padding: 6px 12px; margin: 0; border-radius: 8px; font-size: 0.9em; background-color: #fff; }
+        
+        /* Trạng thái vắng của học sinh trong danh sách chính */
+        .student-item.absent { background-color: #ffe6e6; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="main-btn" onclick="toggle('day2')">► THỨ 2</div>
+<div class="container">
+    <select id="caHoc"><option>Ca 1 (Sáng)</option><option>Ca 2 (Chiều)</option></select>
     
-    <div id="day2" class="section">
-        <div class="time-btn" onclick="toggle('t18')">18:00 — PHIÊN HỌC</div>
-        <div id="t18" class="section">
-            <div class="class-btn" onclick="toggle('listSKY-KID')">LỚP SKY-KID ▼</div>
-            <div id="listSKY-KID" class="section" data-class="SKY-KID">
-                
-                <div class="student-card" id="st1">
-                    <div>1. Nguyễn An Nhiên (Bơ)</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st1', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st1', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0396963955" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
+    <select id="tenLop">
+        <option value="12A1">Lớp 12A1</option>
+        <option value="12B2">Lớp 12B2</option>
+    </select>
+    
+    <select id="phongHoc"><option>Phòng 101</option><option>Phòng 102</option></select>
+    <button onclick="taoHop()">XÁC NHẬN</button>
+    <div id="danhSachHop"></div>
+</div>
+
+<script>
+    // Dữ liệu học sinh được chia theo Tên Lớp (Key của Object)
+    const dataHocSinh = {
+        "12A1": [
+            { id: 101, ten: "Nguyễn Văn An", sdt: "0901234567" },
+            { id: 102, ten: "Trần Thị Bình", sdt: "0912345678" }
+        ],
+        "12B2": [
+            { id: 201, ten: "Lê Văn Cường", sdt: "0922222222" },
+            { id: 202, ten: "Phạm Minh Đức", sdt: "0933333333" },
+            { id: 203, ten: "Hoàng Thu Thảo", sdt: "0944444444" }
+        ]
+    };
+    
+    // Đối tượng lưu trữ trạng thái [boxId][studentId] = ghi_chu và [boxId]['lop'] = ten_lop
+    const danhSachVangData = {};
+
+    // Danh mục ghi chú nhanh
+    const ghiChuOptions = {
+        "": "Chưa chọn lý do",
+        "muon": "Đi muộn",
+        "phep": "Vắng có phép",
+        "kphep": "Vắng không phép",
+        "khac": "Lý do khác..."
+    };
+
+    function taoHop() {
+        const ca = document.getElementById('caHoc').value;
+        const lopKey = document.getElementById('tenLop').value;
+        const lopText = document.getElementById('tenLop').options[document.getElementById('tenLop').selectedIndex].text;
+        const phong = document.getElementById('phongHoc').value;
+        const container = document.getElementById('danhSachHop');
+        
+        // Lấy danh sách học sinh thuộc lớp được chọn (nếu không có thì mặc định mảng rỗng)
+        const danhSachHocSinhCuaLop = dataHocSinh[lopKey] || [];
+
+        const boxId = 'box_' + Date.now(); 
+        danhSachVangData[boxId] = {
+            _lopKey: lopKey // Lưu lại mã lớp để sau này danh sách vắng tìm đúng thông tin học sinh
+        }; 
+
+        const div = document.createElement('div');
+        div.className = 'info-box';
+        div.id = boxId;
+        
+        div.innerHTML = `
+            <div class="box-title">${ca} - ${lopText} - ${phong}</div>
+            <div class="list" style="display:none;">
+                <div class="absent-section" style="display: none;">
+                    <h4>DANH SÁCH VẮNG (<span class="absent-count">0</span>)</h4>
+                    <div class="absent-list"></div>
                 </div>
-
-<div class="student-card" id="st2">
-                    <div>2. Nguyễn Trung Đức (Bon)</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st2', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st2', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0339804981" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st3">
-                    <div>3. Đặng Đình Bách</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st3', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st3', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0904511462" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st4">
-                    <div>4. Lâm Duy Anh</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st4', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st4', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0902239258" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st5">
-                    <div>5. Vũ Nguyễn Hải Anh 23/11/20</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st5', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st5', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0336076895" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st6">
-                    <div>6. Đặng Khánh Ngân</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st6', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st6', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0942093566" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st7">
-                    <div>7. Trần Lê Tuệ Linh</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st7', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st7', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0988742202" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st8">
-                    <div>8. Nguyễn Trâm Anh</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st8', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st8', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0919403848" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st9">
-                    <div>9. Nguyễn Tú Anh</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st9', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st9', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0919403848" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st10">
-                    <div>10. Nguyễn Hà My</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st10', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st10', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0943681990" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-<div class="student-card" id="st11">
-                    <div>11. Hoàng Ngọc Phương Linh</div>
-                    <div class="btn-group">
-                        <button class="btn-yes" onclick="setAttendance('st11', false, 'SKY-KID')">Có mặt</button>
-                        <button class="btn-no" onclick="setAttendance('st11', true, 'SKY-KID')">Vắng</button>
-                        <a href="tel:0912731673" class="btn-call">📞 Gọi</a>
-                    </div>
-                    <select onchange="updateClassAbsentList('SKY-KID')">
-                        <option value="">-- Ghi chú --</option>
-                        <option value="Nghỉ phép">Nghỉ phép</option>
-                        <option value="Đi muộn">Đi muộn</option>
-                        <option value="Quên sách">Quên sách</option>
-                    </select>
-                </div>
-
-
-                
-                <div class="class-absent-list" id="absent-SKY-KID">Danh sách vắng: Không có</div>
-                <button class="btn-copy" onclick="copyAbsentList('SKY-KID')">📋 Copy danh sách vắng</button>
+                <div class="main-student-list"></div>
             </div>
-        </div>
-    </div>
-
-    <script>
-        window.onload = function() {
-            // Load trạng thái vắng từ LocalStorage
-            const savedData = JSON.parse(localStorage.getItem('attendanceData') || '{}');
-            for (let sid in savedData) {
-                if (savedData[sid]) {
-                    const card = document.getElementById(sid);
-                    if (card) card.classList.add('is-absent');
-                }
+        `;
+        
+        div.onclick = function(e) { 
+            if(e.target === this || e.target.className === 'box-title') {
+                const list = this.querySelector('.list');
+                list.style.display = list.style.display === 'none' ? 'block' : 'none';
             }
-            updateClassAbsentList('SKY-KID');
         };
 
-        function toggle(id) {
-            const el = document.getElementById(id);
-            el.classList.toggle('active');
-            el.style.display = el.classList.contains('active') ? 'block' : 'none';
-        }
-
-        function setAttendance(sid, isAbsent, className) {
-            const card = document.getElementById(sid);
-            isAbsent ? card.classList.add('is-absent') : card.classList.remove('is-absent');
+        const mainListDiv = div.querySelector('.main-student-list');
+        
+        danhSachHocSinhCuaLop.forEach(hs => {
+            const item = document.createElement('div');
+            item.className = 'student-item';
+            item.setAttribute('data-id', hs.id);
             
-            // Lưu vào LocalStorage
-            const savedData = JSON.parse(localStorage.getItem('attendanceData') || '{}');
-            savedData[sid] = isAbsent;
-            localStorage.setItem('attendanceData', JSON.stringify(savedData));
-            
-            updateClassAbsentList(className);
-        }
-
-        function updateClassAbsentList(className) {
-            const container = document.getElementById('list' + className);
-            const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
-                const divText = card.querySelector('div').innerText;
-                const name = divText.substring(divText.indexOf('.') + 1).trim();
-                const note = card.querySelector('select').value;
-                return name + (note ? " [" + note + "]" : "");
-            });
-            
-            document.getElementById('absent-' + className).innerHTML = 
-                "Danh sách vắng:<br>" + (absents.length ? absents.join('<br>') : "Không có");
-        }
-
-        function copyAbsentList(className) {
-            const container = document.getElementById('list' + className);
-            const absents = Array.from(container.querySelectorAll('.is-absent')).map(card => {
-                const divText = card.querySelector('div').innerText;
-                const name = divText.substring(divText.indexOf('.') + 1).trim();
-                const note = card.querySelector('select').value;
-                return name + (note ? " [" + note + "]" : "");
-            });
-
-            if (absents.length === 0) {
-                alert("Danh sách vắng trống!");
-                return;
+            let selectOptions = '';
+            for (let key in ghiChuOptions) {
+                const textHienThi = key === "" ? "-- Chọn ghi chú vắng --" : ghiChuOptions[key];
+                selectOptions += `<option value="${key}">${textHienThi}</option>`;
             }
 
-            const textToCopy = "DANH SÁCH VẮNG LỚP " + className + ":\n" + absents.join('\n');
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                alert("Đã copy danh sách vắng!");
-            });
+            item.innerHTML = `
+                <div class="student-info">${hs.ten} <small>(${hs.sdt})</small></div>
+                
+                <div class="student-actions">
+                    <button class="btn-action" onclick="event.stopPropagation(); bieuDienVang('${boxId}', ${hs.id}, true)">Vắng</button>
+                    <button class="btn-action" onclick="event.stopPropagation(); bieuDienVang('${boxId}', ${hs.id}, false)">Đi học</button>
+                    <a href="tel:${hs.sdt}" onclick="event.stopPropagation();"><button class="btn-action btn-goi">Gọi</button></a>
+                </div>
+
+                <select class="student-note" onclick="event.stopPropagation();" onchange="capNhatGhiChu('${boxId}', ${hs.id}, this.value)">
+                    ${selectOptions}
+                </select>
+            `;
+            mainListDiv.appendChild(item);
+        });
+        
+        container.appendChild(div);
+    }
+
+    // Hàm xử lý khi bấm nút "Vắng" hoặc "Đi học"
+    function bieuDienVang(boxId, studentId, isAbsent) {
+        const box = document.getElementById(boxId);
+        const studentRow = box.querySelector(`.student-item[data-id="${studentId}"]`);
+        const noteSelect = studentRow.querySelector('.student-note');
+
+        if (isAbsent) {
+            studentRow.classList.add('absent');
+            if (danhSachVangData[boxId][studentId] === undefined) {
+                danhSachVangData[boxId][studentId] = noteSelect.value || "";
+            }
+        } else {
+            studentRow.classList.remove('absent');
+            delete danhSachVangData[boxId][studentId];
         }
-    </script>
+
+        taiLaiDanhSachVangGiaoDien(boxId);
+    }
+
+    // Hàm xử lý đồng bộ và thay đổi lý do tức thì khi chọn ở thẻ học sinh dưới
+    function capNhatGhiChu(boxId, studentId, value) {
+        const box = document.getElementById(boxId);
+        const studentRow = box.querySelector(`.student-item[data-id="${studentId}"]`);
+
+        if (studentRow && studentRow.classList.contains('absent')) {
+            danhSachVangData[boxId][studentId] = value;
+            taiLaiDanhSachVangGiaoDien(boxId);
+        }
+    }
+
+    // Hàm vẽ giao diện Danh sách vắng
+    function taiLaiDanhSachVangGiaoDien(boxId) {
+        const box = document.getElementById(boxId);
+        const absentSection = box.querySelector('.absent-section');
+        const absentListContainer = box.querySelector('.absent-list');
+        const absentCountSpan = box.querySelector('.absent-count');
+        
+        absentListContainer.innerHTML = ''; 
+        
+        const danhSachVangHienTai = danhSachVangData[boxId];
+        const lopKey = danhSachVangHienTai._lopKey;
+        const listHocSinhCuaLop = dataHocSinh[lopKey] || [];
+        
+        // Lấy danh sách ID học sinh đang vắng (bỏ đi thuộc tính ẩn _lopKey)
+        const cacStudentIdVang = Object.keys(danhSachVangHienTai).filter(k => !k.startsWith('_'));
+        
+        absentCountSpan.textContent = cacStudentIdVang.length;
+
+        if (cacStudentIdVang.length === 0) {
+            absentSection.style.display = 'none';
+            return;
+        }
+
+        absentSection.style.display = 'block';
+
+        cacStudentIdVang.forEach(studentId => {
+            // Tìm chính xác học sinh trong danh sách riêng của lớp này
+            const infoHs = listHocSinhCuaLop.find(h => h.id == studentId);
+            if(!infoHs) return;
+            
+            const maGhiChu = danhSachVangHienTai[studentId];
+            const textLyoDo = ghiChuOptions[maGhiChu] || "Chưa chọn lý do";
+
+            const divVang = document.createElement('div');
+            divVang.className = 'absent-item';
+            divVang.innerHTML = `
+                <div style="font-weight: 600; color: #c53030;">📌 ${infoHs.ten}</div>
+                
+                <div class="absent-row2">
+                    <span class="absent-reason">Lý do: ${textLyoDo}</span>
+                    <a href="tel:${infoHs.sdt}" onclick="event.stopPropagation();">
+                        <button class="btn-goi-small">Gọi</button>
+                    </a>
+                </div>
+            `;
+            absentListContainer.appendChild(divVang);
+        });
+    }
+</script>
 </body>
-                                                               </html>
+</html>
