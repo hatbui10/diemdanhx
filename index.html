@@ -265,15 +265,16 @@
     let danhSachHopList = JSON.parse(localStorage.getItem('danhSachHopList')) || [];
 
     const ghiChuOptions = {
-        "": "Chưa chọn lý do",
-        "muon": "Đi muộn",
-        "phep": "Không nghe máy",
-        "kphep": "Nghỉ hết tháng 7",
-        "khac1": "Nghỉ hôm nay",
-        "khac2": "Nghỉ tuần này",
-    "khac3": "Khi nào đi học sẽ báo lại",
-    "khac4": "Lý do khác..."
-    };
+    "": "Chưa chọn lý do",
+    "muon": "Đi muộn",
+    "noCall": "Không nghe máy",
+    "nghiThang7": "Nghỉ hết tháng 7",
+    "nghiHomNay": "Nghỉ hôm nay",
+    "nghiTuanNay": "Nghỉ tuần này",
+    "baoSau": "Khi nào đi học sẽ báo lại",
+    "khac": "Lý do khác..."
+};
+
 
     function taoHopMoi() {
         const ca = document.getElementById('caHoc').value;
