@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -14,12 +13,12 @@
             margin-right: 3px; 
             color: #333;
         }
-        .container { max-width: 500px; margin: auto; padding: 20px; background: red; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .container { max-width: 500px; margin: auto; padding: 20px; background: #fff; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         select, button { width: 100%; padding: 12px; margin: 8px 0; border-radius: 25px; border: 1px solid #ddd; outline: none; transition: 0.3s; }
         button { background: #007bff; color: white; font-weight: bold; cursor: pointer; border: none; }
         button:hover { background: #0056b3; }
         
-        .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fafafa; }
+        .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fafafa; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px;}
         
         /* Tiêu đề dòng trên cùng */
         .box-header { border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-bottom: 10px; }
@@ -33,7 +32,7 @@
         .btn-copy-absent { width: auto; padding: 4px 10px; margin: 0; font-size: 0.8em; border-radius: 6px; background: #e53e3e; color: white; font-weight: normal; }
         .btn-copy-absent:hover { background: #c53030; }
         
-        /* Cấu trúc 2 DÒNG của danh sách vắng (Họ tên - Chữ lý do + Nút gọi) */
+        /* Cấu trúc 2 DÒNG của danh sách vắng */
         .absent-item { display: flex; flex-direction: column; padding: 8px 5px; border-bottom: 1px dashed #fecaca; gap: 4px; }
         .absent-item:last-child { border-bottom: none; }
         
@@ -41,7 +40,7 @@
         .absent-row2 { display: flex; justify-content: space-between; align-items: center; }
         .absent-reason { color: #c53030; font-size: 0.9em; font-style: italic; font-weight: 500; }
         .absent-row2 a { text-decoration: none; }
-        .btn-goi-small { width: auto; padding: 5px 15px; margin: 0; font-size: 0.8em; border-radius: 8px; background: #28a745; text-align: center; }
+        .btn-goi-small { width: auto; padding: 5px 15px; margin: 0; font-size: 0.8em; border-radius: 8px; background: #28a745; text-align: center; color: white; font-weight: bold; border: none;}
 
         /* Cấu trúc từng hàng dọc cho học sinh danh sách chính */
         .student-item { display: flex; flex-direction: column; padding: 12px 5px; border-bottom: 1px solid #eee; gap: 8px; transition: background 0.2s; }
@@ -53,18 +52,18 @@
         /* Dòng 2: Các nút bấm chính */
         .student-actions { display: flex; gap: 5px; }
         .btn-action { width: auto; flex: 1; padding: 8px; font-size: 0.85em; margin: 0; border-radius: 8px; }
-        .btn-goi { background: #28a745; text-align: center; }
+        .btn-goi { background: #28a745; text-align: center; color: white; text-decoration: none; font-weight: bold; border-radius: 8px; padding: 8px;}
         .btn-goi:hover { background: #218838; }
         .student-actions a { flex: 1; text-decoration: none; }
         
         /* Dòng 3: Dropdown ghi chú chính */
-        .student-note { width: 100%; padding: 6px 12px; margin: 0; border-radius: 8px; font-size: 0.9em; background-color: #fff; }
+        .student-note { width: 100%; padding: 6px 12px; margin: 0; border-radius: 8px; font-size: 0.9em; background-color: #fff; border: 1px solid #ddd;}
         
         /* Trạng thái vắng của học sinh trong danh sách chính */
         .student-item.absent { background-color: #ffe6e6; border-radius: 10px; }
         
         /* Nút xóa hộp lớp học */
-        .btn-delete-box { background: #dc3545; padding: 5px 10px; font-size: 0.8em; width: auto; border-radius: 5px; display: inline-block; float: right; margin-top: -2px;}
+        .btn-delete-box { background: #dc3545; color: white; border: none; padding: 5px 10px; font-size: 0.8em; width: auto; border-radius: 5px; display: inline-block; float: right; margin-top: -2px; cursor: pointer;}
         .btn-delete-box:hover { background: #bd2130; }
     </style>
 </head>
@@ -72,60 +71,29 @@
 
 <div class="container">
     <select id="caHoc">
-            <option value="18:00">18:00</option>
-            <option value="18:15">18:15</option>
-            <option value="18:30">18:30</option>
-            <option value="18:45">18:45</option>
-            <option value="20:00">20:00</option>
-        </select>
-        <select id="tenLop">
-            <option value="SKY-KID">SKY-KID  T2-237</option>
-            <option value="12A1">12A1</option>
-            <option value="SMART-KID">SMART-KID  T2-237</option>
-            <option value="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng T3-158</option>
-            <option value="MICKEY - L2+3/Thị Phương"> MICKEY - L2+3/Thị Phương T3-158   </option>
-            <option value="OXFORD  L4/Thu Phương">OXFORD  L4/Thu Phương </option>
-            <option value="QUEST L4 Thu Phương">QUEST L4 Thu Phương T3-158</option>
-            <option value="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung  T4-158</option>
-            <option value="KING - L4/Thu Phương">KING - L4/Thu Phương</option>
-            <option value="GALAXY - L4/Minh Phương">GALAXY - L4/Minh Phương</option>
-            <option value="KIND L5 /Tân">KIND L5 /Tân</option>
-            <option value="APOLLO L5/Yến ">APOLLO L5/Yến </option>
-            <option value="LIKE L5/Thu Phương">LIKE L5/Thu Phương</option>
-            <option value="SMILE-L6/Hà An">SMILE-L6/Hà An</option>
-            <option value="STAR-L6/Thanh Thảo">STAR-L6/Thanh Thảo</option>
-            <option value="GOOD-L6/ Hà An ">GOOD-L6/ Hà An </option>
-            <option value="MARS - L6/Ngô Hằng">MARS - L6/Ngô Hằng</option>
-            <option value="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
-            <option value="EVIC">EVIC</option>
-            <option value="KID E7">KID E7</option>
-            <option value="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
-            <option value="MOON-L7/Trà My">MOON-L7/Trà My</option>
-            <option value="ILA-L7 - Thu Hà">ILA-L7 - Thu Hà</option>
-            <option value="DELTA-L7 - Phương">DELTA-L7 - Phương</option>
-            <option value="Happy - L8/Mai Ly">Happy - L8/Mai Ly</option>
-            <option value="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
-            <option value="High - L8/Thu Hà">High - L8/Thu Hà</option>
-            <option value="HOPE-L8 TRÀ MY">HOPE-L8 TRÀ MY</option>
-            <option value="BIG-L9/Mai Ly">BIG-L9/Mai Ly</option>
-            <option value="SUPER - Thu Hà - L9">SUPER - Thu Hà - L9</option>
-            <option value="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
-            <option value="CLC-L9/Thu Hà">CLC-L9/Thu Hà</option>
-            <option value="WIN - L10/Thu Hà">WIN - L10/Thu Hà</option>
-            <option value="SMART - L10/Hà An">SMART - L10/Hà An</option>
-            <option value="CLOUD - L10/Hà An">CLOUD - L10/Hà An</option>
-            <option value="TRY - L10/Thu Hà">TRY - L10/Thu Hà</option>
-            <option value="CAN - L11/Lê Thu Hà">CAN - L11/Lê Thu Hà</option>
-            <option value="VICTORYA">VICTORYA</option>
-            <option value="OCEAN-L11">OCEAN-L11</option>
-            <option value="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
-            <option value="IELTS-WONDERFUL/Thu Hà">IELTS-WONDERFUL/Thu Hà</option>
-            <option value="SPACEX">SPACEX</option>
-            <option value="FUN - IE-L12/Lê Thu Hà">FUN - IE-L12/Lê Thu Hà</option>
-            <option value="L12-BLUE">L12-BLUE</option>
-            
-        </select>
-    
+        <option value="18:00">18:00</option>
+        <option value="18:15">18:15</option>
+        <option value="18:30">18:30</option>
+        <option value="18:45">18:45</option>
+        <option value="20:00">20:00</option>
+    </select>
+    <select id="tenLop">
+        <option value="SMART-KID">SMART-KID T2-237</option>
+        <option value="CLOUD-KID">CLOUD-KID T2-237</option>
+        <option value="HOPE-L8 TRÀ MY">HOPE-L8 TRÀ MY</option>
+        <option value="ATHENA-L12/Mai Ly">ATHENA-L12/Mai Ly</option>
+        <option value="SMILE-L6/Hà An">SMILE-L6/Hà An</option>
+        <option value="SEA - L9/Thu Hà">SEA - L9/Thu Hà</option>
+        <option value="QUEST L4 Thu Phương">QUEST L4 Thu Phương</option>
+        <option value="OXFORD  L4/Thu Phương">OXFORD L4/Thu Phương</option>
+        <option value="LIKE L5/Thu Phương">LIKE L5/Thu Phương</option>
+        <option value="GOOD-L6/ Hà An">GOOD-L6/ Hà An</option>
+        <option value="Sun - L8/Mai Ly">Sun - L8/Mai Ly</option>
+        <option value="PARIS-L6/Minh Phương">PARIS-L6/Minh Phương</option>
+        <option value="MICKEY - L2+3/Thị Phương">MICKEY - L2+3/Thị Phương</option>
+        <option value="CAMBRIDGE - L4/Nhung">CAMBRIDGE - L4/Nhung</option>
+        <option value="BOSS-VIP - L7/Lê Thu Hà">BOSS-VIP - L7/Lê Thu Hà</option>
+    </select>
     <select id="phongHoc">
         <option>T1-30</option>
         <option>T2-30</option>
@@ -141,861 +109,259 @@
         <option>T4-237</option>
         <option>T5-237</option>
         <option>T6-237</option>
-         </select>
+    </select>
     <button onclick="taoHopMoi()">XÁC NHẬN</button>
     <div id="danhSachHop"></div>
 </div>
 
 <script>
+    // Dữ liệu học sinh đã chuẩn hóa cấu trúc đóng ngoặc hợp lệ
     const dataHocSinh = {
-         "SMART-KID": [
-        { id: "hs_SMART-KID_01", ten: "Phạm Gia Huy", sdt: "0378903698" },
-        { id: "hs_SMART-KID_02", ten: "Nguyễn Mai Anh", sdt: "0978226749" },
-        { id: "hs_SMART-KID_03", ten: "Nguyễn Duy Minh Quang (Sóc)", sdt: "0914242132" },
-        { id: "hs_SMART-KID_04", ten: "Phạm Cát Tiên", sdt: "0911898323" },
-        { id: "hs_SMART-KID_05", ten: "Trịnh Phúc An", sdt: "0971227992" },
-        { id: "hs_SMART-KID_06", ten: "Yên Lệ Nhật Minh (Mít)", sdt: "0919281776" },
-        { id: "hs_SMART-KID_07", ten: "Nguyễn Đoàn Gia Mỹ", sdt: "0335738702" },
-        { id: "hs_SMART-KID_08", ten: "Lê Minh Huy", sdt: "0914373384" }
-    ],
+        "SMART-KID": [
+            { id: "hs_SMART-KID_01", ten: "Phạm Gia Huy", sdt: "0378903698" },
+            { id: "hs_SMART-KID_02", ten: "Nguyễn Mai Anh", sdt: "0978226749" },
+            { id: "hs_SMART-KID_03", ten: "Nguyễn Duy Minh Quang (Sóc)", sdt: "0914242132" },
+            { id: "hs_SMART-KID_04", ten: "Phạm Cát Tiên", sdt: "0911898323" },
+            { id: "hs_SMART-KID_05",通 "Trịnh Phúc An", sdt: "0971227992" },
+            { id: "hs_SMART-KID_06", ten: "Yên Lệ Nhật Minh (Mít)", sdt: "0919281776" },
+            { id: "hs_SMART-KID_07", ten: "Nguyễn Đoàn Gia Mỹ", sdt: "0335738702" },
+            { id: "hs_SMART-KID_08", ten: "Lê Minh Huy", sdt: "0914373384" }
+        ],
         "CLOUD-KID": [
-        { id: "hs_CLOUD-KID_01", ten: "Lê Đức Phúc", sdt: "0974665636" },
-        { id: "hs_CLOUD-KID_02", ten: "Lê Đức Minh", sdt: "0974665636" },
-        { id: "hs_CLOUD-KID_03", ten: "Chu Huyền Anh", sdt: "0982896335" },
-        { id: "hs_CLOUD-KID_04", ten: "Triệu Trúc An", sdt: "0346485202" },
-        { id: "hs_CLOUD-KID_05", ten: "Lê Minh Quân", sdt: "0972342286" },
-        { id: "hs_CLOUD-KID_06", ten: "Nguyễn Ngọc Khánh Linh", sdt: "0981796729" },
-        { id: "hs_CLOUD-KID_07", ten: "Lê Ngọc An Nhiên", sdt: "0908036029" },
-        { id: "hs_CLOUD-KID_08", ten: "Bùi Linh San", sdt: "0981220986" },
-        { id: "hs_CLOUD-KID_09", ten: "Lê Quý Hương", sdt: "0978463483" },
-        { id: "hs_CLOUD-KID_10", ten: "Nguyễn Minh Ngọc", sdt: "0979538636" },
-        { id: "hs_CLOUD-KID_11", ten: "Trần Thanh Tùng", sdt: "0961721015" }
-    ],
-       "SMILE-L6/Hà An": [
-        { id: "hs_SMILE-L6/Hà An_01", ten: "Dương Ngọc Thảo Anh", sdt: "0348738159" },
-        { id: "hs_SMILE-L6/Hà An_02", ten: "Nguyễn Tiến Sơn", sdt: "0972472383" },
-        { id: "hs_SMILE-L6/Hà An_03", ten: "Trần Hồ Đức Lượng", sdt: "0939142870" },
-        { id: "hs_SMILE-L6/Hà An_04", ten: "Nguyễn Phú Thảo (trai)", sdt: "0912642998" },
-        { id: "hs_SMILE-L6/Hà An_05", ten: "Tạ Hồng Phương Vy", sdt: "0936255655" },
-        { id: "hs_SMILE-L6/Hà An_06", ten: "Đỗ Minh Khoa", sdt: "0373733368" },
-        { id: "hs_SMILE-L6/Hà An_07", ten: "Nguyễn Hữu Bảo Phú", sdt: "0983520087" },
-        { id: "hs_SMILE-L6/Hà An_08", ten: "Trần Xuân Phú", sdt: "0905583399" },
-        { id: "hs_SMILE-L6/Hà An_09", ten: "Nguyễn Minh Triết", sdt: "0335738702" },
-        { id: "hs_SMILE-L6/Hà An_10", ten: "Nguyễn Đức Quang", sdt: "0982262873" },
-        { id: "hs_SMILE-L6/Hà An_11", ten: "Trần Phương Chi", sdt: "0963687969" }
-    ],
-         "SEA - L9/Thu Hà": [
-        { id: "hs_SEA - L9/Thu Hà_01", ten: "Nguyễn Minh Đăng", sdt: "0967255168" },
-        { id: "hs_SEA - L9/Thu Hà_02", ten: "Đặng Ngọc Ánh", sdt: "0979986466" },
-        { id: "hs_SEA - L9/Thu Hà_03", ten: "Lê Gia Linh", sdt: "0966107333" },
-        { id: "hs_SEA - L9/Thu Hà_04", ten: "Trần Vũ Hoài Anh", sdt: "0989322283" },
-        { id: "hs_SEA - L9/Thu Hà_05", ten: "Nguyễn Hương Trang (Sóc)", sdt: "0359681688" },
-        { id: "hs_SEA - L9/Thu Hà_06", ten: "Trần Ngọc Khánh Chi", sdt: "0941926764" },
-        { id: "hs_SEA - L9/Thu Hà_07", ten: "Nguyễn Quang Huy", sdt: "0915829192" },
-        { id: "hs_SEA - L9/Thu Hà_08", ten: "Đinh Đức Minh", sdt: "0981540082" },
-        { id: "hs_SEA - L9/Thu Hà_09", ten: "Nguyễn Minh Lộc", sdt: "0977818398" },
-        { id: "hs_SEA - L9/Thu Hà_10", ten: "Nguyễn Thị Minh Anh", sdt: "0963050085" },
-        { id: "hs_SEA - L9/Thu Hà_11", ten: "Lê Duy Tùng", sdt: "0812768475" }
-    ],
-        
-    "QUEST L4 Thu Phương": [
-        { id: "hs_QUEST L4 Thu Phương_01", ten: "Nguyễn Thu An", sdt: "0981517872" },
-        { id: "hs_QUEST L4 Thu Phương_02", ten: "Tô Trần Gia Hưng", sdt: "0934660145" },
-        { id: "hs_QUEST L4 Thu Phương_03", ten: "Lê Phương Thảo", sdt: "0977713604" },
-        { id: "hs_QUEST L4 Thu Phương_04", ten: "Nguyễn Nhật Minh", sdt: "0389986968" },
-        { id: "hs_QUEST L4 Thu Phương_05", ten: "Nguyễn Nam Anh", sdt: "0787286186" },
-        { id: "hs_QUEST L4 Thu Phương_06", ten: "Trần Trung Kiên", sdt: "0902134609" },
-        { id: "hs_QUEST L4 Thu Phương_07", ten: "Nguyễn Bảo Hân (Bống)", sdt: "0936806006" },
-        { id: "hs_QUEST L4 Thu Phương_08", ten: "Nguyễn Quang Bách", sdt: "0915246426" },
-        { id: "hs_QUEST L4 Thu Phương_09", ten: "Nguyễn Tuấn Minh Khôi", sdt: "0366776360" },
-        { id: "hs_QUEST L4 Thu Phương_10", ten: "Dương Nguyễn Hữu Bách", sdt: "0393588800" },
-        { id: "hs_QUEST L4 Thu Phương_11", ten: "Cao Thiên Vân (Kem)", sdt: "0902125989" }
-    ],
-        
-        "LIKE L5/Thu Phương": [
-        { id: "hs_LIKE L5/Thu Phương_01", ten: "Hoàng Lê Minh Châu", sdt: "0823982281" },
-        { id: "hs_LIKE L5/Thu Phương_02", ten: "Đỗ Quỳnh Chi", sdt: "0973755730" },
-        { id: "hs_LIKE L5/Thu Phương_03", ten: "Nguyễn Tùng Lâm", sdt: "0989261380" },
-        { id: "hs_LIKE L5/Thu Phương_04", ten: "Nguyễn Tuấn Khang", sdt: "0975257800" },
-        { id: "hs_LIKE L5/Thu Phương_05", ten: "Dư Thanh Hương", sdt: "0964486678" },
-        { id: "hs_LIKE L5/Thu Phương_06", ten: "Bủi Minh Hiếu", sdt: "0972648276" },
-        { id: "hs_LIKE L5/Thu Phương_07", ten: "Lưu Thiện Nhân", sdt: "0382654007" },
-        { id: "hs_LIKE L5/Thu Phương_08", ten: "Nghiêm Vũ Trà My (Xinh cao)", sdt: "0988608866" },
-        { id: "hs_LIKE L5/Thu Phương_09", ten: "Trần Hà Linh (Mun)", sdt: "0915298019" },
-        { id: "hs_LIKE L5/Thu Phương_10", ten: "Nguyễn Xuân Bách", sdt: "0989137308" },
-        { id: "hs_LIKE L5/Thu Phương_11", ten: "Vũ Ngọc Trúc Diễm", sdt: "0961996698" }
-    ],
-    
-    "GOOD-L6/ Hà An": [
-        { id: "hs_GOOD-L6/ Hà An_01", ten: "Hoàng Thảo An", sdt: "0912915863" },
-        { id: "hs_GOOD-L6/ Hà An_02", ten: "Đào Phú Khang", sdt: "0362745377" },
-        { id: "hs_GOOD-L6/ Hà An_03", ten: "Lê Tùng Lâm", sdt: "0855193868" },
-        { id: "hs_GOOD-L6/ Hà An_04", ten: "Nguyễn Ngọc Minh Ánh", sdt: "0812658908" },
-        { id: "hs_GOOD-L6/ Hà An_05", ten: "Nguyễn Khả An", sdt: "0944148688" },
-        { id: "hs_GOOD-L6/ Hà An_06", ten: "Lê Minh Vũ", sdt: "0963922936" },
-        { id: "hs_GOOD-L6/ Hà An_07", ten: "Lê Thảo Vy", sdt: "0948022886" },
-        { id: "hs_GOOD-L6/ Hà An_08", ten: "Nguyễn Thu Mai Hương", sdt: "0349374280" }
-    ],
-
-         "Sun - L8/Mai Ly": [
-        { id: "hs_Sun - L8/Mai Ly_01", ten: "Nguyễn Phương Hà", sdt: "0914644430" },
-        { id: "hs_Sun - L8/Mai Ly_02", ten: "Nguyễn Bảo Trâm", sdt: "0965101084" },
-        { id: "hs_Sun - L8/Mai Ly_03", ten: "Vũ Hoài An", sdt: "0974420240" },
-        { id: "hs_Sun - L8/Mai Ly_04", ten: "Nguyễn Hà Chi", sdt: "0975645008" },
-        { id: "hs_Sun - L8/Mai Ly_05", ten: "Vũ Kim Anh", sdt: "0358610285" },
-        { id: "hs_Sun - L8/Mai Ly_06", ten: "Nguyễn Nam Phong", sdt: "0983049684" },
-        { id: "hs_Sun - L8/Mai Ly_07", ten: "Hoàng Trung Kiên", sdt: "0976324469" },
-        { id: "hs_Sun - L8/Mai Ly_08", ten: "Trịnh Hoàng Long", sdt: "0328193199" },
-        { id: "hs_Sun - L8/Mai Ly_09", ten: "Phạm Gia Hưng", sdt: "0942118371" },
-        { id: "hs_Sun - L8/Mai Ly_10", ten: "Trần Ngọc Khánh Linh", sdt: "0941926764" },
-        { id: "hs_Sun - L8/Mai Ly_11", ten: "Trần Đặng Quốc Bảo", sdt: "0915829192" },
-        { id: "hs_Sun - L8/Mai Ly_12", ten: "Nguyễn Hà Anh", sdt: "0904251857" },
-        { id: "hs_Sun - L8/Mai Ly_13", ten: "Nguyễn An Yên", sdt: "0977818398" },
-        { id: "hs_Sun - L8/Mai Ly_14", ten: "Đỗ Quang Hải", sdt: "0979885898" },
-        { id: "hs_Sun - L8/Mai Ly_15", ten: "Minh Quân", sdt: "0973631819" },
-        { id: "hs_Sun - L8/Mai Ly_16", ten: "Minh Hiếu", sdt: "0973631819" },
-        { id: "hs_Sun - L8/Mai Ly_17", ten: "Minh Nghĩa", sdt: "0973631819" },
-        { id: "hs_Sun - L8/Mai Ly_18", ten: "Nguyễn Huyền Anh", sdt: "0906269913" }
-    ],
-         "PARIS-L6/Minh Phương": [
-        { id: "hs_PARIS-L6/Minh Phương_01", ten: "Nguyễn Gia Hưng (Út)", sdt: "0782229349" },
-        { id: "hs_PARIS-L6/Minh Phương_02", ten: "Nguyễn Nhà Khánh", sdt: "0782229349" },
-        { id: "hs_PARIS-L6/Minh Phương_03", ten: "Nguyễn Chúc An", sdt: "0968338686" },
-        { id: "hs_PARIS-L6/Minh Phương_04", ten: "Nguyễn Khánh Nam", sdt: "0907180000" },
-        { id: "hs_PARIS-L6/Minh Phương_05", ten: "Nguyễn Nam Phong", sdt: "0932264999" },
-        { id: "hs_PARIS-L6/Minh Phương_06", ten: "Lê Bảo Nguyên", sdt: "0974505336" },
-        { id: "hs_PARIS-L6/Minh Phương_07", ten: "Ngô Phương Anh", sdt: "0569999398" }
-    ],
-         "MICKEY - L2+3/Thị Phương": [
-        { id: "hs_MICKEY - L2+3/Thị Phương_01", ten: "Nguyễn An Nhiên (Bơ)", sdt: "0396963955" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_02", ten: "Đỗ Bảo Linh", sdt: "0973755730" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_03", ten: "Đào Đức Minh Khôi (Sữa)", sdt: "0969986889" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_04", ten: "Trần Bảo Nam", sdt: "0989850687" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_05", ten: "Trần Hồ Tuệ Nhi MIC", sdt: "0939142870" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_06", ten: "Trần Minh Khoa", sdt: "0339830886" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_07", ten: "Lê An Nhi (Ri)", sdt: "0797350000" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_08", ten: "Phùng Thanh Thảo", sdt: "0934668644" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_09", ten: "Đặng Ngọc Gia Khôi", sdt: "0969146280" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_10", ten: "Đặng Khải An", sdt: "0987385591" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_11", ten: "Nguyễn Bảo Anh", sdt: "0325670039" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_12", ten: "Nguyễn Phương Uyên", sdt: "0367701993" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_13", ten: "Ngô Thị Ngọc Diệp", sdt: "0965801726" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_14", ten: "Nguyễn Bảo Hân", sdt: "0989082066" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_15", ten: "Nguyễn Minh Khôi", sdt: "0948830246" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_16", ten: "Phạm Quang Anh 1D NQ", sdt: "0911898323" },
-        { id: "hs_MICKEY - L2+3/Thị Phương_17", ten: "Nguyễn Minh Thảo", sdt: "0399351432" }
-    ],
-        "CAMBRIDGE - L4/Nhung": [
-        { id: "hs_CAMBRIDGE - L4/Nhung_01", ten: "Trần Hà My (Su)", sdt: "0966049391" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_02", ten: "Nguyễn Kim Ngân", sdt: "0973549189" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_03", ten: "Nguyễn Tấn Nhật Anh", sdt: "0984591586" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_04", ten: "Nguyễn An Bảo Ngọc", sdt: "0374546363" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_05", ten: "Nguyễn Minh Đăng", sdt: "0983049684" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_06", ten: "Tạ Hồng Phúc Nguyên", sdt: "0936255655" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_07", ten: "Hoàng Trần Diên Phúc", sdt: "0968409989" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_08", ten: "Dương Trúc Lâm (Rubi)", sdt: "0972394345" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_09", ten: "Nguyễn Mỹ An", sdt: "0983520087" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_10", ten: "Lê Bảo An", sdt: "0985368466" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_11", ten: "Nguyễn Trúc Anh", sdt: "0948830246" },
-        { id: "hs_CAMBRIDGE - L4/Nhung_12", ten: "Nguyễn Văn Phúc", sdt: "0903236135" }
-    ],
-        
-    "BOSS-VIP - L7/Lê Thu Hà": [
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_01", ten: "Nguyễn Tiến Minh", sdt: "0987632876" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_02", ten: "Trần Hà Duy", sdt: "0966049391" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_03", ten: "Trần Đức Minh", sdt: "0984537775" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_04", ten: "Nguyễn Linh Anh", sdt: "0981951661" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_05", ten: "Vũ Thảo Vy", sdt: "0975543845" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_06", ten: "Nguyễn Ngọc Tâm An", sdt: "0942980106" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_07", ten: "Trần Nguyễn Hải Đăng", sdt: "0976193580" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_08", ten: "Nguyễn Hà Vy", sdt: "0975253669" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_09", ten: "Lê Ngọc Bảo Như", sdt: "0903265409" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_10", ten: "Trần Nguyễn Thảo Nguyên", sdt: "0904440466" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_11", ten: "Phạm Văn Hùng (Bin)", sdt: "0912088738" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_12", ten: "Giáp Quốc Hiếu", sdt: "0906261551" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_13", ten: "Bùi Khánh An", sdt: "0912337220" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_14", ten: "Nguyễn Khánh Linh", sdt: "0912752012" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_15", ten: "Nguyễn Gia Huy", sdt: "0905181990" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_16", ten: "Trần Gia Huy B", sdt: "0979220120" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_17", ten: "Chúng Đức Duy", sdt: "0977029696" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_18", ten: "Phạm Đức Duy B", sdt: "0984426146" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_19", ten: "Phạm Khánh Chi", sdt: "0385712119" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_20", ten: "Lê Gia Hân", sdt: "0942721357" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_21", ten: "Lý Thành Long", sdt: "0986692113" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_22", ten: "Nguyễn Trung Hiếu", sdt: "0971699982" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_23", ten: "Hoàng Minh Khoa (Khoai)", sdt: "0904554902" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_24", ten: "Lê Gia Linh", sdt: "0974665636" },
-        { id: "hs_BOSS-VIP - L7/Lê Thu Hà_25", ten: "Dương Minh Tâm", sdt: "0984903160" }
-    ],
-        
-    "SKY-KID": [
-        { id: "hs_SKY-KID_01", ten: "Nguyễn An Nhiên (Bơ)", sdt: "0396963955" },
-        { id: "hs_SKY-KID_02", ten: "Nguyễn Trung Đức (Bon)", sdt: "0339804981" },
-        { id: "hs_SKY-KID_03", ten: "Đặng Đình Bách", sdt: "0904511462" },
-        { id: "hs_SKY-KID_04", ten: "Lâm Duy Anh", sdt: "0902239258" },
-        { id: "hs_SKY-KID_05", ten: "Vũ Nguyễn Hải Anh 23/11/20", sdt: "0336076895" },
-        { id: "hs_SKY-KID_06", ten: "Lan Anh em Tuấn Anh B", sdt: "KhôngcóSĐT" },
-        { id: "hs_SKY-KID_07", ten: "Đặng Khánh Ngân", sdt: "0942093566" },
-        { id: "hs_SKY-KID_08", ten: "Trần Lê Tuệ Linh", sdt: "0988742202" },
-        { id: "hs_SKY-KID_09", ten: "Nguyễn Trâm Anh", sdt: "0919403848" },
-        { id: "hs_SKY-KID_10", ten: "Nguyễn Tú Anh", sdt: "0919403848" },
-        { id: "hs_SKY-KID_11", ten: "Nguyễn Hà My", sdt: "0943681990" },
-        { id: "hs_SKY-KID_12", ten: "Hoàng Ngọc Phương Linh", sdt: "0912731673" },
-        { id: "hs_SKY-KID_13", ten: "Thái Phương Uyên", sdt: "0376788868" },
-        { id: "hs_SKY-KID_14", ten: "Nguyễn Bảo Hân", sdt: "0989082066" },
-        { id: "hs_SKY-KID_15", ten: "Đoàn Đắc Nhật", sdt: "0976001849" }
-    ],
-    
-        
-    "ILA-L7 - Thu Hà": [
-        { id: "hs_ILA-L7 - Thu Hà_01", ten: "Quốc Bảo", sdt: "0342866968" },
-        { id: "hs_ILA-L7 - Thu Hà_02", ten: "Nguyễn Khôi Nguyên", sdt: "0366658588" },
-        { id: "hs_ILA-L7 - Thu Hà_03", ten: "Nguyễn Thanh Bình", sdt: "0981478558" },
-        { id: "hs_ILA-L7 - Thu Hà_04", ten: "Nguyễn Linh Ngân", sdt: "0942916191" },
-        { id: "hs_ILA-L7 - Thu Hà_05", ten: "Nguyễn Thị Thanh Thảo", sdt: "0986507735" },
-        { id: "hs_ILA-L7 - Thu Hà_06", ten: "Lâm Anh Thư", sdt: "0902239258" },
-        { id: "hs_ILA-L7 - Thu Hà_07", ten: "Đặng Hải Đăng", sdt: "0988678758" },
-        { id: "hs_ILA-L7 - Thu Hà_08", ten: "Nguyễn Minh Trang", sdt: "0989137308" },
-        { id: "hs_ILA-L7 - Thu Hà_09", ten: "Lê Minh Dũng", sdt: "0983572284" },
-        { id: "hs_ILA-L7 - Thu Hà_10", ten: "Trần Bảo Long", sdt: "0989850687" },
-        { id: "hs_ILA-L7 - Thu Hà_11", ten: "Vũ Trọng Quang Huy", sdt: "0983309284" },
-        { id: "hs_ILA-L7 - Thu Hà_12", ten: "Nguyễn Tuấn Minh", sdt: "0823607777" },
-        { id: "hs_ILA-L7 - Thu Hà_13", ten: "Tống Quang Anh", sdt: "0977342412" }
-    ],
-        
-    "KID E7": [
-        { id: "hs_KID E7_01", ten: "Lê Phương Linh (Bông)", sdt: "0915936459" },
-        { id: "hs_KID E7_02", ten: "Vũ Hoài An", sdt: "0945068878" },
-        { id: "hs_KID E7_03", ten: "Nguyễn Đăng Phong (bé)", sdt: "0358342931" },
-        { id: "hs_KID E7_04", ten: "Quang Điền", sdt: "0912635718" },
-        { id: "hs_KID E7_05", ten: "Lê Diệp Anh", sdt: "0988953288" },
-        { id: "hs_KID E7_06", ten: "Điền Phương Linh", sdt: "0979153900" },
-        { id: "hs_KID E7_07", ten: "Nguyễn Hà My", sdt: "0377421228" },
-        { id: "hs_KID E7_08", ten: "Nguyễn Quỳnh Anh", sdt: "0339804981" },
-        { id: "hs_KID E7_09", ten: "Lê Minh Phương", sdt: "0978007173" },
-        { id: "hs_KID E7_10", ten: "Trần Quang Huy", sdt: "0988284122" },
-        { id: "hs_KID E7_11", ten: "Trần Phương Linh", sdt: "0912401266" },
-        { id: "hs_KID E7_12", ten: "Lê Bảo Châu", sdt: "0917961055" },
-        { id: "hs_KID E7_13", ten: "Dương Nguyễn Tùng Lâm", sdt: "0393588800" }
-    ],
-    
-    "BIG-L9/Mai Ly": [
-        { id: "hs_BIG-L9/Mai Ly_01", ten: "Nguyễn Ngọc Minh", sdt: "0902688666" },
-        { id: "hs_BIG-L9/Mai Ly_02", ten: "Ngô Thanh Vân", sdt: "0812929066" },
-        { id: "hs_BIG-L9/Mai Ly_03", ten: "Đỗ Gia Huy", sdt: "0389500306" },
-        { id: "hs_BIG-L9/Mai Ly_04", ten: "Đỗ Ngọc Anh", sdt: "0906265338" },
-        { id: "hs_BIG-L9/Mai Ly_05", ten: "Đỗ Lê Song Thư", sdt: "0985254340" },
-        { id: "hs_BIG-L9/Mai Ly_06", ten: "Đỗ Trọng Tấn", sdt: "0965044125" },
-        { id: "hs_BIG-L9/Mai Ly_07", ten: "Nguyễn Ngọc Ánh", sdt: "0358342931" },
-        { id: "hs_BIG-L9/Mai Ly_08", ten: "Đặng Xuân An", sdt: "0989266728" },
-        { id: "hs_BIG-L9/Mai Ly_09", ten: "Ngô Quỳnh Nhi", sdt: "0337450804" },
-        { id: "hs_BIG-L9/Mai Ly_10", ten: "Nguyễn Viết Anh Quân", sdt: "0987508668" },
-        { id: "hs_BIG-L9/Mai Ly_11", ten: "Nguyễn Hà Phương", sdt: "0976181098" },
-        { id: "hs_BIG-L9/Mai Ly_12", ten: "Nguyễn Đức Khánh", sdt: "0989825265" },
-        { id: "hs_BIG-L9/Mai Ly_13", ten: "Đào Trà My", sdt: "0934568609" },
-        { id: "hs_BIG-L9/Mai Ly_14", ten: "Trần Đức Trung", sdt: "0979646812" },
-        { id: "hs_BIG-L9/Mai Ly_15", ten: "Trương Minh Vũ", sdt: "0916106904" },
-        { id: "hs_BIG-L9/Mai Ly_16", ten: "Trần Hải Nam", sdt: "0976221510" },
-        { id: "hs_BIG-L9/Mai Ly_17", ten: "Lê Đình Phúc", sdt: "0976971924" },
-        { id: "hs_BIG-L9/Mai Ly_18", ten: "Nguyễn Lan Anh", sdt: "0845477789" },
-        { id: "hs_BIG-L9/Mai Ly_19", ten: "Trần Thanh Hà", sdt: "0914255991" },
-        { id: "hs_BIG-L9/Mai Ly_20", ten: "Lê Mạnh Quân", sdt: "0987867008" },
-        { id: "hs_BIG-L9/Mai Ly_21", ten: "Nguyễn Thục Anh 2012", sdt: "0912345938" },
-        { id: "hs_BIG-L9/Mai Ly_22", ten: "Đỗ Anh Thư 2013", sdt: "0912839789" },
-        { id: "hs_BIG-L9/Mai Ly_23", ten: "Nguyễn Minh An", sdt: "0366776360" }
-    ],
-         "STAR-L6/Thanh Thảo": [
-        { id: "hs_STAR-L6/Thanh Thảo_01", ten: "Lê Hà My Bánh gạo", sdt: "0382094451" },
-        { id: "hs_STAR-L6/Thanh Thảo_02", ten: "Nguyễn Hồng Anh", sdt: "0389968457" },
-        { id: "hs_STAR-L6/Thanh Thảo_03", ten: "Bùi Minh Hiếu", sdt: "0978990613" },
-        { id: "hs_STAR-L6/Thanh Thảo_04", ten: "Tô Khoa", sdt: "0912145662" },
-        { id: "hs_STAR-L6/Thanh Thảo_05", ten: "Trần Gia Phú", sdt: "0982802158" },
-        { id: "hs_STAR-L6/Thanh Thảo_06", ten: "Trần Khánh An", sdt: "0982802158" },
-        { id: "hs_STAR-L6/Thanh Thảo_07", ten: "Phùng Phương Chi", sdt: "0976786762" },
-        { id: "hs_STAR-L6/Thanh Thảo_08", ten: "Nguyễn Quỳnh Phương", sdt: "0943009820" },
-        { id: "hs_STAR-L6/Thanh Thảo_09", ten: "Nguyễn Bảo An", sdt: "0964265190" },
-        { id: "hs_STAR-L6/Thanh Thảo_10", ten: "Lê Việt Anh", sdt: "0977235829" },
-        { id: "hs_STAR-L6/Thanh Thảo_11", ten: "Nguyễn Thảo Quyên", sdt: "0976447281" },
-        { id: "hs_STAR-L6/Thanh Thảo_12", ten: "Nghiêm Yến My", sdt: "0385516886" },
-        { id: "hs_STAR-L6/Thanh Thảo_13", ten: "Nguyễn Việt Quân", sdt: "0918222626" },
-        { id: "hs_STAR-L6/Thanh Thảo_14", ten: "Đỗ Đức Anh", sdt: "0974413662" }
-    ],
-         "GOOD-L6/ Hà An": [
-        { id: "hs_GOOD-L6/ Hà An_01", ten: "Nguyễn Thu Mai Hương", sdt: "0349374280" },
-        { id: "hs_GOOD-L6/ Hà An_02", ten: "Hoàng Thảo An", sdt: "0912915863" },
-        { id: "hs_GOOD-L6/ Hà An_03", ten: "Nguyễn Bảo An", sdt: "0919403848" },
-        { id: "hs_GOOD-L6/ Hà An_04", ten: "Đào Phú Khang", sdt: "0362745377" },
-        { id: "hs_GOOD-L6/ Hà An_05", ten: "Lê Tùng Lâm", sdt: "0855193868" },
-        { id: "hs_GOOD-L6/ Hà An_06", ten: "Nguyễn Ngọc Minh Ánh", sdt: "0812658908" },
-        { id: "hs_GOOD-L6/ Hà An_07", ten: "Điền Đăng Khoa", sdt: "0979153900" },
-        { id: "hs_GOOD-L6/ Hà An_08", ten: "Đoàn Đắc Khang", sdt: "0976001849" },
-        { id: "hs_GOOD-L6/ Hà An_09", ten: "Huỳnh Gia Khang", sdt: "0972593526" },
-        { id: "hs_GOOD-L6/ Hà An_10", ten: "Lê Khanh", sdt: "0904485858" },
-        { id: "hs_GOOD-L6/ Hà An_11", ten: "Lê Đình Vinh", sdt: "0976971924" }
-    ],
-         "MARS - L6/Ngô Hằng": [
-        { id: "hs_MARS - L6/Ngô Hằng_01", ten: "Nguyễn Hà Vy B 6/12/15", sdt: "0988880534" },
-        { id: "hs_MARS - L6/Ngô Hằng_02", ten: "Lê Ngọc Diệp", sdt: "0977713604" },
-        { id: "hs_MARS - L6/Ngô Hằng_03", ten: "Nguyễn Minh Tùng", sdt: "0968155311" },
-        { id: "hs_MARS - L6/Ngô Hằng_04", ten: "Nguyễn Xuân Mai", sdt: "0987340014" },
-        { id: "hs_MARS - L6/Ngô Hằng_05", ten: "Lê Thảo Vy", sdt: "0948022886" },
-        { id: "hs_MARS - L6/Ngô Hằng_06", ten: "Nguyễn Hà Vy (A-cũ) 28/9/15", sdt: "0973658805" },
-        { id: "hs_MARS - L6/Ngô Hằng_07", ten: "Tưởng Đăng Khoa", sdt: "0944562088" },
-        { id: "hs_MARS - L6/Ngô Hằng_08", ten: "Nguyễn Ngọc Linh", sdt: "0981463664" },
-        { id: "hs_MARS - L6/Ngô Hằng_09", ten: "Nguyễn Tiến Đạt (Tôm)", sdt: "0833291234" }
-    ],
-     "EVIC": [
-        { id: "hs_EVIC_01", ten: "Phan Gia Bảo", sdt: "0972164536" },
-        { id: "hs_EVIC_02", ten: "Chử Nhật Minh", sdt: "0974478232" },
-        { id: "hs_EVIC_03", ten: "Đỗ Quang Minh Bon", sdt: "0936449009" },
-        { id: "hs_EVIC_04", ten: "Lê Minh Vũ", sdt: "0963922936" },
-        { id: "hs_EVIC_05", ten: "Nguyễn Tùng Dương", sdt: "0867291368" },
-        { id: "hs_EVIC_06", ten: "Bùi Hương Giang", sdt: "0915890069" },
-        { id: "hs_EVIC_07", ten: "Lê Khánh My (Thỏ)", sdt: "0972342286" },
-        { id: "hs_EVIC_08", ten: "Nguyễn Hoàng Yến", sdt: "0845477789" },
-        { id: "hs_EVIC_09", ten: "Nguyễn Thùy Dương", sdt: "0845477789" },
-        { id: "hs_EVIC_10", ten: "Đặng Đăng Khoa", sdt: "0768279199" },
-        { id: "hs_EVIC_11", ten: "Phạm Minh Anh", sdt: "0912921228" },
-        { id: "hs_EVIC_12", ten: "Vương Ngọc Khánh Linh", sdt: "0949686899" },
-        { id: "hs_EVIC_13", ten: "Lê Gia Bảo", sdt: "0388327989" },
-        { id: "hs_EVIC_14", ten: "Dương Bảo Nam", sdt: "0334633675" }
-    ],
-        "MOON-L7/Trà My": [
-        { id: "hs_MOON-L7/Trà My_01", ten: "Nguyễn Bảo An", sdt: "0964243909" },
-        { id: "hs_MOON-L7/Trà My_02", ten: "Nhật Hưng", sdt: "0904892848" },
-        { id: "hs_MOON-L7/Trà My_03", ten: "Nguyễn Bích Ngọc", sdt: "0912965919" },
-        { id: "hs_MOON-L7/Trà My_04", ten: "Chu Tuấn Kiệt", sdt: "0936100374" },
-        { id: "hs_MOON-L7/Trà My_05", ten: "Nguyễn Hưng Tuấn Dũng", sdt: "0974961488" },
-        { id: "hs_MOON-L7/Trà My_06", ten: "Phạm Minh Anh", sdt: "0948150891" },
-        { id: "hs_MOON-L7/Trà My_07", ten: "Nguyễn Bảo Khánh (trai)", sdt: "0946209986" },
-        { id: "hs_MOON-L7/Trà My_08", ten: "Khuất Minh Đức (bé)", sdt: "0943084625" },
-        { id: "hs_MOON-L7/Trà My_09", ten: "Nguyễn Đức Minh Tâm Anh", sdt: "0374924024" },
-        { id: "hs_MOON-L7/Trà My_10", ten: "Trần Thu Thuỷ", sdt: "0783427315" }
-    ],
-     "DELTA-L7 - Phương": [
-        { id: "hs_DELTA-L7 - Phương_01", ten: "Bùi Gia Hân", sdt: "0904131591" },
-        { id: "hs_DELTA-L7 - Phương_02", ten: "Lê Vũ Trung Đức", sdt: "0984850463" },
-        { id: "hs_DELTA-L7 - Phương_03", ten: "Nguyễn Thảo My", sdt: "0983668552" },
-        { id: "hs_DELTA-L7 - Phương_04", ten: "Trần Ngọc Huyền", sdt: "0983395568" },
-        { id: "hs_DELTA-L7 - Phương_05", ten: "Tống Đức Nghĩa", sdt: "0915619905" },
-        { id: "hs_DELTA-L7 - Phương_06", ten: "Nguyễn Trọng Khánh", sdt: "0815673993" },
-        { id: "hs_DELTA-L7 - Phương_07", ten: "Phạm Thanh Hằng", sdt: "0838108998" }
-    ],
-         "Happy - L8/Mai Ly": [
-        { id: "hs_Happy - L8/Mai Ly_01", ten: "Nguyễn Đình Bảo", sdt: "0962597526" },
-        { id: "hs_Happy - L8/Mai Ly_02", ten: "Nguyễn Hữu Minh Vũ", sdt: "0366782716" },
-        { id: "hs_Happy - L8/Mai Ly_03", ten: "Nguyễn Phương Anh", sdt: "0986706615" },
-        { id: "hs_Happy - L8/Mai Ly_04", ten: "Nguyễn Anh Thư", sdt: "0912445905" },
-        { id: "hs_Happy - L8/Mai Ly_05", ten: "Hoàng Đan Lê", sdt: "0934472818" },
-        { id: "hs_Happy - L8/Mai Ly_06", ten: "Nguyễn Phúc An", sdt: "0903236135" },
-        { id: "hs_Happy - L8/Mai Ly_07", ten: "Nghiêm Minh Đức", sdt: "0988608866" },
-        { id: "hs_Happy - L8/Mai Ly_08", ten: "Bùi Bảo Châu", sdt: "0379089136" },
-        { id: "hs_Happy - L8/Mai Ly_09", ten: "Phạm Gia Phong", sdt: "0986571229" },
-        { id: "hs_Happy - L8/Mai Ly_10", ten: "Nguyễn Văn Gia Khánh", sdt: "0976296696" },
-        { id: "hs_Happy - L8/Mai Ly_11", ten: "Phạm Trần Mỹ Tâm", sdt: "0972932188" },
-        { id: "hs_Happy - L8/Mai Ly_12", ten: "Nguyễn Viết Bảo Khánh", sdt: "0399229319" },
-        { id: "hs_Happy - L8/Mai Ly_13", ten: "Cao Mai Trang", sdt: "0902125989" }
-    ],
-     "High - L8/Thu Hà": [
-        { id: "hs_High - L8/Thu Hà_01", ten: "Nguyễn Đỗ Hải Long", sdt: "0961287398" },
-        { id: "hs_High - L8/Thu Hà_02", ten: "Nguyễn Hương Trà", sdt: "0973549189" },
-        { id: "hs_High - L8/Thu Hà_03", ten: "Nguyễn Thái Dương", sdt: "0912425469" },
-        { id: "hs_High - L8/Thu Hà_04", ten: "Nguyễn Huy Hoàng", sdt: "0912787519" },
-        { id: "hs_High - L8/Thu Hà_05", ten: "Nguyễn Phương Linh", sdt: "0845154444" },
-        { id: "hs_High - L8/Thu Hà_06", ten: "Nguyễn Phương Vy", sdt: "0906010537" },
-        { id: "hs_High - L8/Thu Hà_07", ten: "Dương Thanh Lâm", sdt: "0919791388" },
-        { id: "hs_High - L8/Thu Hà_08", ten: "Trần Thu Uyên", sdt: "0773453668" },
-        { id: "hs_High - L8/Thu Hà_09", ten: "Nguyễn Mạnh Cường", sdt: "0868462972" },
-        { id: "hs_High - L8/Thu Hà_10", ten: "Nguyễn Trường Sơn", sdt: "0964315276" },
-        { id: "hs_High - L8/Thu Hà_11", ten: "Trần Cát Bình", sdt: "0905583399" },
-        { id: "hs_High - L8/Thu Hà_12", ten: "Tô Quang Anh", sdt: "0377488252" },
-        { id: "hs_High - L8/Thu Hà_13", ten: "Phạm Anh Thư", sdt: "0367214181" },
-        { id: "hs_High - L8/Thu Hà_14", ten: "Nguyễn Bảo Nam", sdt: "0932264999" },
-        { id: "hs_High - L8/Thu Hà_15", ten: "Đỗ Minh Quang", sdt: "0773006886" },
-        { id: "hs_High - L8/Thu Hà_16", ten: "Nghiêm Hải Lâm", sdt: "0988819366" },
-        { id: "hs_High - L8/Thu Hà_17", ten: "Lê Khánh Ngọc (Sóc)", sdt: "0972720485" },
-        { id: "hs_High - L8/Thu Hà_18", ten: "Nguyễn Lê Uyên Nhi", sdt: "0915131860" },
-        { id: "hs_High - L8/Thu Hà_19", ten: "Dương An Thy", sdt: "0985332435" },
-        { id: "hs_High - L8/Thu Hà_20", ten: "Nguyễn Quang Duy (Ba Duy)", sdt: "0944448556" },
-        { id: "hs_High - L8/Thu Hà_21", ten: "Nguyễn Đỗ Quỳnh Anh", sdt: "0787286186" },
-        { id: "hs_High - L8/Thu Hà_22", ten: "Nguyễn Đỗ Diệu Anh", sdt: "0787286186" },
-        { id: "hs_High - L8/Thu Hà_23", ten: "Trần Minh Châu Sữa", sdt: "0904747244" },
-        { id: "hs_High - L8/Thu Hà_24", ten: "Chử Hoàng Sơn", sdt: "0974478232" },
-        { id: "hs_High - L8/Thu Hà_25", ten: "Nguyễn Thị Kim Tuyến", sdt: "0983674461" }
-    ],
+            { id: "hs_CLOUD-KID_01", ten: "Lê Đức Phúc", sdt: "0974665636" },
+            { id: "hs_CLOUD-KID_02", ten: "Lê Đức Minh", sdt: "0974665636" },
+            { id: "hs_CLOUD-KID_03", ten: "Chu Huyền Anh", sdt: "0982896335" },
+            { id: "hs_CLOUD-KID_04", ten: "Triệu Trúc An", sdt: "0346485202" },
+            { id: "hs_CLOUD-KID_05", ten: "Lê Minh Quân", sdt: "0972342286" },
+            { id: "hs_CLOUD-KID_06", ten: "Nguyễn Ngọc Khánh Linh", sdt: "0981796729" },
+            { id: "hs_CLOUD-KID_07", ten: "Lê Ngọc An Nhiên", sdt: "0908036029" },
+            { id: "hs_CLOUD-KID_08", ten: "Bùi Linh San", sdt: "0981220986" },
+            { id: "hs_CLOUD-KID_09", ten: "Lê Quý Hương", sdt: "0978463483" },
+            { id: "hs_CLOUD-KID_10", ten: "Nguyễn Minh Ngọc", sdt: "0979538636" },
+            { id: "hs_CLOUD-KID_11", ten: "Trần Thanh Tùng", sdt: "0961721015" }
+        ],
         "HOPE-L8 TRÀ MY": [
-        { id: "hs_HOPE-L8 TRÀ MY_01", ten: "Đào Ngọc Mai", sdt: "0396900726" },
-        { id: "hs_HOPE-L8 TRÀ MY_02", ten: "Trần Bảo Hân", sdt: "0936302882" },
-        { id: "hs_HOPE-L8 TRÀ MY_03", ten: "Nguyễn Quang Phong", sdt: "0941186831" },
-        { id: "hs_HOPE-L8 TRÀ MY_04", ten: "Đặng Trúc Linh", sdt: "0962597779" },
-        { id: "hs_HOPE-L8 TRÀ MY_05", ten: "Vũ Bích Phương", sdt: "0983368665" },
-        { id: "hs_HOPE-L8 TRÀ MY_06", ten: "Nguyễn Khánh Trang Su", sdt: "0785285678" },
-        { id: "hs_HOPE-L8 TRÀ MY_07", ten: "Nguyễn Hồng Thư", sdt: "0904143890" },
-        { id: "hs_HOPE-L8 TRÀ MY_08", ten: "Nguyễn Tuấn Đức Thiện", sdt: "0979983492" },
-        { id: "hs_HOPE-L8 TRÀ MY_09", ten: "Nguyễn Hoàng Minh Thư", sdt: "0823607777" },
-        { id: "hs_HOPE-L8 TRÀ MY_10", ten: "Nguyễn Khánh Ly", sdt: "0822865612" },
-        { id: "hs_HOPE-L8 TRÀ MY_11", ten: "Lê Hà Linh", sdt: "0914373384" },
-        { id: "hs_HOPE-L8 TRÀ MY_12", ten: "Nguyễn An Phú", sdt: "0362065658" }
-    ],
-         "SUPER - Thu Hà - L9": [
-        { id: "hs_SUPER - Thu Hà - L9_01", ten: "Lê Anh Thư (Nhím)", sdt: "0343969358" },
-        { id: "hs_SUPER - Thu Hà - L9_02", ten: "Lê Đức Duy (Sóc)", sdt: "0342065248" },
-        { id: "hs_SUPER - Thu Hà - L9_03", ten: "Nguyễn Bảo Ngọc", sdt: "0383996789" },
-        { id: "hs_SUPER - Thu Hà - L9_04", ten: "Trần Anh Khôi", sdt: "0976301189" },
-        { id: "hs_SUPER - Thu Hà - L9_05", ten: "Phạm Sơn Lâm", sdt: "0985176796" },
-        { id: "hs_SUPER - Thu Hà - L9_06", ten: "Nghiêm Chí Nghĩa", sdt: "0904516469" },
-        { id: "hs_SUPER - Thu Hà - L9_07", ten: "Phùng Thành Đạt", sdt: "0976786762" },
-        { id: "hs_SUPER - Thu Hà - L9_08", ten: "Đặng Quang Nhật Minh", sdt: "0946969313" },
-        { id: "hs_SUPER - Thu Hà - L9_09", ten: "Nguyễn Anh Thuận Phong", sdt: "0946209986" },
-        { id: "hs_SUPER - Thu Hà - L9_10", ten: "Trinh Đình Ngọc Anh Bin", sdt: "0979434121" },
-        { id: "hs_SUPER - Thu Hà - L9_11", ten: "Nguyễn Thị Thanh Hằng", sdt: "0934288977" },
-        { id: "hs_SUPER - Thu Hà - L9_12", ten: "Lê Trần Hiếu", sdt: "0936538868" },
-        { id: "hs_SUPER - Thu Hà - L9_13", ten: "Nguyễn Thị Hồng Lam .", sdt: "0916136835" },
-        { id: "hs_SUPER - Thu Hà - L9_14", ten: "Lâm Vân Trang", sdt: "0902239258" }
-    ],
-    "CLC-L9/Thu Hà": [
-        { id: "hs_CLC-L9/Thu Hà_01", ten: "Đỗ Hải Nguyên Bin", sdt: "0936449009" },
-        { id: "hs_CLC-L9/Thu Hà_02", ten: "Nguyễn Bảo Hân (Lavie)", sdt: "0972350586" },
-        { id: "hs_CLC-L9/Thu Hà_03", ten: "Vũ Bảo My", sdt: "0974030787" },
-        { id: "hs_CLC-L9/Thu Hà_04", ten: "Nguyễn Minh Quân", sdt: "0936008090" },
-        { id: "hs_CLC-L9/Thu Hà_05", ten: "Hoàng Ánh Chi", sdt: "0986072146" },
-        { id: "hs_CLC-L9/Thu Hà_06", ten: "Đặng Đức Kiên", sdt: "0988678758" },
-        { id: "hs_CLC-L9/Thu Hà_07", ten: "Nguyễn Danh Thái", sdt: "0912007664" },
-        { id: "hs_CLC-L9/Thu Hà_08", ten: "Nguyễn Đức Anh (Cao)", sdt: "0386978864" },
-        { id: "hs_CLC-L9/Thu Hà_09", ten: "Vương Mạnh Quân", sdt: "0387765999" },
-        { id: "hs_CLC-L9/Thu Hà_10", ten: "Phạm Xuân Mai", sdt: "0367214181" },
-        { id: "hs_CLC-L9/Thu Hà_11", ten: "Nguyễn Anh Quân", sdt: "0989379396" },
-        { id: "hs_CLC-L9/Thu Hà_12", ten: "Nguyễn Đan Chi", sdt: "0944215248" },
-        { id: "hs_CLC-L9/Thu Hà_13", ten: "Vương Hoàng Bảo Ngọc", sdt: "0934500963" },
-        { id: "hs_CLC-L9/Thu Hà_14", ten: "Dương Gia Hân", sdt: "0973064442" },
-        { id: "hs_CLC-L9/Thu Hà_15", ten: "Nguyễn Vũ Hà Chi", sdt: "0936844955" },
-        { id: "hs_CLC-L9/Thu Hà_16", ten: "Bùi Anh Thư", sdt: "0906226433" },
-        { id: "hs_CLC-L9/Thu Hà_17", ten: "Tống Lan Phương", sdt: "0977342412" },
-        { id: "hs_CLC-L9/Thu Hà_18", ten: "Đỗ Mạnh Hải", sdt: "0904440099" },
-        { id: "hs_CLC-L9/Thu Hà_19", ten: "Trần Ngọc Bảo Hân", sdt: "0912112727" },
-        { id: "hs_CLC-L9/Thu Hà_20", ten: "Minh Khánh", sdt: "0972554096" },
-        { id: "hs_CLC-L9/Thu Hà_21", ten: "Nguyễn Thị Thanh Hằng", sdt: "0934288977" }
-    ],
-        "WIN - L10/Thu Hà": [
-        { id: "hs_WIN - L10/Thu Hà_01", ten: "Nguyễn Kiều Phương Vy", sdt: "0354587777" },
-        { id: "hs_WIN - L10/Thu Hà_02", ten: "Nguyễn Hà Vy", sdt: "0913309096" },
-        { id: "hs_WIN - L10/Thu Hà_03", ten: "Lương Vũ Khánh Ngọc", sdt: "0788370593" },
-        { id: "hs_WIN - L10/Thu Hà_04", ten: "Nguyễn Hà Anh", sdt: "0913315526" },
-        { id: "hs_WIN - L10/Thu Hà_05", ten: "Hoàng Bảo Trang", sdt: "0976324469" },
-        { id: "hs_WIN - L10/Thu Hà_06", ten: "Nhật Phong", sdt: "0904892848" },
-        { id: "hs_WIN - L10/Thu Hà_07", ten: "Nguyễn Thanh Mai", sdt: "0986706615" },
-        { id: "hs_WIN - L10/Thu Hà_08", ten: "Đặng Yến Nhi", sdt: "0399155568" },
-        { id: "hs_WIN - L10/Thu Hà_09", ten: "Đào Hùng Anh", sdt: "0903416568" },
-        { id: "hs_WIN - L10/Thu Hà_10", ten: "Nguyễn Hoàng Quân", sdt: "0395940688" },
-        { id: "hs_WIN - L10/Thu Hà_11", ten: "Nguyễn Bảo Duy", sdt: "0905181990" },
-        { id: "hs_WIN - L10/Thu Hà_12", ten: "Bùi Thị Hà Xuân", sdt: "0366040683" },
-        { id: "hs_WIN - L10/Thu Hà_13", ten: "Vũ Minh Hằng", sdt: "0834211802" },
-        { id: "hs_WIN - L10/Thu Hà_14", ten: "Nguyễn Phương Vy", sdt: "0933961989" },
-        { id: "hs_WIN - L10/Thu Hà_15", ten: "Nguyễn Kiều Anh", sdt: "0972245361" },
-        { id: "hs_WIN - L10/Thu Hà_16", ten: "Mai Xuân Trường", sdt: "0399437444" },
-        { id: "hs_WIN - L10/Thu Hà_17", ten: "Nguyễn Hoàng Mạnh Hưng", sdt: "0836633698" },
-        { id: "hs_WIN - L10/Thu Hà_18", ten: "Trần Phương Trà", sdt: "0377021669" },
-        { id: "hs_WIN - L10/Thu Hà_19", ten: "Lại Xuân Bách", sdt: "0904444922" },
-        { id: "hs_WIN - L10/Thu Hà_20", ten: "Nguyễn Bình An", sdt: "0945493993" },
-        { id: "hs_WIN - L10/Thu Hà_21", ten: "Nguyễn Hà Phương", sdt: "0975253669" },
-        { id: "hs_WIN - L10/Thu Hà_22", ten: "Vũ Phúc An", sdt: "0888340283" },
-        { id: "hs_WIN - L10/Thu Hà_23", ten: "Phạm Minh Nghĩa", sdt: "0983535301" },
-        { id: "hs_WIN - L10/Thu Hà_24", ten: "Lê Đức Thành", sdt: "0915552648" },
-        { id: "hs_WIN - L10/Thu Hà_25", ten: "Nguyễn Duy Lân", sdt: "0983008859" },
-        { id: "hs_WIN - L10/Thu Hà_26", ten: "Lê Anh Tuệ", sdt: "0974013657" },
-        { id: "hs_WIN - L10/Thu Hà_27", ten: "Bùi Minh Thư", sdt: "0984682760" },
-        { id: "hs_WIN - L10/Thu Hà_28", ten: "Nguyễn Quang Anh", sdt: "0834456669" },
-        { id: "hs_WIN - L10/Thu Hà_29", ten: "Nguyễn Hoàng Lâm Uyên", sdt: "0989261380" },
-        { id: "hs_WIN - L10/Thu Hà_30", ten: "Trần Lê Phương Linh", sdt: "0988742202" },
-        { id: "hs_WIN - L10/Thu Hà_31", ten: "Dương Nguyễn An Huy", sdt: "0985332435" },
-        { id: "hs_WIN - L10/Thu Hà_32", ten: "Trương Minh Quang Tuấn", sdt: "0915413316" },
-        { id: "hs_WIN - L10/Thu Hà_33", ten: "Trương Hồng Phúc", sdt: "0966737025" },
-        { id: "hs_WIN - L10/Thu Hà_34", ten: "Đặng Linh Anh", sdt: "0344946368" },
-        { id: "hs_WIN - L10/Thu Hà_35", ten: "Nguyễn Anh Khoa", sdt: "0912820105" },
-        { id: "hs_WIN - L10/Thu Hà_36", ten: "Gia Phát", sdt: "0983860979" },
-        { id: "hs_WIN - L10/Thu Hà_37", ten: "Vũ Minh Khuê", sdt: "0978831585" },
-        { id: "hs_WIN - L10/Thu Hà_38", ten: "Con mẹ Thuỳ Linh", sdt: "0946188338" }
-    ],
-    "SMART - L10/Hà An": [
-        { id: "hs_SMART - L10/Hà An_01", ten: "Nguyễn Bùi Khánh Ly", sdt: "0333345378" },
-        { id: "hs_SMART - L10/Hà An_02", ten: "Nguyễn Tường Vy mẹ Hoa", sdt: "0914656598" },
-        { id: "hs_SMART - L10/Hà An_03", ten: "Nguyễn Phát Đạt", sdt: "0986507735" },
-        { id: "hs_SMART - L10/Hà An_04", ten: "Nguyễn Đắc Chính", sdt: "0977453287" },
-        { id: "hs_SMART - L10/Hà An_05", ten: "Lê Thảo Nguyên", sdt: "0913563261" },
-        { id: "hs_SMART - L10/Hà An_06", ten: "Chu Gia Hân", sdt: "0912677661" },
-        { id: "hs_SMART - L10/Hà An_07", ten: "Lý Gia Khang", sdt: "0914313489" },
-        { id: "hs_SMART - L10/Hà An_08", ten: "Trần Hà Mai Phương", sdt: "0979646812" },
-        { id: "hs_SMART - L10/Hà An_09", ten: "Tạ Thành An", sdt: "0346923439" },
-        { id: "hs_SMART - L10/Hà An_10", ten: "Trần Quang Minh", sdt: "0912022784" },
-        { id: "hs_SMART - L10/Hà An_11", ten: "Đặng Tuấn Quyền Linh", sdt: "0985545781" },
-        { id: "hs_SMART - L10/Hà An_12", ten: "Gia Phát", sdt: "0983860979" },
-        { id: "hs_SMART - L10/Hà An_13", ten: "Thảo Vân (Lu)", sdt: "0904747244" }
-    ],
-    "CLOUD - L10/Hà An": [
-        { id: "hs_CLOUD - L10/Hà An_01", ten: "Vũ Minh Hiếu", sdt: "0945068878" },
-        { id: "hs_CLOUD - L10/Hà An_02", ten: "Dương Khánh Bảo Ngọc", sdt: "0919469355" },
-        { id: "hs_CLOUD - L10/Hà An_03", ten: "Trần Đức Duy", sdt: "0904768618" },
-        { id: "hs_CLOUD - L10/Hà An_04", ten: "Trần Hoàng Minh Vũ", sdt: "0945121999" },
-        { id: "hs_CLOUD - L10/Hà An_05", ten: "Lê Tuấn Trường", sdt: "0336775082" },
-        { id: "hs_CLOUD - L10/Hà An_06", ten: "Bùi Ngọc Huyền", sdt: "0986079083" },
-        { id: "hs_CLOUD - L10/Hà An_07", ten: "Phạm Huy Khiêm", sdt: "0903246830" },
-        { id: "hs_CLOUD - L10/Hà An_08", ten: "Nguyễn Hà Minh Khánh mẹ Hoa", sdt: "0966574393" },
-        { id: "hs_CLOUD - L10/Hà An_09", ten: "Đỗ Minh Khôi", sdt: "0977756767" },
-        { id: "hs_CLOUD - L10/Hà An_10", ten: "Nguyễn Minh Nghĩa", sdt: "0358560399" }
-    ],
-         "TRY - L10/Thu Hà": [
-        { id: "hs_TRY - L10/Thu Hà_01", ten: "Ngô Quang Minh", sdt: "0916511952" },
-        { id: "hs_TRY - L10/Thu Hà_02", ten: "Nguyễn Huyền Anh", sdt: "0329871880" },
-        { id: "hs_TRY - L10/Thu Hà_03", ten: "Nguyễn Ngọc Khánh", sdt: "0982948586" },
-        { id: "hs_TRY - L10/Thu Hà_04", ten: "Ninh Quốc Việt", sdt: "0934524232" },
-        { id: "hs_TRY - L10/Thu Hà_05", ten: "Nguyễn Phương Linh", sdt: "0395030076" },
-        { id: "hs_TRY - L10/Thu Hà_06", ten: "Phạm Đức Trí", sdt: "0965859186" },
-        { id: "hs_TRY - L10/Thu Hà_07", ten: "Nguyễn Anh Thảo 20/12/2011", sdt: "0936681884" }
-    ],
-         "CAN - L11/Lê Thu Hà": [
-        { id: "hs_CAN - L11/Lê Thu Hà_01", ten: "Nguyễn Khánh Linh (Chíp)", sdt: "0934503450" },
-        { id: "hs_CAN - L11/Lê Thu Hà_02", ten: "Yên Nhật Anh Thư", sdt: "0944724668" },
-        { id: "hs_CAN - L11/Lê Thu Hà_03", ten: "Nguyễn Cầm Giang", sdt: "0944448556" },
-        { id: "hs_CAN - L11/Lê Thu Hà_04", ten: "Tô Minh Ngọc", sdt: "0912145662" },
-        { id: "hs_CAN - L11/Lê Thu Hà_05", ten: "Nguyễn Linh Chi", sdt: "0366656979" },
-        { id: "hs_CAN - L11/Lê Thu Hà_06", ten: "Nguyễn Tuấn Anh (B)", sdt: "0917381828" },
-        { id: "hs_CAN - L11/Lê Thu Hà_07", ten: "Lê Ngân Giang", sdt: "0982078556" },
-        { id: "hs_CAN - L11/Lê Thu Hà_08", ten: "Đặng Khánh Hiền", sdt: "0969146280" },
-        { id: "hs_CAN - L11/Lê Thu Hà_09", ten: "Bùi Công Hoàng Nam", sdt: "0988338999" },
-        { id: "hs_CAN - L11/Lê Thu Hà_10", ten: "Nguyễn Minh Hải", sdt: "0917633148" },
-        { id: "hs_CAN - L11/Lê Thu Hà_11", ten: "Phạm Hồng Thắng", sdt: "0904251857" },
-        { id: "hs_CAN - L11/Lê Thu Hà_12", ten: "Nguyễn Thảo Trang", sdt: "0936268922" },
-        { id: "hs_CAN - L11/Lê Thu Hà_13", ten: "Nguyễn Trí Dũng", sdt: "0968912915" },
-        { id: "hs_CAN - L11/Lê Thu Hà_14", ten: "Bùi Phước An", sdt: "0986897989" },
-        { id: "hs_CAN - L11/Lê Thu Hà_15", ten: "Nguyễn Trần Thanh Hằng", sdt: "0867291368" },
-        { id: "hs_CAN - L11/Lê Thu Hà_16", ten: "Phạm Bảo Minh (Bột)", sdt: "0982101899" },
-        { id: "hs_CAN - L11/Lê Thu Hà_17", ten: "Lê Minh Hiếu", sdt: "0903484553" },
-        { id: "hs_CAN - L11/Lê Thu Hà_18", ten: "Nguyễn Tiến Anh", sdt: "0768613133" },
-        { id: "hs_CAN - L11/Lê Thu Hà_19", ten: "Bùi Gia Hiển", sdt: "0904131591" },
-        { id: "hs_CAN - L11/Lê Thu Hà_20", ten: "Nguyễn Thanh Lâm", sdt: "0905029888" },
-        { id: "hs_CAN - L11/Lê Thu Hà_21", ten: "Phạm Hoàng Lân", sdt: "0944827284" },
-        { id: "hs_CAN - L11/Lê Thu Hà_22", ten: "Lê Thành Công", sdt: "0373253378" },
-        { id: "hs_CAN - L11/Lê Thu Hà_23", ten: "Đoàn Việt Anh", sdt: "0988838288" },
-        { id: "hs_CAN - L11/Lê Thu Hà_24", ten: "Mã Diệp Anh", sdt: "0358143884" },
-        { id: "hs_CAN - L11/Lê Thu Hà_25", ten: "Lý Thành Đức", sdt: "0986692113" },
-        { id: "hs_CAN - L11/Lê Thu Hà_26", ten: "Nguyễn Nghiêm Hoàng Hải", sdt: "0916931661" }
-    ],
-         "OCEAN-L11": [
-        { id: "hs_OCEAN-L11_01", ten: "Nguyễn Ngọc Anh A mẹ Xuân", sdt: "0365570559" },
-        { id: "hs_OCEAN-L11_02", ten: "Hoàng Phương Hà", sdt: "0902288884" },
-        { id: "hs_OCEAN-L11_03", ten: "Nguyễn Minh Anh mẹ Quỳnh A", sdt: "0981951661" },
-        { id: "hs_OCEAN-L11_04", ten: "Nguyễn Thái Thu", sdt: "0915157572" },
-        { id: "hs_OCEAN-L11_05", ten: "Nguyễn Đăng Dương (Gấu)", sdt: "0983734509" },
-        { id: "hs_OCEAN-L11_06", ten: "Ánh Dương", sdt: "0936062814" },
-        { id: "hs_OCEAN-L11_07", ten: "Giang Sỹ Nam Bảo", sdt: "0988865208" },
-        { id: "hs_OCEAN-L11_08", ten: "Phí Gia Tuấn", sdt: "0869476184" },
-        { id: "hs_OCEAN-L11_09", ten: "Dương Đức Quân", sdt: "0912244788" },
-        { id: "hs_OCEAN-L11_10", ten: "Phạm Khoa Bảo", sdt: "0985694099" },
-        { id: "hs_OCEAN-L11_11", ten: "Vũ Minh Châu", sdt: "0939105689" }
-    ],
-         "ATHENA-L12/Mai Ly": [
-        { id: "hs_ATHENA-L12/Mai Ly_01", ten: "Đặng Minh Anh", sdt: "0906151528" },
-        { id: "hs_ATHENA-L12/Mai Ly_02", ten: "Trần Duy Anh", sdt: "0968836774" },
-        { id: "hs_ATHENA-L12/Mai Ly_03", ten: "Phan Quyết Thắng", sdt: "0936881883" },
-        { id: "hs_ATHENA-L12/Mai Ly_04", ten: "Nguyễn Chúc An", sdt: "0338985565" },
-        { id: "hs_ATHENA-L12/Mai Ly_05", ten: "Trần Vũ Diệp Anh", sdt: "0989322283" },
-        { id: "hs_ATHENA-L12/Mai Ly_06", ten: "Nguyễn Ngọc Duyên", sdt: "0937418815" },
-        { id: "hs_ATHENA-L12/Mai Ly_07", ten: "Nguyễn Phương Thanh", sdt: "0911645602" },
-        { id: "hs_ATHENA-L12/Mai Ly_08", ten: "Nguyễn Hoàng Mạnh Tùng", sdt: "0989705274" },
-        { id: "hs_ATHENA-L12/Mai Ly_09", ten: "Đoàn Ngọc Minh Quân", sdt: "0973981707" },
-        { id: "hs_ATHENA-L12/Mai Ly_10", ten: "Vũ Mạnh Thắng", sdt: "0988661743" },
-        { id: "hs_ATHENA-L12/Mai Ly_11", ten: "Lý Quang Tùng", sdt: "0982981186" },
-        { id: "hs_ATHENA-L12/Mai Ly_12", ten: "Hoàng Quang Tiến Hưng", sdt: "0972472811" },
-        { id: "hs_ATHENA-L12/Mai Ly_13", ten: "Đặng Bảo Minh", sdt: "0973916286" }
-    ],
-         "IELTS-WONDERFUL/Thu Hà": [
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_01", ten: "Trần Đức Minh", sdt: "0912770181" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_02", ten: "Nguyễn Ngọc Minh", sdt: "0987822736" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_03", ten: "Nguyễn Hà Vân", sdt: "0912841300" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_04", ten: "Đàm Xuân Bắc", sdt: "0823639122" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_05", ten: "Trần Linh Nhi", sdt: "0368692421" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_06", ten: "Đỗ Minh Thành", sdt: "0986075443" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_07", ten: "Vũ Đức Lâm Khang", sdt: "0988554872" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_08", ten: "Trần Minh Cường", sdt: "0983395568" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_09", ten: "Bùi Ngân An", sdt: "0978990613" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_10", ten: "Nguyễn Bảo Khang", sdt: "0916996599" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_11", ten: "Tạ Chí Lâm", sdt: "0929381818" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_12", ten: "Tống Duy Anh", sdt: "0913006284" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_13", ten: "Nguyễn Minh Đức", sdt: "0332272170" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_14", ten: "Nguyễn Tuấn Khanh", sdt: "0975257800" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_15", ten: "Nguyễn Quang Minh 2k9", sdt: "0942121985" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_16", ten: "Vũ Trúc An", sdt: "0912872479" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_17", ten: "Trúc Lâm", sdt: "0912872479" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_18", ten: "Nguyễn Phương Anh", sdt: "0914349267" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_19", ten: "Lê Bảo Nguyên", sdt: "0912323547" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_20", ten: "Trần Phạm Hiền Anh", sdt: "0936702298" },
-        { id: "hs_IELTS-WONDERFUL/Thu Hà_21", ten: "Hà Linh", sdt: "0989096029" }
-    ],
-         "FUN - IE-L12/Lê Thu Hà": [
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_01", ten: "Lê Gia Bảo", sdt: "0912411922" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_02", ten: "Đinh Nguyễn Tuấn Anh", sdt: "0819973299" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_03", ten: "Lê Yến Vy", sdt: "0916883232" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_04", ten: "Nguyễn Việt Hoà", sdt: "0986965463" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_05", ten: "Vũ Quang Minh", sdt: "0982239698" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_06", ten: "Nguyễn Quỳnh Trang", sdt: "0395030076" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_07", ten: "Vũ Đỗ Phương Anh", sdt: "0985310685" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_08", ten: "Trần Tuấn Khải", sdt: "0904440466" },
-        { id: "hs_FUN - IE-L12/Lê Thu Hà_09", ten: "Nguyễn Vũ Phương Thảo 2k8", sdt: "0963128101" }
-    ],
-         "L12-BLUE": [
-        { id: "hs_L12-BLUE_01", ten: "Bùi Bá Nhật Minh", sdt: "0982566922" },
-        { id: "hs_L12-BLUE_02", ten: "Nguyễn Nhật Nam", sdt: "0917633148" },
-        { id: "hs_L12-BLUE_03", ten: "Nguyễn Ngọc Tuấn", sdt: "0979983492" },
-        { id: "hs_L12-BLUE_04", ten: "Ngô Hà Vy", sdt: "0962053740" },
-        { id: "hs_L12-BLUE_05", ten: "Phùng Thị Ngọc Chi", sdt: "0832880898" },
-        { id: "hs_L12-BLUE_06", ten: "Hoàng Đình Hải", sdt: "0385673095" },
-        { id: "hs_L12-BLUE_07", ten: "Nguyễn Đình Hào", sdt: "0359398683" },
-        { id: "hs_L12-BLUE_08", ten: "Nguyễn Nhật Lan Vy", sdt: "0825222536" }
-    ]
-    
-    
-
-
-
-
+            { id: "hs_HOPE-L8 TRÀ MY_01", ten: "Đào Ngọc Mai", sdt: "0396900726" },
+            { id: "hs_HOPE-L8 TRÀ MY_02", ten: "Trần Bảo Hân", sdt: "0936302882" },
+            { id: "hs_HOPE-L8 TRÀ MY_03", ten: "Nguyễn Quang Phong", sdt: "0941186831" },
+            { id: "hs_HOPE-L8 TRÀ MY_04", ten: "Vũ Bích Phương", sdt: "0983368665" },
+            { id: "hs_HOPE-L8 TRÀ MY_05", ten: "Nguyễn Khánh Trang Su", sdt: "0785285678" },
+            { id: "hs_HOPE-L8 TRÀ MY_06", ten: "Nguyễn Hồng Thư", sdt: "0904143890" },
+            { id: "hs_HOPE-L8 TRÀ MY_07", ten: "Nguyễn Tuấn Đức Thiện", sdt: "0979983492" },
+            { id: "hs_HOPE-L8 TRÀ MY_08", ten: "Nguyễn Hoàng Minh Thư", sdt: "0823607777" },
+            { id: "hs_HOPE-L8 TRÀ MY_09", ten: "Nguyễn Khánh Ly", sdt: "0822865612" },
+            { id: "hs_HOPE-L8 TRÀ MY_10", ten: "Lê Hà Linh", sdt: "0914373384" },
+            { id: "hs_HOPE-L8 TRÀ MY_11", ten: "Nguyễn An Phú", sdt: "0362065658" },
+            { id: "hs_HOPE-L8 TRÀ MY_12", ten: "Vũ Ngọc Anh", sdt: "0866924691" },
+            { id: "hs_HOPE-L8 TRÀ MY_13", ten: "Phạm Trần Mỹ Tâm", sdt: "0972932188" }
+        ],
+        "ATHENA-L12/Mai Ly": [
+            { id: "hs_ATHENA-L12/Mai Ly_01", ten: "Đặng Minh Anh", sdt: "0906151528" },
+            { id: "hs_ATHENA-L12/Mai Ly_02", ten: "Trần Duy Anh", sdt: "0968836774" },
+            { id: "hs_ATHENA-L12/Mai Ly_03", ten: "Phan Quyết Thắng", sdt: "0936881883" },
+            { id: "hs_ATHENA-L12/Mai Ly_04", ten: "Nguyễn Chúc An", sdt: "0338985565" },
+            { id: "hs_ATHENA-L12/Mai Ly_05", ten: "Trần Vũ Diệp Anh", sdt: "0989322283" },
+            { id: "hs_ATHENA-L12/Mai Ly_06", ten: "Nguyễn Ngọc Duyên", sdt: "0937418815" },
+            { id: "hs_ATHENA-L12/Mai Ly_07", ten: "Nguyễn Phương Thanh", sdt: "0911645602" },
+            { id: "hs_ATHENA-L12/Mai Ly_08", ten: "Nguyễn Hoàng Mạnh Tùng", sdt: "0989705274" },
+            { id: "hs_ATHENA-L12/Mai Ly_09", ten: "Đoàn Ngọc Minh Quân", sdt: "0973981707" },
+            { id: "hs_ATHENA-L12/Mai Ly_10", ten: "Vũ Mạnh Thắng", sdt: "0988661743" }
+        ],
+        "SMILE-L6/Hà An": [
+            { id: "hs_SMILE-L6/Hà An_01", ten: "Dương Ngọc Thảo Anh", sdt: "0348738159" },
+            { id: "hs_SMILE-L6/Hà An_02", ten: "Nguyễn Tiến Sơn", sdt: "0972472383" },
+            { id: "hs_SMILE-L6/Hà An_03", ten: "Trần Hồ Đức Lượng", sdt: "0939142870" }
+        ],
+        "BOSS-VIP - L7/Lê Thu Hà": [
+            { id: "hs_BOSS-VIP - L7/Lê Thu Hà_01", ten: "Nguyễn Tiến Minh", sdt: "0987632876" },
+            { id: "hs_BOSS-VIP - L7/Lê Thu Hà_02", ten: "Trần Hà Duy", sdt: "0966049391" },
+            { id: "hs_BOSS-VIP - L7/Lê Thu Hà_03", ten: "Trần Đức Minh", sdt: "0984537775" }
+        ]
     };
-    
-    let danhSachVangData = JSON.parse(localStorage.getItem('danhSachVangData')) || {};
-    let danhSachHopList = JSON.parse(localStorage.getItem('danhSachHopList')) || [];
 
+    // Các tùy chọn lý do vắng mặt
     const ghiChuOptions = {
-    "": "***",
-    "muon": "Đi muộn",
-    "noCall": "Không nghe máy",
-    "nghiThang7": "Nghỉ hết tháng 7",
-    "nghiHomNay": "Nghỉ hôm nay",
-    "nghiTuanNay": "Nghỉ tuần này",
-    "baoSau": "Khi nào đi học sẽ báo lại",
-    "khac": "Lý do khác..."
-};
+        "0": "Chưa chọn lý do",
+        "1": "Nghỉ có phép",
+        "2": "Nghỉ không phép",
+        "3": "Bận việc gia đình",
+        "4": "Ốm / Sức khỏe",
+        "5": "Trùng lịch học khác"
+    };
 
+    // Quản lý trạng thái bằng LocalStorage
+    let danhSachHopList = JSON.parse(localStorage.getItem('danhSachHopList')) || [];
+    let danhSachVangData = JSON.parse(localStorage.getItem('danhSachVangData')) || {};
+
+    // Khởi tạo giao diện từ LocalStorage khi load trang
+    window.onload = function() {
+        danhSachHopList.forEach(hop => hienThiHopLopGiaoDien(hop.boxId, hop.ca, hop.lop, hop.phong));
+    };
+
+    function luuVaoLocalStorage() {
+        localStorage.setItem('danhSachHopList', JSON.stringify(danhSachHopList));
+        localStorage.setItem('danhSachVangData', JSON.stringify(danhSachVangData));
+    }
 
     function taoHopMoi() {
-        const ca = document.getElementById('caHoc').value;
-        const lopKey = document.getElementById('tenLop').value;
-        const lopText = document.getElementById('tenLop').options[document.getElementById('tenLop').selectedIndex].text;
-        const phong = document.getElementById('phongHoc').value;
+        const ca = document.getElementById("caHoc").value;
+        const lop = document.getElementById("tenLop").value;
+        const phong = document.getElementById("phongHoc").value;
         
-        const boxId = 'box_' + Date.now(); 
+        const boxId = `box_${Date.now()}`;
         
-        danhSachVangData[boxId] = { _lopKey: lopKey }; 
-        danhSachHopList.push({ boxId, title: `${ca} - ${lopText} - ${phong}`, lopKey });
-        
+        // Khởi tạo vùng lưu trữ vắng cho lớp này
+        danhSachVangData[boxId] = {}; 
+        danhSachHopList.push({ boxId, ca, lop, phong });
         luuVaoLocalStorage();
-        dungGiaoDienHop(boxId, `${ca} - ${lopText} - ${phong}`, lopKey);
+
+        hienThiHopLopGiaoDien(boxId, ca, lop, phong);
     }
 
-    function dungGiaoDienHop(boxId, boxTitle, lopKey) {
-        const container = document.getElementById('danhSachHop');
-        const danhSachHocSinhCuaLop = dataHocSinh[lopKey] || [];
+    function hienThiHopLopGiaoDien(boxId, ca, lop, phong) {
+        const containerBox = document.createElement("div");
+        containerBox.className = "info-box";
+        containerBox.id = boxId;
 
-        const div = document.createElement('div');
-        div.className = 'info-box';
-        div.id = boxId;
-        
-        div.innerHTML = `
-            <div class="box-header">
-                <button class="btn-delete-box" onclick="xoaHopLop(event, '${boxId}')">Xóa</button>
-                <div class="box-title">${boxTitle}</div>
-                <div class="box-stats">Sĩ số: <span class="present-count">0</span>/${danhSachHocSinhCuaLop.length}</div>
-            </div>
-            <div class="list" style="display:none;">
-                <div class="absent-section" style="display: none;">
-                    <div class="absent-header-wrapper">
-                        <h4>DANH SÁCH VẮNG (<span class="absent-count">0</span>)</h4>
-                        <button class="btn-copy-absent" onclick="copyDanhSachVang(event, '${boxId}', '${boxTitle}')">Copy nhanh</button>
-                    </div>
-                    <div class="absent-list"></div>
-                </div>
-                <div class="main-student-list"></div>
-            </div>
+        // Header hộp lớp
+        const header = document.createElement("div");
+        header.className = "box-header";
+        header.innerHTML = `
+            <button class="btn-delete-box" onclick="xoaHopLop(event, '${boxId}')">Xóa lớp</button>
+            <div class="box-title">${lop} - Phòng ${phong}</div>
+            <div class="box-stats">Ca học: ${ca} | Sĩ số: ${(dataHocSinh[lop] || []).length} HS</div>
         `;
-        
-        div.onclick = function(e) { 
-            if(e.target === this || e.target.className === 'box-header' || e.target.className === 'box-title' || e.target.className === 'box-stats' || e.target.className === 'absent-header-wrapper') {
-                const list = this.querySelector('.list');
-                list.style.display = list.style.display === 'none' ? 'block' : 'none';
+        containerBox.appendChild(header);
+
+        // Khu vực hiển thị danh sách vắng lên đầu hộp
+        const absentSection = document.createElement("div");
+        absentSection.className = "absent-section";
+        absentSection.id = `absent_sec_${boxId}`;
+        absentSection.innerHTML = `
+            <div class="absent-header-wrapper">
+                <h4>DANH SÁCH VẮNG HỌC</h4>
+                <button class="btn-copy-absent" onclick="copyDanhSachVang('${boxId}', '${lop}')">Copy nhanh</button>
+            </div>
+            <div id="absent_list_${boxId}"><i>Chưa có học sinh vắng</i></div>
+        `;
+        containerBox.appendChild(absentSection);
+
+        // Danh sách học sinh chi tiết
+        const listHocSinh = dataHocSinh[lop] || [];
+        listHocSinh.forEach(hs => {
+            const studentItem = document.createElement("div");
+            studentItem.className = "student-item";
+            studentItem.id = `student_${boxId}_${hs.id}`;
+
+            // Phục hồi trạng thái vắng từ LocalStorage nếu có
+            const maVangTruocDo = danhSachVangData[boxId][hs.id];
+            if (maVangTruocDo && maVangTruocDo !== "0") {
+                studentItem.classList.add("absent");
             }
-        };
 
-        const mainListDiv = div.querySelector('.main-student-list');
-        
-        danhSachHocSinhCuaLop.forEach(hs => {
-            const item = document.createElement('div');
-            item.className = 'student-item';
-            item.setAttribute('data-id', hs.id);
-            
-            const đangVang = danhSachVangData[boxId] && danhSachVangData[boxId][hs.id] !== undefined;
-            if (đangVang) item.classList.add('absent');
-
-            let selectOptions = '';
-            const ghiChuHienTai = đangVang ? danhSachVangData[boxId][hs.id] : "";
-
-            for (let key in ghiChuOptions) {
-                const textHienThi = key === "" ? "-- Chọn ghi chú vắng --" : ghiChuOptions[key];
-                const selected = key === ghiChuHienTai ? 'selected' : '';
-                selectOptions += `<option value="${key}" ${selected}>${textHienThi}</option>`;
-            }
-
-            item.innerHTML = `
-                <div class="student-info">${hs.ten} <small>(${hs.sdt})</small></div>
-                
+            studentItem.innerHTML = `
+                <div class="student-info">${hs.ten} <small>SĐT: ${hs.sdt}</small></div>
                 <div class="student-actions">
-                    <button class="btn-action" onclick="event.stopPropagation(); bieuDienVang('${boxId}', '${hs.id}', true)">Vắng</button>
-                    <button class="btn-action" onclick="event.stopPropagation(); bieuDienVang('${boxId}', '${hs.id}', false)">Đi học</button>
-                    <a href="tel:${hs.sdt}" onclick="event.stopPropagation();"><button class="btn-action btn-goi">Gọi</button></a>
+                    <a href="tel:${hs.sdt}" class="btn-goi">📞 Gọi Phụ Huynh</a>
                 </div>
-
-                <select class="student-note" onclick="event.stopPropagation();" onchange="capNhatGhiChu('${boxId}', '${hs.id}', this.value)">
-                    ${selectOptions}
+                <select class="student-note" onchange="capNhatTrangThaiVang('${boxId}', '${lop}', '${hs.id}', this.value)">
+                    ${Object.keys(ghiChuOptions).map(key => `
+                        <option value="${key}" ${maVangTruocDo == key ? 'selected' : ''}>${ghiChuOptions[key]}</option>
+                    `).join('')}
                 </select>
             `;
-            mainListDiv.appendChild(item);
+            containerBox.appendChild(studentItem);
         });
-        
-        container.appendChild(div);
-        taiLaiDanhSachVangGiaoDien(boxId);
+
+        document.getElementById("danhSachHop").prepend(containerBox);
+        reRenderAbsentList(boxId, lop);
     }
 
-    function bieuDienVang(boxId, studentId, isAbsent) {
-        const box = document.getElementById(boxId);
-        const studentRow = box.querySelector(`.student-item[data-id="${studentId}"]`);
-        const noteSelect = studentRow.querySelector('.student-note');
-
-        if (isAbsent) {
-            studentRow.classList.add('absent');
-            if (danhSachVangData[boxId][studentId] === undefined) {
-                danhSachVangData[boxId][studentId] = noteSelect.value || "";
-            }
-        } else {
-            studentRow.classList.remove('absent');
+    function capNhatTrangThaiVang(boxId, lopTen, studentId, value) {
+        const studentItem = document.getElementById(`student_${boxId}_${studentId}`);
+        
+        if (value === "0") {
             delete danhSachVangData[boxId][studentId];
-        }
-
-        taiLaiDanhSachVangGiaoDien(boxId);
-        luuVaoLocalStorage();
-    }
-
-    function capNhatGhiChu(boxId, studentId, value) {
-        const box = document.getElementById(boxId);
-        const studentRow = box.querySelector(`.student-item[data-id="${studentId}"]`);
-
-        if (studentRow && studentRow.classList.contains('absent')) {
+            if(studentItem) studentItem.classList.remove("absent");
+        } else {
             danhSachVangData[boxId][studentId] = value;
-            taiLaiDanhSachVangGiaoDien(boxId);
-            luuVaoLocalStorage();
+            if(studentItem) studentItem.classList.add("absent");
         }
+        
+        luuVaoLocalStorage();
+        reRenderAbsentList(boxId, lopTen);
     }
 
-    function taiLaiDanhSachVangGiaoDien(boxId) {
-        const box = document.getElementById(boxId);
-        if(!box) return;
-        const absentSection = box.querySelector('.absent-section');
-        const absentListContainer = box.querySelector('.absent-list');
-        const absentCountSpan = box.querySelector('.absent-count');
-        const presentCountSpan = box.querySelector('.present-count');
-        
-        absentListContainer.innerHTML = ''; 
-        
+    function reRenderAbsentList(boxId, lopTen) {
+        const absentListDiv = document.getElementById(`absent_list_${boxId}`);
+        if (!absentListDiv) return;
+
+        const listHocSinhCuaLop = dataHocSinh[lopTen] || [];
         const danhSachVangHienTai = danhSachVangData[boxId] || {};
-        const lopKey = danhSachVangHienTai._lopKey;
-        const listHocSinhCuaLop = dataHocSinh[lopKey] || [];
-        
-        const cacStudentIdVang = Object.keys(danhSachVangHienTai).filter(k => !k.startsWith('_'));
-        
-        // Cập nhật số lượng vắng lên nhãn danh sách vắng
-        absentCountSpan.textContent = cacStudentIdVang.length;
-        
-        // Cập nhật sĩ số đi học thời gian thực lên dòng thống kê sĩ số
-        presentCountSpan.textContent = listHocSinhCuaLop.length - cacStudentIdVang.length;
+        const cacStudentIdVang = Object.keys(danhSachVangHienTai);
 
         if (cacStudentIdVang.length === 0) {
-            absentSection.style.display = 'none';
+            absentListDiv.innerHTML = `<i>Chưa có học sinh vắng</i>`;
             return;
         }
 
-        absentSection.style.display = 'block';
-
+        let htmlContent = "";
         cacStudentIdVang.forEach(studentId => {
-            const infoHs = listHocSinhCuaLop.find(h => h.id == studentId);
-            if(!infoHs) return;
-            
-            const maGhiChu = danhSachVangHienTai[studentId];
-            const textLyoDo = ghiChuOptions[maGhiChu] || "Chưa chọn lý do";
-
-            const divVang = document.createElement('div');
-            divVang.className = 'absent-item';
-            divVang.innerHTML = `
-                <div style="font-weight: 600; color: #c53030;">📌 ${infoHs.ten}</div>
-                <div class="absent-row2">
-                    <span class="absent-reason">Lý do: ${textLyoDo}</span>
-                    <a href="tel:${infoHs.sdt}" onclick="event.stopPropagation();">
-                        <button class="btn-goi-small">Gọi</button>
-                    </a>
-                </div>
-            `;
-            absentListContainer.appendChild(divVang);
+            const infoHs = listHocSinhCuaLop.find(h => h.id === studentId);
+            if (infoHs) {
+                const maGhiChu = danhSachVangHienTai[studentId];
+                const textLyDo = ghiChuOptions[maGhiChu] || "Chưa chọn lý do";
+                htmlContent += `
+                    <div class="absent-item">
+                        <div style="font-weight: bold; color: #333;">• ${infoHs.ten}</div>
+                        <div class="absent-row2">
+                            <span class="absent-reason">Lý do: ${textLyDo}</span>
+                            <a href="tel:${infoHs.sdt}"><button class="btn-goi-small">📞 Gọi</button></a>
+                        </div>
+                    </div>
+                `;
+            }
         });
+        absentListDiv.innerHTML = htmlContent;
     }
 
-    function copyDanhSachVang(event, boxId, boxTitle) {
-        event.stopPropagation();
+    function copyDanhSachVang(boxId, lopTen) {
+        const listHocSinhCuaLop = dataHocSinh[lopTen] || [];
         const danhSachVangHienTai = danhSachVangData[boxId] || {};
-        const lopKey = danhSachVangHienTai._lopKey;
-        const listHocSinhCuaLop = dataHocSinh[lopKey] || [];
-        const cacStudentIdVang = Object.keys(danhSachVangHienTai).filter(k => !k.startsWith('_'));
+        const cacStudentIdVang = Object.keys(danhSachVangHienTai);
 
-        if(cacStudentIdVang.length === 0) {
-            alert("Không có học sinh vắng để copy!");
+        if (cacStudentIdVang.length === 0) {
+            alert("Lớp học này hiện tại không có học sinh vắng!");
             return;
         }
 
-        let textCopy = `Danh sách vắng:\n ${boxTitle}\n`;
-        textCopy += `Vắng: ${cacStudentIdVang.length}\n`;
-        textCopy += `---------------------------\n`;
-        
+        let textCopy = `BÁO CÁO VẮNG LỚP: ${lopTen}\n---------------------------\n`;
         cacStudentIdVang.forEach((studentId, index) => {
             const infoHs = listHocSinhCuaLop.find(h => h.id == studentId);
-            if(infoHs) {
+            if (infoHs) {
                 const maGhiChu = danhSachVangHienTai[studentId];
-                const textLyoDo = ghiChuOptions[maGhiChu] || "Chưa chọn lý do";
-                textCopy += `${index + 1}. ${infoHs.ten} \n Lý do: ${textLyoDo}\n`;
+                const textLyDo = ghiChuOptions[maGhiChu] || "Chưa chọn lý do";
+                textCopy += `${index + 1}. ${infoHs.ten} \n   Lý do: ${textLyDo}\n`;
             }
         });
 
         navigator.clipboard.writeText(textCopy).then(() => {
-            alert("Đã copy danh sách vắng thành công!");
+            alert("Đã sao chép danh sách vắng vào bộ nhớ tạm thành công!");
         }).catch(err => {
-            alert("Lỗi khi copy: ", err);
+            alert("Lỗi không thể copy: ", err);
         });
     }
 
     function xoaHopLop(event, boxId) {
         event.stopPropagation();
-        if(confirm("Bạn có chắc chắn muốn xóa lớp học này không?")) {
+        if (confirm("Bạn có chắc chắn muốn xóa lớp học này không?")) {
             document.getElementById(boxId).remove();
             delete danhSachVangData[boxId];
             danhSachHopList = danhSachHopList.filter(h => h.boxId !== boxId);
             luuVaoLocalStorage();
         }
     }
-
-    function luuVaoLocalStorage() {
-        localStorage.setItem('danhSachVangData', JSON.stringify(danhSachVangData));
-        localStorage.setItem('danhSachHopList', JSON.stringify(danhSachHopList));
-    }
-
-    window.onload = function() {
-        danhSachHopList.forEach(hop => {
-            dungGiaoDienHop(hop.boxId, hop.title, hop.lopKey);
-        });
-    };
 </script>
+
 </body>
-                </html>
-                
+</html>
