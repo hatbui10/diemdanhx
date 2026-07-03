@@ -1,3 +1,6 @@
+localStorage.clear();
+sessionStorage.clear();
+location.reload();
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -18,13 +21,34 @@
         button { background: #007bff; color: white; font-weight: bold; cursor: pointer; border: none; }
         button:hover { background: #0056b3; }
         
-        .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fafafa; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px;}
+        /* Hộp thông tin lớp */
+        .info-box { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 15px; background: #fafafa; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px;}
         
-        /* Tiêu đề dòng trên cùng */
-        .box-header { border-bottom: 2px solid #007bff; padding-bottom: 5px; margin-bottom: 10px; }
+        /* Thanh tiêu đề lớp có thể click để đóng/mở */
+        .box-header { 
+            border-bottom: 2px solid #007bff; 
+            padding-bottom: 5px; 
+            margin-bottom: 10px; 
+            cursor: pointer; 
+            user-select: none;
+            transition: background 0.2s;
+            border-radius: 4px;
+        }
+        .box-header:hover {
+            background-color: #f0f7ff;
+        }
         .box-title { font-weight: bold; font-size: 1.1em; color: #007bff; display: inline-block; }
         .box-stats { font-size: 0.9em; color: #666; margin-top: 4px; font-weight: 500; }
         
+        /* Vùng nội dung chứa danh sách (sẽ ẩn/hiện khi click header) */
+        .box-content {
+            transition: all 0.3s ease;
+        }
+        /* Class dùng để ẩn danh sách lớp */
+        .hidden { 
+            display: none !important; 
+        }
+
         /* Khu vực danh sách vắng ở trên */
         .absent-section { background: #fff5f5; border: 1px dashed #e53e3e; border-radius: 10px; padding: 10px; margin-bottom: 15px; }
         .absent-header-wrapper { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -78,8 +102,7 @@
         <option value="20:00">20:00</option>
     </select>
     <select id="tenLop">
-       <option value="SKY-KID">SKY-KID  T2-237</option>
-            <option value="12A1">12A1</option>
+       <option value="12A1">12A1</option>
             <option value="SMART-KID">SMART-KID  T2-237</option>
             <option value="OZON-L2+3/Ngô Hằng">OZON-L2+3/Ngô Hằng T3-158</option>
             <option value="MICKEY - L2+3/Thị Phương"> MICKEY - L2+3/Thị Phương T3-158   </option>
@@ -124,6 +147,7 @@
             <option value="L12-BLUE">L12-BLUE</option>
             
         </select>
+
     <select id="phongHoc">
         <option>T1-30</option>
         <option>T2-30</option>
@@ -145,9 +169,8 @@
 </div>
 
 <script>
-    // Dữ liệu học sinh đã chuẩn hóa cấu trúc đóng ngoặc hợp lệ
-   
     const dataHocSinh = {
+       
          "SMART-KID": [
         { id: "hs_SMART-KID_01", ten: "Phạm Gia Huy", sdt: "0378903698" },
         { id: "hs_SMART-KID_02", ten: "Nguyễn Mai Anh", sdt: "0978226749" },
@@ -354,7 +377,7 @@
         { id: "hs_ILA-L7 - Thu Hà_04", ten: "Nguyễn Linh Ngân", sdt: "0942916191" },
         { id: "hs_ILA-L7 - Thu Hà_05", ten: "Nguyễn Thị Thanh Thảo", sdt: "0986507735" },
         { id: "hs_ILA-L7 - Thu Hà_06", ten: "Lâm Anh Thư", sdt: "0902239258" },
-       
+        { id: "hs_ILA-L7 - Thu Hà_07", ten: "Đặng Hải Đăng", sdt: "0988678758" },
         { id: "hs_ILA-L7 - Thu Hà_08", ten: "Nguyễn Minh Trang", sdt: "0989137308" },
         { id: "hs_ILA-L7 - Thu Hà_09", ten: "Lê Minh Dũng", sdt: "0983572284" },
         { id: "hs_ILA-L7 - Thu Hà_10", ten: "Trần Bảo Long", sdt: "0989850687" },
@@ -759,12 +782,12 @@
 
 
     };
-    
-   
 
-    // Các tùy chọn lý do vắng mặt
+
+
     const ghiChuOptions = {
-        "": "***",
+        
+ "": "***",
     "muon": "Đi muộn",
     "noCall": "Không nghe máy",
     "nghiThang7": "Nghỉ hết tháng 7",
@@ -774,11 +797,9 @@
     "khac": "Lý do khác..."
     };
 
-    // Quản lý trạng thái bằng LocalStorage
     let danhSachHopList = JSON.parse(localStorage.getItem('danhSachHopList')) || [];
     let danhSachVangData = JSON.parse(localStorage.getItem('danhSachVangData')) || {};
 
-    // Khởi tạo giao diện từ LocalStorage khi load trang
     window.onload = function() {
         danhSachHopList.forEach(hop => hienThiHopLopGiaoDien(hop.boxId, hop.ca, hop.lop, hop.phong));
     };
@@ -795,7 +816,6 @@
         
         const boxId = `box_${Date.now()}`;
         
-        // Khởi tạo vùng lưu trữ vắng cho lớp này
         danhSachVangData[boxId] = {}; 
         danhSachHopList.push({ boxId, ca, lop, phong });
         luuVaoLocalStorage();
@@ -803,33 +823,47 @@
         hienThiHopLopGiaoDien(boxId, ca, lop, phong);
     }
 
+    // Hàm đóng hoặc mở lớp khi người dùng click vào thanh tiêu đề
+    function dongMoLop(boxId) {
+        const contentBox = document.getElementById(`content_${boxId}`);
+        if (contentBox) {
+            contentBox.classList.toggle('hidden');
+        }
+    }
+
     function hienThiHopLopGiaoDien(boxId, ca, lop, phong) {
         const containerBox = document.createElement("div");
         containerBox.className = "info-box";
         containerBox.id = boxId;
 
-        // Header hộp lớp
+        // Header hộp lớp - Thêm sự kiện click để Đóng/Mở lớp
         const header = document.createElement("div");
         header.className = "box-header";
+        header.setAttribute("onclick", `dongMoLop('${boxId}')`);
         header.innerHTML = `
             <button class="btn-delete-box" onclick="xoaHopLop(event, '${boxId}')">Xóa lớp</button>
-            <div class="box-title">${lop} - Phòng ${phong}</div>
-            <div class="box-stats">Ca học: ${ca} | Sĩ số: ${(dataHocSinh[lop] || []).length} HS</div>
+            <div class="box-title">▼ ${lop} - Phòng ${phong}</div>
+            <div class="box-stats">Ca học: ${ca} | Sĩ số: ${(dataHocSinh[lop] || []).length} học sinh</div>
         `;
         containerBox.appendChild(header);
 
-        // Khu vực hiển thị danh sách vắng lên đầu hộp
+        // Tạo một container riêng cho phần nội dung để dễ dàng ẩn/hiện
+        const contentBox = document.createElement("div");
+        contentBox.className = "box-content";
+        contentBox.id = `content_${boxId}`;
+
+        // Khu vực hiển thị danh sách vắng
         const absentSection = document.createElement("div");
         absentSection.className = "absent-section";
         absentSection.id = `absent_sec_${boxId}`;
         absentSection.innerHTML = `
             <div class="absent-header-wrapper">
                 <h4>DANH SÁCH VẮNG HỌC</h4>
-                <button class="btn-copy-absent" onclick="copyDanhSachVang('${boxId}', '${lop}')">Copy nhanh</button>
+                <button class="btn-copy-absent" onclick="copyDanhSachVang(event, '${boxId}', '${lop}')">Copy nhanh</button>
             </div>
             <div id="absent_list_${boxId}"><i>Chưa có học sinh vắng</i></div>
         `;
-        containerBox.appendChild(absentSection);
+        contentBox.appendChild(absentSection);
 
         // Danh sách học sinh chi tiết
         const listHocSinh = dataHocSinh[lop] || [];
@@ -838,7 +872,6 @@
             studentItem.className = "student-item";
             studentItem.id = `student_${boxId}_${hs.id}`;
 
-            // Phục hồi trạng thái vắng từ LocalStorage nếu có
             const maVangTruocDo = danhSachVangData[boxId][hs.id];
             if (maVangTruocDo && maVangTruocDo !== "0") {
                 studentItem.classList.add("absent");
@@ -855,9 +888,10 @@
                     `).join('')}
                 </select>
             `;
-            containerBox.appendChild(studentItem);
+            contentBox.appendChild(studentItem);
         });
 
+        containerBox.appendChild(contentBox);
         document.getElementById("danhSachHop").prepend(containerBox);
         reRenderAbsentList(boxId, lop);
     }
@@ -910,7 +944,8 @@
         absentListDiv.innerHTML = htmlContent;
     }
 
-    function copyDanhSachVang(boxId, lopTen) {
+    function copyDanhSachVang(event, boxId, lopTen) {
+        event.stopPropagation(); // Ngăn việc đóng/mở lớp khi bấm nút copy
         const listHocSinhCuaLop = dataHocSinh[lopTen] || [];
         const danhSachVangHienTai = danhSachVangData[boxId] || {};
         const cacStudentIdVang = Object.keys(danhSachVangHienTai);
@@ -938,7 +973,7 @@
     }
 
     function xoaHopLop(event, boxId) {
-        event.stopPropagation();
+        event.stopPropagation(); // Ngăn việc đóng/mở lớp khi bấm nút xóa
         if (confirm("Bạn có chắc chắn muốn xóa lớp học này không?")) {
             document.getElementById(boxId).remove();
             delete danhSachVangData[boxId];
